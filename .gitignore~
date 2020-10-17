@@ -1,6 +1,5 @@
 # Prerequisites
 *.d
-*.DS_Store
 
 # Object files
 *.o
