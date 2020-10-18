@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/18 12:00:24 by nwakour           #+#    #+#             */
+/*   Updated: 2020/10/18 12:00:33 by nwakour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int	take_texture(t_mlx *mlx, t_tex *tex)
+int		take_texture(t_mlx *mlx, t_tex *tex)
 {
 	if (!(tex->tex_ptr = mlx_xpm_file_to_image(mlx->mlx_p,
 		tex->path, &tex->width, &tex->height)))
@@ -11,9 +23,9 @@ int	take_texture(t_mlx *mlx, t_tex *tex)
 	return (1);
 }
 
-void		init_textute(t_all *all)
+void	init_textute(t_all *all)
 {
- 	take_texture(&all->mlx, &all->tex[TEX_NO]);
+	take_texture(&all->mlx, &all->tex[TEX_NO]);
 	take_texture(&all->mlx, &all->tex[TEX_SO]);
 	take_texture(&all->mlx, &all->tex[TEX_WE]);
 	take_texture(&all->mlx, &all->tex[TEX_EA]);

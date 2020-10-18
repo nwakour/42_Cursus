@@ -1,59 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/18 11:54:12 by nwakour           #+#    #+#             */
+/*   Updated: 2020/10/18 11:57:26 by nwakour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-char **list_to_map(t_list **list, int x, int y)
+char	**list_to_map(t_list **list, int x, int y)
 {
-	char **map;
-	char *lcont;
-	t_list *tmp;
-	int i;
-	int j;
-	int len;
+	char	**map;
+	char	*lcont;
+	t_list	*tmp;
+	int		i;
+	int		j;
+	int		len;
 
 	tmp = *list;
 	if (!(map = malloc(sizeof(char*) * (x + 1))))
-		return NULL;
+		return (NULL);
 	i = -1;
 	while (++i < x)
 	{
 		lcont = tmp->content;
 		tmp = tmp->next;
 		if (!(map[i] = malloc(sizeof(char) * (y + 1))))
-			return NULL;
+			return (NULL);
 		j = 0;
 		len = ft_strlen(lcont);
 		while (j <= y)
 		{
 			if (j < len)
-				map[i][j] =  lcont[j];
+				map[i][j] = lcont[j];
 			else
 				map[i][j] = '\0';
 			j++;
 		}
 	}
 	map[i] = NULL;
-	return map;
+	return (map);
 }
 
-char 	**ft_read_map(int fd)
+char	**ft_read_map(int fd)
 {
-	t_list *list;
-	char *line;
-	int i;
-	int map_x;
-	int map_y;
-	int j;
+	t_list	*list;
+	char	*line;
+	int		i;
+	int		map_x;
+	int		map_y;
+	int		j;
+
 	line = NULL;
 	list = NULL;
 	map_x = 0;
 	map_y = 0;
 	i = 1;
-
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
 		if (line[0] == '\n')
 		{
-			if(map_y != 0)
-				return NULL;
+			if (map_y != 0)
+				return (NULL);
 			while (line[0] == '\n' && i == 1)
 				i = get_next_line(fd, &line);
 		}
@@ -68,24 +80,24 @@ char 	**ft_read_map(int fd)
 				map_x++;
 			}
 			if (j == 0 && map_y > 0)
-				return NULL;
+				return (NULL);
 		}
 	}
-	return list_to_map(&list, map_x, map_y);
+	return (list_to_map(&list, map_x, map_y));
 }
 
-int	ft_check_map(char **map)
+int		ft_check_map(char **map)
 {
-	int i;
-	int j;
-	int x;
-	int y;
-	
+	int		i;
+	int		j;
+	int		x;
+	int		y;
+
 	y = ft_strlen(map[0]);
 	while (y > 0)
 	{
 		if (map[0][--y] == '0')
-			return 0;
+			return (0);
 	}
 	x = 1;
 	while (map[x + 1] != NULL)
@@ -97,24 +109,26 @@ int	ft_check_map(char **map)
 		while (i < j)
 		{
 			if (map[x][--j] == '0')
-				return 0;
+				return (0);
 		}
 		while (i > 0)
 		{
 			if (map[x][0] == '0')
-				return 0;
+				return (0);
 			if (map[x][i] == '1')
 				i--;
-			else if(map[x][i] == ' ')
+			else if (map[x][i] == ' ')
 			{
-				if (map[x - 1][i] == '0' || map[x][i - 1] == '0' || map[x][i + 1] == '0' || map[x][i + 1] == '\0')
-					return 0;
+				if (map[x - 1][i] == '0' || map[x][i - 1] == '0'
+					|| map[x][i + 1] == '0' || map[x][i + 1] == '\0')
+					return (0);
 				i--;
 			}
-			else if(map[x][i] == '0')
+			else if (map[x][i] == '0')
 			{
-				if (map[x - 1][i] == ' ' || map[x][i - 1] == ' ' || map[x][i + 1] == ' ' || map[x][i + 1] == '\0')
-					return 0;
+				if (map[x - 1][i] == ' ' || map[x][i - 1] == ' ' ||
+					map[x][i + 1] == ' ' || map[x][i + 1] == '\0')
+					return (0);
 				i--;
 			}
 			else if (map[x][i] == '\0')
@@ -126,12 +140,12 @@ int	ft_check_map(char **map)
 	while (i > 0)
 	{
 		if (map[x][--i] == '0')
-			return 0;
+			return (0);
 	}
-	return 1;
+	return (1);
 }
 
-void drawmap(t_all *all)
+void	drawmap(t_all *all)
 {
 	int i;
 	int j;

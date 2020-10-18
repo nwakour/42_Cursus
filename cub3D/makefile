@@ -8,7 +8,7 @@ CC = gcc
 SRC_LIBFT = libft/get_next_line.c libft/ft_lstnew.c \
 libft/ft_lstadd_back.c libft/ft_lstsize.c libft/ft_atoi.c libft/ft_isdigit.c libft/ft_substr.c libft/ft_strjoin.c libft/ft_strdup.c libft/ft_strlen.c
 
-SRC_CUB3D = src/collision.c src/cub3d.c src/draw.c src/key.c src/map.c src/math.c src/player.c src/rays.c src/check_file.c src/texture.c
+SRC_CUB3D = src/collision.c src/cub3d.c src/draw.c src/key.c src/map.c src/math.c src/player.c src/rays.c src/check_file.c src/texture.c src/sprite.c
 
 SRCS = ${SRC_CUB3D} ${SRC_LIBFT}
 

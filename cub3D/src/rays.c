@@ -1,39 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rays.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/18 11:59:41 by nwakour           #+#    #+#             */
+/*   Updated: 2020/10/18 13:23:53 by nwakour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int ray_coordinate(float ray_angle, int hit_ver)
+int		ray_coordinate(float ray_angle, int hit_ver)
 {
+	float	an;
 
-	float angle;
-
-	angle = rad_to_angle(ray_angle);
-	if ((angle < 45) || (angle >= 45 && angle < 90))
-	{
-		if (hit_ver)
-			return NO;
-		else
-			return EA;
-	}
-	else if ((angle >= 90 && angle < 135) || (angle >= 135 && angle < 180))
-	{
-		if (hit_ver)
-			return SO;
-		else
-			return EA;
-	}
-	else if ((angle >= 180 && angle < 225) || (angle >= 225 && angle < 270))
-	{
-		if (hit_ver)
-			return SO;
-		else
-			return WE;
-	}
+	an = rad_to_angle(ray_angle);
+	if (((an < 45) || (an >= 45 && an < 90)) && hit_ver)
+		return (NO);
+	else if (((an < 45) || (an >= 45 && an < 90)) && !hit_ver)
+		return (EA);
+	else if (((an >= 90 && an < 135) || (an >= 135 && an < 180)) && hit_ver)
+		return (SO);
+	else if (((an >= 90 && an < 135) || (an >= 135 && an < 180)) && !hit_ver)
+		return (EA);
+	else if (((an >= 180 && an < 225) || (an >= 225 && an < 270)) && hit_ver)
+		return (SO);
+	else if (((an >= 180 && an < 225) || (an >= 225 && an < 270)) && !hit_ver)
+		return (WE);
+	else if (an >= 270 && hit_ver)
+		return (NO);
+	else if (an >= 270 && !hit_ver)
+		return (WE);
 	else
-	{
-		if (hit_ver)
-			return NO;
-		else
-			return WE;
-	}
+		return (-1);
 }
 
 void	cast_ray(t_all *all, float ray_angle, int ray_num)
@@ -75,7 +76,7 @@ void	cast_ray(t_all *all, float ray_angle, int ray_num)
 	ray_is_up = !ray_is_down;
 	ray_is_right = ray_angle < 0.5 * PI || ray_angle > 1.5 * PI;
 	ray_is_left = !ray_is_right;
-
+	
 	hoz_wall = 0;
 	hoz_wall_x = 0;
 	hoz_wall_y = 0;
@@ -145,7 +146,7 @@ void	cast_ray(t_all *all, float ray_angle, int ray_num)
 			vert_wall_x = next_vert_x;
 			vert_wall_y = next_vert_y;
 			vert_wall = 1;
-			break;
+			break ;
 		}
 		else
 		{
@@ -176,31 +177,27 @@ void	cast_ray(t_all *all, float ray_angle, int ray_num)
 	all->ray[ray_num].ray_left = ray_is_left;
 	all->ray[ray_num].ray_right = ray_is_right;
 	all->ray[ray_num].ray_cord = ray_coordinate(ray_angle, all->ray[ray_num].hit_ver);
-
-		
-	
 }
 
 void	cast_all_rays(t_all *all)
 {
-	float ray_angle;
-	float dist;
-	int i;
+	float	ray_angle;
+	float	dist;
+	int		i;
 
 	i = 0;
-	dist = (WINDOW_WIDTH / 2 ) / tan(FOV_ANGLE / 2);
+	dist = (WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2);
 	while (i < NUM_RAYS)
 	{
 		ray_angle = all->player.rotation + atan((i - (NUM_RAYS / 2)) / dist);
-
 		cast_ray(all, ray_angle, i);
 		i++;
 	}
 }
 
-void render_rays(t_all *all)
+void	render_rays(t_all *all)
 {
-	int i;
+	int		i;
 
 	i = -1;
 	all->draw.start_x = all->player.x;

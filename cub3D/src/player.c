@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/18 11:58:50 by nwakour           #+#    #+#             */
+/*   Updated: 2020/10/18 13:56:39 by nwakour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	init_player(t_player *player)
@@ -9,15 +21,15 @@ void	init_player(t_player *player)
 	player->turn = 0;
 	player->walk = 0;
 	player->rotation = PI / 2;
-	player->walkspeed = 20;
-	player->turnspeed = 20 * (PI / 180);
+	player->walkspeed = 3;
+	player->turnspeed = 3 * (PI / 180);
 }
 
-void player_move(t_all *all)
+void	player_move(t_all *all)
 {
-	float steps;
-	float new_x;
-	float new_y;
+	float	steps;
+	float	new_x;
+	float	new_y;
 
 	all->player.rotation += all->player.turn * all->player.turnspeed;
 	steps = all->player.walk * all->player.walkspeed;
@@ -28,11 +40,9 @@ void player_move(t_all *all)
 		all->player.x = new_x;
 		all->player.y = new_y;
 	}
-	all->player.walk = 0;
-	all->player.turn = 0;
 }
 
-void draw_player(t_all *all)
+void	draw_player(t_all *all)
 {
 	player_move(all);
 	all->draw.start_x = all->player.x * MINI_MAP;
