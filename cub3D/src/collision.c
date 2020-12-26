@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 11:48:38 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/18 11:48:40 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/10/19 17:39:40 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,8 @@ int		ft_collision(t_all *all, float x, float y)
 		return (1);
 	i = floor(x / TILE_SIZE);
 	j = floor(y / TILE_SIZE);
-	return (all->map[j][i] != '0');
+	if (all->map[j][i] != '0')
+		return (1);
+	else
+		return (0);
 }

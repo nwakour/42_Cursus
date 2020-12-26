@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 11:47:50 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/18 12:55:54 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/10/19 17:17:11 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	read_file(t_all *all)
 		return ;
 	else
 	{
-		while ((i = get_next_line(fd, &line)) > 0 && lines != 8)
+		while (lines != 8 && ((i = get_next_line(fd, &line)) > 0))
 		{
 			if (i == 1 && line[0] != '\0')
 			{
@@ -107,6 +107,6 @@ void	read_file(t_all *all)
 				lines++;
 			}
 		}
-		all->map = ft_read_map(fd);
+		all->map = ft_read_map(all, fd);
 	}
 }

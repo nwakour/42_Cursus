@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 11:54:12 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/18 11:57:26 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/10/20 12:57:35 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**list_to_map(t_list **list, int x, int y)
+char	**list_to_map(t_all *all, t_list **list, int x, int y)
 {
 	char	**map;
 	char	*lcont;
@@ -21,10 +21,13 @@ char	**list_to_map(t_list **list, int x, int y)
 	int		j;
 	int		len;
 
+	if (all)
+		i = -1;
 	tmp = *list;
 	if (!(map = malloc(sizeof(char*) * (x + 1))))
 		return (NULL);
 	i = -1;
+	all->info.num_sprite = 0;
 	while (++i < x)
 	{
 		lcont = tmp->content;
@@ -39,6 +42,18 @@ char	**list_to_map(t_list **list, int x, int y)
 				map[i][j] = lcont[j];
 			else
 				map[i][j] = '\0';
+			if (lcont[j] == 'P')
+			{
+				all->player.x = j * TILE_SIZE;
+				all->player.y = i * TILE_SIZE;
+				map[i][j] = '0';
+			}
+			if (lcont[j] == '2')
+			{
+				init_sprite(all, all->sprite, all->map, 's');
+				all->sprite->nb_sprite++;
+				map[i][j] = '1';
+			}
 			j++;
 		}
 	}
@@ -46,7 +61,7 @@ char	**list_to_map(t_list **list, int x, int y)
 	return (map);
 }
 
-char	**ft_read_map(int fd)
+char	**ft_read_map(t_all *all, int fd)
 {
 	t_list	*list;
 	char	*line;
@@ -83,64 +98,94 @@ char	**ft_read_map(int fd)
 				return (NULL);
 		}
 	}
-	return (list_to_map(&list, map_x, map_y));
+	return (list_to_map(all, &list, map_x, map_y));
 }
 
-int		ft_check_map(char **map)
+static int		check_first_character(char *line)
 {
-	int		i;
-	int		j;
-	int		x;
-	int		y;
+	int	i;
 
-	y = ft_strlen(map[0]);
-	while (y > 0)
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (!line[i] || line[i] != '1')
+		return (-1);
+	return (i);
+}
+
+static	int		check_last_character(char character)
+{
+	if (character != '1')
+		return (-1);
+	return (1);
+}
+
+static int		is_valide_character(char *orientation, char character)
+{
+	char		*ptr;
+
+	ptr = ft_strchr("012NSEW ", character);
+	if (ptr)
 	{
-		if (map[0][--y] == '0')
-			return (0);
-	}
-	x = 1;
-	while (map[x + 1] != NULL)
-	{
-		i = ft_strlen(map[x - 1]);
-		j = ft_strlen(map[x]);
-		if (i > j)
-			i = j;
-		while (i < j)
+		if (ft_strchr("NSEW", character))
 		{
-			if (map[x][--j] == '0')
-				return (0);
+			if (*orientation == '\0')
+				*orientation = character;
+			else
+				return (-1);
 		}
-		while (i > 0)
-		{
-			if (map[x][0] == '0')
-				return (0);
-			if (map[x][i] == '1')
-				i--;
-			else if (map[x][i] == ' ')
-			{
-				if (map[x - 1][i] == '0' || map[x][i - 1] == '0'
-					|| map[x][i + 1] == '0' || map[x][i + 1] == '\0')
-					return (0);
-				i--;
-			}
-			else if (map[x][i] == '0')
-			{
-				if (map[x - 1][i] == ' ' || map[x][i - 1] == ' ' ||
-					map[x][i + 1] == ' ' || map[x][i + 1] == '\0')
-					return (0);
-				i--;
-			}
-			else if (map[x][i] == '\0')
-				i--;
-		}
-		x++;
 	}
-	i = ft_strlen(map[x]);
-	while (i > 0)
+	else
+		return (-1);
+	return (1);
+}
+
+int		check_character_around(char **map, int i, int j)
+{
+	int	ret;
+
+	ret = 0;
+	if (ft_strchr("012NSEW", map[i][j]))
 	{
-		if (map[x][--i] == '0')
-			return (0);
+		if (map[i][j] == ' ')
+		{
+			if (map[i][j + 1] == ' ')
+				ret++;
+			if (map[i][j - 1] == ' ')
+				ret++;
+			if (map[i + 1][j] == ' ')
+				ret++;
+			if (map[i - 1][j] == ' ')
+				ret++;
+		}
+	}
+	return (ret == 4 ? -1 : 1);
+}
+
+int		ft_check_map(t_all *all, char *orientation)
+{
+	int			i;
+	int			j;
+	int			save;
+
+	i = 0;
+	save = 0;
+	while (all->map[i])
+	{
+		if ((j = check_first_character(all->map[i])) == -1)
+			return (-1);
+		while (all->map[i][++j])
+		{
+			if ((is_valide_character(orientation, all->map[i][j])) == -1)
+				return (-1);
+			if (check_character_around(all->map, i, j) == -1)
+				return (-1);
+			if (all->map[i][j] != ' ')
+				save = j;
+		}
+		if (check_last_character(all->map[i][save]) == -1)
+			return (-1);
+		i++;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 13:07:39 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/18 14:08:09 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/10/20 13:04:22 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,48 @@ typedef struct		s_player
 
 typedef struct		s_sprite
 {
-	float			x;
-	float			y;
-	float			dist;
-	int				texture;
-	struct s_sprite	*next;
+	float			diry;
+	float			dirx;
+	float			plany;
+	float			planx;
+	int				*data;
+	void			*ptr;
+	int				size_l;
+	float			*distance;
+	float			angle;
+	int				width;
+	int				bpp;
+	int				endian;
+	int				height;
+	float			*x;
+	float			*y;
+	char			*path;
+	int				nb_sprite;
+	float			*buffer;
+	int				spritescreenx;
+	int				drawstarty;
+	int				drawendy;
+	int				drawstartx;
+	int				drawendx;
 }					t_sprite;
 
 typedef struct		s_ray
 {
 	float			ray_angle;
-	float			wall_x;
-	float			wall_y;
+	float			inter_x;
+	float			inter_y;
+	float			step_x;
+	float			step_y;
+	float			hit_x;
+	float			hit_y;
+	float			ver_hit_x;
+	float			ver_hit_y;
+	float			hoz_hit_x;
+	float			hoz_hit_y;
 	float			dist;
+	float			was_hit_vert;
 	int				hit_ver;
+	int				hit_hoz;
 	int				ray_up;
 	int				ray_down;
 	int				ray_left;
@@ -145,6 +173,15 @@ typedef struct		s_info
 	int				num_sprite;
 }					t_info;
 
+typedef struct		s_wall
+{
+	float			correct_wall_distance;
+	float			distance_projection_plane;
+	int				wall_strip_height;
+	int				wall_top;
+	int				wall_bottom;
+}					t_wall;
+
 typedef struct		s_all
 {
 	t_mlx			mlx;
@@ -152,9 +189,11 @@ typedef struct		s_all
 	t_ray			ray[NUM_RAYS];
 	t_draw			draw;
 	t_tex			tex[TEXTURE_NB];
-	t_sprite		*sprite;
+	t_sprite		sprite[2];
 	t_info			info;
+	t_wall			wall;
 	char			**map;
+	char			orientation;
 }					t_all;
 
 /*
@@ -171,6 +210,8 @@ int					ft_lstsize(t_list *lst);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_isdigit(int c);
 int					ft_atoi(const char *str);
+char				*ft_strchr(const char *str, int c);
+void				*ft_bzero(void *ptr, size_t n);
 /*
 					**CUB3D
 */
@@ -203,6 +244,8 @@ void				init_draw(t_draw *draw);
 void				projection_3d(t_all *all);
 void				drawblock(int *img_data, t_draw draw, int color);
 void				drawline(int *img_data, t_draw draw);
+void				draw_ceiling(t_all *all);
+void				draw_floor(t_all *all);
 /*
 					**KEY
 */
@@ -214,9 +257,9 @@ int					key_press_hook(int c, t_all *all);
 /*
 					**MAP
 */
-char				**list_to_map(t_list **list, int x, int y);
-char				**ft_read_map(int fd);
-int					ft_check_map(char **map);
+char				**list_to_map(t_all *all, t_list **list, int x, int y);
+char				**ft_read_map(t_all *all, int fd);
+int					ft_check_map(t_all *all, char *orientation);
 void				drawmap(t_all *all);
 /*
 					**MATH
@@ -234,12 +277,20 @@ void				draw_player(t_all *all);
 					**RAYS
 */
 void				cast_ray(t_all *all, float ray_angle, int ray_num);
-void				cast_all_rays(t_all *all);
+void				cast_all_rays(t_all *all, t_ray *ray);
 void				render_rays(t_all *all);
+void				ray_ver(t_all *all, t_ray *ray, t_player *player);
+void				next_ray_ver(t_all *all, t_ray *ray, float next_ver_y, float next_ver_x);
+void				ray_hoz(t_all *all, t_ray *ray, t_player *player);
+void				next_ray_hoz(t_all *all, t_ray *ray, float next_hoz_y, float next_hoz_x);
+void				low_ray(t_ray *ray, t_player *player);
+void				ray_fac(t_ray *ray);
+void				init_ray(t_ray *ray);
 /*
 					**SPRITE
 */
 void				generete_sprite(t_all *all);
-void				init_sprite(t_all *all, int x, int y);
+void				init_sprite(t_all *all, t_sprite *sprite, char **map, char player_position);
 void				render_all_sprites(t_all *all);
+void				ft_putsprite(t_all *all, t_sprite *sprite, t_player *player);
 #endif
