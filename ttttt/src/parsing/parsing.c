@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 12:53:57 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 19:14:08 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,34 @@ static int	put_map_in_array(t_all *all, t_list *node,
 	return (SUCCESS);
 }
 
-static	int	put_files_in_list(t_list **begin, int fd)
+static int	get_info(t_all *all, char *line)
 {
-	char	*line;
-	t_list	*node;
-	int		end;
+	if ((all->info.window_width == -1) && !get_window_size(all, line))
+		return (SUCCESS);
+	else if (!all->tex[NO].path && !path(&all->tex[NO].path, line, "NO ", 3))
+		return (SUCCESS);
+	else if (!all->tex[SO].path && !path(&all->tex[SO].path, line, "SO ", 3))
+		return (SUCCESS);
+	else if (!all->tex[WE].path && !path(&all->tex[WE].path, line, "WE ", 3))
+		return (SUCCESS);
+	else if (!all->tex[EA].path && !path(&all->tex[EA].path, line, "EA ", 3))
+		return (SUCCESS);
+	else if (!all->tex[S].path && !path(&all->tex[S].path, line, "S ", 2))
+		return (SUCCESS);
+	else if ((all->info.color_floor == -1) && !get_color(&all->info.color_floor, line, "F "))
+		return (SUCCESS);
+	else if ((all->info.color_ceil == -1) && !get_color(&all->info.color_ceil, line, "C "))
+		return (SUCCESS);
+	else
+	{
+		perror("Error\nWrong identifier\n");
+		return (free_all(all, ERROR));
+	}
+}
+
+static int	get_map(t_list **list, int fd, char *line, int end)
+{
+	t_list	*new;
 
 	end = 1;
 	while (end)
@@ -53,12 +76,12 @@ static	int	put_files_in_list(t_list **begin, int fd)
 			perror("Error\nReading file failed\n");
 			return (ERROR);
 		}
-		if (!(node = ft_lstnew(line)))
+		if (!(new = ft_lstnew(line)))
 		{
 			perror("Error\nAllocation failed\n");
 			return (ERROR);
 		}
-		ft_lstadd_back(begin, node);
+		ft_lstadd_back(list, new);
 	}
 	if (close(fd) != SUCCESS)
 	{
@@ -68,29 +91,41 @@ static	int	put_files_in_list(t_list **begin, int fd)
 	return (SUCCESS);
 }
 
-static int	get_info(t_all *all)
+static int	read_file(t_all *all)
 {
-	if (get_window_size(all) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_image_path(&all->info.list, "NO ", 3, &all->tex[NO].path) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_image_path(&all->info.list, "SO ", 3, &all->tex[SO].path) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_image_path(&all->info.list, "WE ", 3, &all->tex[WE].path) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_image_path(&all->info.list, "EA ", 3, &all->tex[EA].path) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_image_path(&all->info.list, "S ", 2, &all->tex[S].path) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_color(&all->info.list, "C ", &all->info.color_ceiling) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_color(&all->info.list, "F ", &all->info.color_floor) == ERROR)
-		return (free_all(all, ERROR));
+	char	*line;
+	int		end;
+	int		lines;
+
+	end = 1;
+	lines = 0;
+	while (lines != 8 && end)
+	{
+		if ((end = get_next_line(all->info.fd, &line)) == ERROR)
+		{
+			perror("Error\nReading file failed\n");
+			return (ERROR);
+		}
+		if (end == 1 && line[0] != '\0')
+		{
+			if (get_info(all, line) == ERROR)
+				return (ERROR);
+			else
+				lines++;
+		}
+	}
+	if (!end || get_map(&all->info.list, all->info.fd, line, end) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }
 
-static int	read_map(t_all *all)
+int			parsing(t_all *all)
 {
+	all->info.window_width = -1;
+	all->info.color_floor = -1;
+	all->info.color_ceil = -1;
+	if (read_file(all) == ERROR)
+		return (free_all(all, ERROR));
 	if ((delete_empty_line_map(&all->info.list) == ERROR))
 		return (free_all(all, ERROR));
 	if ((rows_cols_nb(&all->info)) == ERROR)
@@ -106,16 +141,5 @@ static int	read_map(t_all *all)
 	if (check_map(all, &all->info.orientation) == ERROR)
 		return (free_all(all, ERROR));
 	all->info.list = 0;
-	return (SUCCESS);
-}
-
-int			parsing(t_all *all)
-{
-	if (put_files_in_list(&all->info.list, all->info.fd) == ERROR)
-		return (free_all(all, ERROR));
-	if (get_info(all) == ERROR)
-		return (ERROR);
-	if ((read_map(all)) == ERROR)
-		return (ERROR);
 	return (SUCCESS);
 }

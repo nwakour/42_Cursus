@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:11 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:48:11 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 19:08:42 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct		s_player
 typedef struct		s_info
 {
 	t_list			*list;
-	int				color_ceiling;
+	int				color_ceil;
 	int				color_floor;
 	int				fd;
 	unsigned int	screenshoot : 1;
@@ -184,11 +184,10 @@ int					free_all(t_all *all, int ret);
 int					parsing(t_all *all);
 int					skip_number(char *str);
 int					skip_space(char *str);
-int					get_window_size(t_all *all);
+int					get_window_size(t_all *all, char *line);
 t_list				*get_node(t_list **begin, char *search, int n);
-int					get_color(t_list **begin, char *name, int *num_color);
-int					get_image_path(t_list **begin, char *name,
-									int n, char **dest);
+int					get_color(int *num_color, char *line, char *cmp);
+int					path(char **dest, char *line, char *cmp, int n);
 int					delete_empty_line_map(t_list **begin);
 int					check_file_ext(char *line, char *ext);
 int					nb_cloumn(t_list *node);

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:44 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/11 17:34:54 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 16:25:09 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,8 @@ char	*get_height(char *line, int *window_height)
 	return (line);
 }
 
-int		get_window_size(t_all *all)
+int		get_window_size(t_all *all, char *line)
 {
-	char	*line;
-	t_list	*node;
-
-	if (!(node = get_node(&all->info.list, "R ", 2)))
-	{
-		perror("Error\nCorrect resolution format is 'R Width Height'\n");
-		return (ERROR);
-	}
-	line = node->content;
 	if (!(line = get_width(line, &all->info.window_width)))
 		return (ERROR);
 	if (!(line = get_height(line, &all->info.window_height)))
@@ -84,7 +75,5 @@ int		get_window_size(t_all *all)
 		perror("Error\nWidth and Height must be greater than 100\n");
 		return (ERROR);
 	}
-	ft_list_remove_one_if(&all->info.list, node->content,
-						&ft_strcmp, &free_content_node);
 	return (SUCCESS);
 }

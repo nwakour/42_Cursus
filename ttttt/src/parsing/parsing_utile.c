@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:24 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/24 18:03:19 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 18:41:35 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			check_that_line_is_wall(char *line)
 	return (SUCCESS);
 }
 
-static int	header_empty_line_map(t_list **begin, t_list *node)
+static int	header_empty_line_map(t_list **list, t_list *node)
 {
 	char	*line;
 	t_list	*next;
@@ -57,22 +57,22 @@ static int	header_empty_line_map(t_list **begin, t_list *node)
 	if (!*line)
 	{
 		next = node->next;
-		ft_list_remove_one_if(begin, node->content,
+		ft_list_remove_one_if(list, node->content,
 		&ft_strcmp, &free_content_node);
-		return (header_empty_line_map(begin, next));
+		return (header_empty_line_map(list, next));
 	}
 	else if (*line != '1')
 		return (ERROR);
-	(void)begin;
+	(void)list;
 	return (SUCCESS);
 }
 
-static int	footer_empty_line_map(t_list **begin)
+static int	footer_empty_line_map(t_list **list)
 {
 	char	*line;
 	t_list	*node;
 
-	node = ft_lstlast(*begin);
+	node = ft_lstlast(*list);
 	if (!node)
 		return (ERROR);
 	line = node->content;
@@ -81,22 +81,22 @@ static int	footer_empty_line_map(t_list **begin)
 	{
 		return (ERROR);
 	}
-	(void)begin;
+	(void)list;
 	return (SUCCESS);
 }
 
-int			delete_empty_line_map(t_list **begin)
+int			delete_empty_line_map(t_list **list)
 {
-	if ((header_empty_line_map(begin, *begin)) == ERROR)
+	if ((header_empty_line_map(list, *list)) == ERROR)
 	{
 		perror("Error\nWrong map format\n");
 		return (ERROR);
 	}
-	if (footer_empty_line_map(begin) == ERROR)
+	if (footer_empty_line_map(list) == ERROR)
 	{
 		perror("Error\nWrong map format");
 		return (ERROR);
 	}
-	(void)begin;
+	(void)list;
 	return (SUCCESS);
 }

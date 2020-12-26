@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:22 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/28 20:19:06 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 16:53:29 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	draw_ceiling(t_all *all)
 
 	i = 0;
 	j = 0;
-	color = all->info.color_ceiling;
+	color = all->info.color_ceil;
 	while (i < (all->info.window_height / 2))
 	{
 		while (j < all->info.window_width)

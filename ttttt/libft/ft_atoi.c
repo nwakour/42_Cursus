@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 12:53:03 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/10 16:50:58 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 18:37:15 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ float		ft_atoi(const char *str)
 	i = 0;
 	sum = 0;
 	sign = 1;
-	while (str[i] == ' '  || (str[i] >= 9 && str[i] <= 13))
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-')
 		sign = -1;

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:33 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/07 18:13:37 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 18:22:45 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,16 @@ static char		*get_value_color(int *ptr, char *line, int column)
 	return ((line = get_value_color2(line, column)));
 }
 
-int				get_color(t_list **begin, char *name, int *num_color)
+int				get_color(int *num_color, char *line, char *cmp)
 {
-	char		*line;
-	t_list		*node;
 	int			color[3];
 
-	if (!(node = get_node(begin, name, 2)))
+	if (ft_memcmp(line, cmp, 2))
 	{
 		perror("Error\nColor format is\nF R,G,B\n");
 		return (ERROR);
 	}
-	line = node->content;
-	line += 1;
-	if (*line != ' ')
-	{
-		perror("Error\nColor format is\nF R,G,B\n");
-		return (ERROR);
-	}
+	line += 2;
 	if (!(line = get_value_color(&color[0], line, 0)))
 		return (ERROR);
 	if (!(line = get_value_color(&color[1], line, 1)))
@@ -80,6 +72,5 @@ int				get_color(t_list **begin, char *name, int *num_color)
 	if (!(line = get_value_color(&color[2], line, 2)))
 		return (ERROR);
 	*num_color = (((color[0]) << 16) + ((color[1]) << 8) + (color[2]));
-	ft_list_remove_one_if(begin, node->content, &ft_strcmp, &free_content_node);
 	return (SUCCESS);
 }

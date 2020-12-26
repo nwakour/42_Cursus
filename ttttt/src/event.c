@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:26 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:36:20 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 18:34:12 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int		key_pressed(int key, void *param)
 
 	all = (t_all*)param;
 	if (key == UP_KEY)
-		all->player.walk = +1;
+		all->player.walk = 1;
 	else if (key == DOWN_KEY)
 		all->player.walk = -1;
 	else if (key == RIGHT_KEY)
-		all->player.turn = +1;
+		all->player.turn = 1;
 	else if (key == LEFT_KEY)
 		all->player.turn = -1;
 	else if (key == ESP_KEY)
@@ -30,7 +30,7 @@ int		key_pressed(int key, void *param)
 	else if (key == RIGHT_ARROW)
 	{
 		all->player.translation = 1;
-		all->player.walk = +1;
+		all->player.walk = 1;
 	}
 	else if (key == LEFT_ARROW)
 	{

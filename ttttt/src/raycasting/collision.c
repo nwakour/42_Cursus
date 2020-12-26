@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:47 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:51:17 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/26 18:35:22 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int			collision(t_all *all, float y, float x)
 	{
 		return (1);
 	}
-	mapgridindexx = floor(x / all->info.tile_size);
-	mapgridindexy = floor(y / all->info.tile_size);
+	mapgridindexx = floor(x / (float)all->info.tile_size);
+	mapgridindexy = floor(y / (float)all->info.tile_size);
 	return (all->map[mapgridindexy][mapgridindexx] == '1' ||
 			all->map[mapgridindexy][mapgridindexx] == ' ');
 }
@@ -38,8 +38,8 @@ void		player_collision(t_all *all, float y, float x)
 	{
 		return ;
 	}
-	mapgridindexx = floor(x / all->info.tile_size);
-	mapgridindexy = floor(y / all->info.tile_size);
+	mapgridindexx = floor(x / (float)all->info.tile_size);
+	mapgridindexy = floor(y / (float)all->info.tile_size);
 	if (all->map[mapgridindexy][mapgridindexx] != '1' &&
 		all->map[mapgridindexy][mapgridindexx] != '2')
 	{

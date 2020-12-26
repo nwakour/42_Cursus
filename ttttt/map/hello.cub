@@ -2,7 +2,7 @@ R 1920 1080
 NO ./image_texture/test.xpm
 SO ./image_texture/test1.xpm
 WE ./image_texture/test2.xpm
-EA ./image_texture/test3.xpm
+1EA ./image_texture/test3.xpm
 S ./image_sprite/test0.xpm
 F 150,150,150
 C 200,236,255
