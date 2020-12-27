@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 19:14:08 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:05:28 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int			parsing(t_all *all)
 	if ((put_map_in_array(all, all->info.list,
 		all->info.rows_nb, all->info.cols_nb)) == ERROR)
 		return (free_all(all, ERROR));
-	ft_lstclear(&all->info.list, &free_content_node);
+	ft_lstclear(&all->info.list, &free_content);
 	if (check_that_line_is_wall(all->map[0]) == ERROR)
 		return (free_all(all, ERROR));
 	if (check_that_line_is_wall(all->map[all->info.rows_nb - 1]) == ERROR)

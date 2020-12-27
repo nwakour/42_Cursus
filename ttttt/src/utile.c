@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:24:13 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/24 17:52:22 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:13:37 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,6 @@ int			skip_number(char *str)
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
 	return (i);
-}
-
-t_list		*get_node(t_list **begin, char *to_find, int n)
-{
-	t_list	*list;
-
-	list = ft_list_find(*begin, to_find, n, &ft_memcmp);
-	if (!list)
-		return (0);
-	if (list == ft_lstlast(*begin))
-		return (0);
-	return (list);
 }
 
 int			nb_cloumn(t_list *list)

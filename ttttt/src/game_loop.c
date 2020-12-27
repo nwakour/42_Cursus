@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 13:38:06 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 12:39:21 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:42:04 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void		update_all(t_all *all)
 int				game_loop(t_all *all)
 {
 	update_all(all);
-	render_all(all);
 	if (all->info.screenshoot)
 		bmp_exporter(all, "my_screenshoot.bmp");
 	else

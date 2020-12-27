@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:09 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:34:29 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:33:41 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void		create_window(t_all *all)
 	if (!all->info.screenshoot)
 	{
 		if (!(all->mlx.win_p = mlx_new_window(all->mlx.mlx_p,
-		all->info.window_width, all->info.window_height, "CUB3D")))
+		all->info.window_width, all->info.window_height, "Cub3D")))
 		{
 			perror("Error\nFailed to open a window\n");
 			exit(free_all(all, ERROR));

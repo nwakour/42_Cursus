@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:33 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 18:22:45 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 15:42:43 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int				get_color(int *num_color, char *line, char *cmp)
 	int			color[3];
 
 	if (ft_memcmp(line, cmp, 2))
-	{
-		perror("Error\nColor format is\nF R,G,B\n");
 		return (ERROR);
-	}
 	line += 2;
 	if (!(line = get_value_color(&color[0], line, 0)))
 		return (ERROR);

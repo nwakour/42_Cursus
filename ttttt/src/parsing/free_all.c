@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:30 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:32:00 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:06:19 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void			free_map(t_all *all)
 	}
 }
 
-void			free_content_node(void *line)
+void			free_content(void *content)
 {
-	if ((char *)line)
+	if ((char *)content)
 	{
-		free((char *)line);
-		line = 0;
+		free((char *)content);
+		content = 0;
 	}
 }
 
@@ -61,11 +61,11 @@ static	void	free_texture(t_all *all)
 int				free_all(t_all *all, int ret)
 {
 	if (all->info.list)
-		ft_lstclear(&all->info.list, &free_content_node);
+		ft_lstclear(&all->info.list, &free_content);
 	if (all->l_sprite)
-		ft_lstclear(&all->l_sprite, &free_content_node);
+		ft_lstclear(&all->l_sprite, &free_content);
 	if (all->l_ray)
-		ft_lstclear(&all->l_ray, &free_content_node);
+		ft_lstclear(&all->l_ray, &free_content);
 	free_map(all);
 	free_texture(all);
 	if (all->mlx.win_p)

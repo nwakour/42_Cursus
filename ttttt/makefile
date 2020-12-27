@@ -30,7 +30,6 @@ SRC_CUB3D =	src/cub3d.c\
 			src/parsing/get_window_size.c\
 			src/parsing/get_image_path.c\
 			src/parsing/get_color.c\
-			src/parsing/check_map_utile.c\
 			src/parsing/check_map.c\
 			src/player/player_movement.c\
 			src/raycasting/collision.c\

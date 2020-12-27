@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:58 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:41:21 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:39:33 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,11 @@ static int		count_sprite(char **map)
 	nb_sprite = 0;
 	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
 			if (map[i][j] == '2')
-			{
 				nb_sprite++;
-			}
-			j++;
 		}
 	}
 	return (nb_sprite);

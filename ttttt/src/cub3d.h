@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:11 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 19:08:42 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:13:41 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,17 +185,15 @@ int					parsing(t_all *all);
 int					skip_number(char *str);
 int					skip_space(char *str);
 int					get_window_size(t_all *all, char *line);
-t_list				*get_node(t_list **begin, char *search, int n);
 int					get_color(int *num_color, char *line, char *cmp);
 int					path(char **dest, char *line, char *cmp, int n);
 int					delete_empty_line_map(t_list **begin);
 int					check_file_ext(char *line, char *ext);
 int					nb_cloumn(t_list *node);
-int					check_character_around(char **map, int i, int j);
 int					check_map(t_all *all, char *orientation);
 void				delete_space_in_map(t_all *all, int column);
 int					check_that_line_is_wall(char *line);
-void				free_content_node(void *line);
+void				free_content(void *content);
 void				init_tex(t_all *all);
 void				check_args(t_all *all, int nb_arg, char **arg_array);
 int					rows_cols_nb(t_info *info);

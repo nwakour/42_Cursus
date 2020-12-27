@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:03 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:31:36 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:10:00 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,31 @@ static int		is_valide_character(char *orientation, char character)
 		return (ERROR);
 	}
 	return (SUCCESS);
+}
+
+static int		check_character_around(char **map, int i, int j)
+{
+	int	ret;
+
+	ret = 0;
+	if (ft_strchr("02NSEW", map[i][j]))
+	{
+		if (map[i][j + 1] == ' ')
+			ret++;
+		if (map[i][j - 1] == ' ')
+			ret++;
+		if (map[i + 1][j] == ' ')
+			ret++;
+		if (map[i - 1][j] == ' ')
+			ret++;
+	}
+	if (ret > 0)
+	{
+		perror("Error\nMap not closed\n");
+		return (ERROR);
+	}
+	else
+		return (SUCCESS);
 }
 
 int				check_map(t_all *all, char *orientation)

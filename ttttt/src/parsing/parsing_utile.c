@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:24 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 18:41:35 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 16:07:18 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	header_empty_line_map(t_list **list, t_list *node)
 	{
 		next = node->next;
 		ft_list_remove_one_if(list, node->content,
-		&ft_strcmp, &free_content_node);
+		&ft_strcmp, &free_content);
 		return (header_empty_line_map(list, next));
 	}
 	else if (*line != '1')

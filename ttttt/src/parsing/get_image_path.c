@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:40 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 19:08:34 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/27 15:42:19 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ int			check_file_ext(char *line, char *ext)
 int			path(char **dest, char *line, char *cmp, int n)
 {
 	if (ft_memcmp(line, cmp, n))
-	{
-		perror("Error\nWrong identifier\n");
 		return (ERROR);
-	}
 	line += 2;
 	line += skip_space(line);
 	if (check_file_ext(line, ".xpm") == ERROR)
