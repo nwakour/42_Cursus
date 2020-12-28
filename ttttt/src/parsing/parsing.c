@@ -6,35 +6,37 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 16:05:28 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 16:53:12 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	put_map_in_array(t_all *all, t_list *node,
+static int	put_map_in_array(t_all *all,
 			int nb_line, int nb_column)
 {
 	int		i;
 	int		j;
 	int		len;
 	char	*s;
+	t_list	*tmp;
 
-	i = -1;
 	all->map = array_char(nb_line, nb_column);
+	tmp = all->info.list;
 	if (!all->map)
 	{
 		perror("Error\nAllocation failed\n");
 		return (ERROR);
 	}
+	i = -1;
 	while (++i < nb_line)
 	{
 		j = -1;
-		s = node->content;
+		s = tmp->content;
 		len = ft_strlen(s);
 		while (++j < len)
 			all->map[i][j] = s[j];
-		node = node->next;
+		tmp = tmp->next;
 	}
 	return (SUCCESS);
 }
@@ -130,7 +132,7 @@ int			parsing(t_all *all)
 		return (free_all(all, ERROR));
 	if ((rows_cols_nb(&all->info)) == ERROR)
 		return (free_all(all, ERROR));
-	if ((put_map_in_array(all, all->info.list,
+	if ((put_map_in_array(all,
 		all->info.rows_nb, all->info.cols_nb)) == ERROR)
 		return (free_all(all, ERROR));
 	ft_lstclear(&all->info.list, &free_content);

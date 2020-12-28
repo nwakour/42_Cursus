@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:04 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/28 20:16:46 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:10:01 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	init_tex(t_all *all)
 			exit(free_all(all, ERROR));
 		}
 	}
-	if (!(all->tex[S].buffer = malloc(sizeof(float) * all->info.window_width)))
+	if (!(all->tex[S].buffer = malloc(sizeof(double) * all->info.window_width)))
 	{
 		perror("Error\nAllocation failed\n");
 		exit(free_all(all, ERROR));
 	}
-	ft_bzero(all->tex[S].buffer, sizeof(float) * all->info.window_width);
+	ft_bzero(all->tex[S].buffer, sizeof(double) * all->info.window_width);
 }

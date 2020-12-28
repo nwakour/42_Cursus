@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:21:55 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/25 18:04:34 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:09:32 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static	void	ray_facing(t_ray *ray)
 }
 
 static	void	shortest_dist_utile(t_ray *ray,
-				float vert_hit_distance, float horz_hit_distance)
+				double vert_hit_distance, double horz_hit_distance)
 {
 	if (horz_hit_distance < vert_hit_distance)
 	{
@@ -67,8 +67,8 @@ static	void	shortest_dist_utile(t_ray *ray,
 
 static void		shortest_dist(t_ray *ray, t_player *player)
 {
-	float		horz_hit_distance;
-	float		vert_hit_distance;
+	double		horz_hit_distance;
+	double		vert_hit_distance;
 
 	horz_hit_distance = 0;
 	vert_hit_distance = 0;
@@ -89,11 +89,11 @@ static void		shortest_dist(t_ray *ray, t_player *player)
 void			cast_all_rays(t_all *all, t_player *player)
 {
 	int			i;
-	float		ray_angle;
+	double		ray_angle;
 
-	i = 0;
+	i = -1;
 	ray_angle = all->player.rotation - (all->info.fov_angle / 2);
-	while (i < all->info.num_rays)
+	while (++i < all->info.num_rays)
 	{
 		all->ray = (t_ray*)ft_find_struct_list(all->l_ray, i);
 		if (all->l_ray == NULL || all->ray == NULL)
@@ -107,6 +107,5 @@ void			cast_all_rays(t_all *all, t_player *player)
 		shortest_dist(all->ray, player);
 		ray_angle += (all->info.fov_angle / all->info.num_rays);
 		all->ray->ray_angle = ray_angle;
-		i++;
 	}
 }

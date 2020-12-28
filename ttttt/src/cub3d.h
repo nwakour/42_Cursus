@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:11 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 16:13:41 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:10:21 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,38 @@
 
 typedef struct		s_ray
 {
-	float			x;
-	float			y;
-	float			x_step;
-	float			y_step;
-	float			hit_x;
-	float			hit_y;
-	float			ver_hit_x;
-	float			ver_hit_y;
-	float			hor_hit_y;
-	float			hor_hit_x;
-	float			ver_hit;
-	float			ray_angle;
+	double			x;
+	double			y;
+	double			x_step;
+	double			y_step;
+	double			hit_x;
+	double			hit_y;
+	double			ver_hit_x;
+	double			ver_hit_y;
+	double			hor_hit_y;
+	double			hor_hit_x;
+	double			ver_hit;
+	double			ray_angle;
 	int				ver_wall;
 	int				hor_wall;
 	int				ray_down;
 	int				ray_up;
 	int				ray_right;
 	int				ray_left;
-	float			dist;
+	double			dist;
 }					t_ray;
 
 typedef struct		s_player
 {
-	float			x;
-	float			y;
+	double			x;
+	double			y;
 	int				radius;
-	float			angle;
+	double			angle;
 	int				turn;
 	int				walk;
-	float			rotation;
-	float			walk_speed;
-	float			turn_speed;
+	double			rotation;
+	double			walk_speed;
+	double			turn_speed;
 	char			position;
 	int				translation;
 }					t_player;
@@ -92,9 +92,9 @@ typedef struct		s_info
 	int				cols_nb;
 	int				window_width;
 	int				window_height;
-	float			num_rays;
+	double			num_rays;
 	int				nb_sprite;
-	float			fov_angle;
+	double			fov_angle;
 	int				size;
 }					t_info;
 
@@ -103,7 +103,7 @@ typedef struct		s_tex
 	char			*path;
 	void			*tex_p;
 	int				*img_data;
-	float			*buffer;
+	double			*buffer;
 	int				bits;
 	int				size;
 	int				endian;
@@ -113,8 +113,8 @@ typedef struct		s_tex
 
 typedef struct		s_wall
 {
-	float			dist;
-	float			dist_plane;
+	double			dist;
+	double			dist_plane;
 	int				s_height;
 	int				top;
 	int				bot;
@@ -122,14 +122,14 @@ typedef struct		s_wall
 
 typedef struct		s_sprite
 {
-	float			dir_y;
-	float			dir_x;
-	float			plan_y;
-	float			plan_x;
-	float			size;
-	float			distance;
-	float			x;
-	float			y;
+	double			dir_y;
+	double			dir_x;
+	double			plan_y;
+	double			plan_x;
+	double			size;
+	double			distance;
+	double			x;
+	double			y;
 	int				spritescreenx;
 	int				start_y;
 	int				end_y;
@@ -200,14 +200,14 @@ int					rows_cols_nb(t_info *info);
 int					key_pressed(int key, void *param);
 int					key_release(int key, void *param);
 int					key_exit(void *param);
-float				dist_to_point(float x1, float y1, float x2, float y2);
+double				dist_to_point(double x1, double y1, double x2, double y2);
 void				player_movement(t_all *all, t_player *player);
 void				init_player(t_all *all, t_player *player);
 void				cast_all_rays(t_all *all, t_player *player);
 void				ray_horizontal(t_all *all, t_ray *ray, t_player *player);
 void				ray_vertical(t_all *all, t_ray *ray, t_player *player);
 void				projection_3d(t_all *all);
-float				normalize_angle(float angle);
+double				normalize_angle(double angle);
 void				bmp_exporter(t_all *all, char *file_name);
 void				mini_map(t_all *all, t_player *player, char **map);
 void				put_sprite(t_all *all, t_player *player);
@@ -215,14 +215,14 @@ void				init_sprite(t_all *all, char **map, char player_position);
 int					handling_event(t_all *all);
 int					game_loop(t_all *all);
 int					sprite_visible(t_all *all, t_player *player);
-float				cal_angle(t_player *player, float x, float y);
+double				cal_angle(t_player *player, double x, double y);
 void				get_start(t_all *all);
-void				draw_sprite(t_all *all, float transformy);
+void				draw_sprite(t_all *all, double transformy);
 void				put_tex(t_all *all, t_sprite *sprite, int x, int y);
-int					collision(t_all *all, float y, float x);
+int					collision(t_all *all, double y, double x);
 int					close_window(int key, void *param);
 void				draw_floor(t_all *all);
 void				draw_ceiling(t_all *all);
-void				player_collision(t_all *all, float y, float x);
+void				player_collision(t_all *all, double y, double x);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:24:00 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 12:54:30 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:09:54 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	put_tex(t_all *all, t_sprite *sprite, int x, int y)
 		all->mlx.img_data[y * all->info.window_width + x] = color;
 }
 
-void	draw_sprite(t_all *all, float transformy)
+void	draw_sprite(t_all *all, double transformy)
 {
 	int	y;
 	int	x;
@@ -78,13 +78,13 @@ void	get_start(t_all *all)
 		all->sprite->end_y = all->info.window_height - 1;
 }
 
-float	cal_angle(t_player *player, float x, float y)
+double	cal_angle(t_player *player, double x, double y)
 {
-	float	vectx;
-	float	vecty;
-	float	playertospriteangle;
-	float	spriteangle;
-	float	playerangle;
+	double	vectx;
+	double	vecty;
+	double	playertospriteangle;
+	double	spriteangle;
+	double	playerangle;
 
 	vectx = x - player->x;
 	vecty = y - player->y;
@@ -101,10 +101,10 @@ float	cal_angle(t_player *player, float x, float y)
 
 int		sprite_visible(t_all *all, t_player *player)
 {
-	float	spriteangle;
-	float	spriteangle_end;
-	float	wallspriteangle;
-	float	fovsprite;
+	double	spriteangle;
+	double	spriteangle_end;
+	double	wallspriteangle;
+	double	fovsprite;
 
 	spriteangle = fabs(cal_angle(player, all->sprite->x,
 		all->sprite->y));

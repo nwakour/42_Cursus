@@ -6,19 +6,19 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:56 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 12:49:45 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:09:52 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static float	get_transformy(t_all *all, t_player *player)
+static double	get_transformy(t_all *all, t_player *player)
 {
-	float		spritex;
-	float		spritey;
-	float		invdet;
-	float		transformx;
-	float		transformy;
+	double		spritex;
+	double		spritey;
+	double		invdet;
+	double		transformx;
+	double		transformy;
 
 	spritex = all->sprite->x - player->x;
 	spritey = all->sprite->y - player->y;
@@ -49,9 +49,9 @@ static void		dist_sprite(t_all *all, t_player *player)
 
 static void		switch_sprite(t_all *all, int i, int j)
 {
-	float		temp_dist;
-	float		temp_y;
-	float		temp_x;
+	double		temp_dist;
+	double		temp_y;
+	double		temp_x;
 	t_sprite	*tmp;
 
 	all->sprite = (t_sprite*)ft_find_struct_list(all->l_sprite, j);
@@ -72,7 +72,7 @@ static	void	sort_sprite(t_all *all)
 {
 	int			j;
 	int			i;
-	float		tmp;
+	double		tmp;
 
 	i = -1;
 	while (++i < all->info.nb_sprite)
@@ -92,9 +92,9 @@ static	void	sort_sprite(t_all *all)
 
 void			put_sprite(t_all *all, t_player *player)
 {
-	float		distanceprojection;
+	double		distanceprojection;
 	int			i;
-	float		transformy;
+	double		transformy;
 
 	i = 0;
 	dist_sprite(all, player);

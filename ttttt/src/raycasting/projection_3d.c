@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:52 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/30 16:17:20 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:09:37 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	draw_wall(t_all *all, t_ray *ray, t_wall *wall, int i)
 	{
 		distance_from_top = wall->top + (wall->s_height / 2) -
 		(all->info.window_height / 2);
-		texture_offset_y = distance_from_top * ((float)all->tex[index].height /
+		texture_offset_y = distance_from_top * ((double)all->tex[index].height /
 		wall->s_height);
 		texture_color = all->tex[index].img_data[(all->tex[index].width *
 		texture_offset_y) + texture_offset_x];

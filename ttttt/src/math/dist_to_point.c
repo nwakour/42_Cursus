@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:19 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/07 11:05:41 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:09:00 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-float	dist_to_point(float x1, float y1, float x2, float y2)
+double	dist_to_point(double x1, double y1, double x2, double y2)
 {
 	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }

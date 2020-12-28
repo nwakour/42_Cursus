@@ -6,16 +6,16 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:45 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/05 13:04:57 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:28:11 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static void	next_hor_intercept(t_all *all, t_ray *ray, float next_hor_y,
-								float next_hor_x)
+static void	next_hor_intercept(t_all *all, t_ray *ray, double next_hor_y,
+								double next_hor_x)
 {
-	float	tmp;
+	double	tmp;
 
 	while (next_hor_x >= 0 && next_hor_x <= (all->info.cols_nb *
 	all->info.tile_size) && next_hor_y >= 0 && next_hor_y <=
@@ -38,9 +38,11 @@ static void	next_hor_intercept(t_all *all, t_ray *ray, float next_hor_y,
 
 void		ray_horizontal(t_all *all, t_ray *ray, t_player *player)
 {
-	ray->y = floor(player->y / all->info.tile_size) * all->info.tile_size;
-	if (ray->ray_down)
-		ray->y += all->info.tile_size;
+	double	next_hor_x;
+	double	next_hor_y;
+
+	ray->y = floor(player->y / all->info.tile_size) * all->info.tile_size
+	+ (all->info.tile_size * ray->ray_down);
 	ray->x = player->x + ((ray->y - player->y) /
 	tan(ray->ray_angle));
 	ray->y_step = all->info.tile_size;
@@ -51,5 +53,7 @@ void		ray_horizontal(t_all *all, t_ray *ray, t_player *player)
 		ray->x_step *= -1;
 	if (ray->ray_right && ray->x_step < 0)
 		ray->x_step *= -1;
-	next_hor_intercept(all, ray, ray->y, ray->x);
+	next_hor_x = ray->x;
+	next_hor_y = ray->y;
+	next_hor_intercept(all, ray, next_hor_y, next_hor_x);
 }
