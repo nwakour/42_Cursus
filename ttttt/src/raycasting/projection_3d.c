@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:52 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/28 17:09:37 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 15:24:54 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	choice_of_texture(t_ray *ray)
+static int	correct_tex(t_ray *ray)
 {
 	if (ray->ray_up && !ray->ver_hit)
 		return (0);
@@ -33,7 +33,7 @@ static void	draw_wall(t_all *all, t_ray *ray, t_wall *wall, int i)
 	int	distance_from_top;
 	int	index;
 
-	index = choice_of_texture(ray);
+	index = correct_tex(ray);
 	if (ray->ver_hit == 1)
 		texture_offset_x = (int)(ray->hit_y * all->tex[index].width /
 		all->info.tile_size) % all->tex[index].width;

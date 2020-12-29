@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:04 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/28 17:10:01 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 16:16:20 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@ void	init_tex(t_all *all)
 	i = -1;
 	while (++i < TEXTURE_NB)
 	{
-		all->tex[i].tex_p = mlx_xpm_file_to_image(all->mlx.mlx_p,
-		all->tex[i].path, &all->tex[i].width, &all->tex[i].height);
-		if (!all->tex[i].tex_p)
+		if (!(all->tex[i].tex_p = mlx_xpm_file_to_image(all->mlx.mlx_p,
+		all->tex[i].path, &all->tex[i].width, &all->tex[i].height)))
 		{
 			perror("Error\nFailed creation texture image\n");
 			exit(free_all(all, ERROR));
 		}
-		all->tex[i].img_data = (int *)mlx_get_data_addr(
-								all->tex[i].tex_p, &all->tex[i].bits,
-								&all->tex[i].size, &all->tex[i].endian);
-		if (!all->tex[i].img_data)
+		if (!(all->tex[i].img_data = (int *)mlx_get_data_addr(all->tex[i].tex_p,
+		&all->tex[i].bits, &all->tex[i].size, &all->tex[i].endian)))
 		{
 			perror("Error\nFailed creation texture image data\n");
 			exit(free_all(all, ERROR));

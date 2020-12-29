@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:21:51 by nwakour           #+#    #+#             */
-/*   Updated: 2020/11/30 16:18:07 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 16:45:46 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,15 @@ static void		write_file(t_all *all, int fd, int imagesize)
 
 	if (!(pixel_array = malloc(sizeof(char) * imagesize)))
 		free_all(all, ERROR);
-	i = 0;
+	i = -1;
 	j = 0;
 	imagesize /= 4;
-	while (i < imagesize)
+	while (++i < imagesize)
 	{
 		pixel_array[j++] = all->mlx.img_data[i] & 255;
 		pixel_array[j++] = (all->mlx.img_data[i] & 255 << 8) >> 8;
 		pixel_array[j++] = (all->mlx.img_data[i] & 255 << 16) >> 16;
 		pixel_array[j++] = 0;
-		i++;
 	}
 	j = write(fd, pixel_array, imagesize *= 4);
 	free(pixel_array);

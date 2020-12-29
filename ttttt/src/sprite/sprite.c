@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:56 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/28 17:09:52 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 15:29:03 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,34 @@ static void		dist_sprite(t_all *all, t_player *player)
 {
 	int			i;
 
-	i = 0;
-	while (i < all->info.nb_sprite)
+	i = -1;
+	while (++i < all->info.nb_sprite)
 	{
 		all->sprite = (t_sprite*)ft_find_struct_list(all->l_sprite, i);
 		all->sprite->distance = dist_to_point(player->x,
 		player->y, all->sprite->x, all->sprite->y);
-		i++;
 	}
 }
 
 static void		switch_sprite(t_all *all, int i, int j)
 {
-	double		temp_dist;
-	double		temp_y;
-	double		temp_x;
+	double		tmp_dist;
+	double		tmp_y;
+	double		tmp_x;
 	t_sprite	*tmp;
 
 	all->sprite = (t_sprite*)ft_find_struct_list(all->l_sprite, j);
 	tmp = all->sprite;
-	temp_dist = all->sprite->distance;
-	temp_x = all->sprite->x;
-	temp_y = all->sprite->y;
+	tmp_dist = all->sprite->distance;
+	tmp_x = all->sprite->x;
+	tmp_y = all->sprite->y;
 	all->sprite = (t_sprite*)ft_find_struct_list(all->l_sprite, i);
 	tmp->distance = all->sprite->distance;
 	tmp->x = all->sprite->x;
 	tmp->y = all->sprite->y;
-	all->sprite->distance = temp_dist;
-	all->sprite->x = temp_x;
-	all->sprite->y = temp_y;
+	all->sprite->distance = tmp_dist;
+	all->sprite->x = tmp_x;
+	all->sprite->y = tmp_y;
 }
 
 static	void	sort_sprite(t_all *all)
@@ -96,10 +95,10 @@ void			put_sprite(t_all *all, t_player *player)
 	int			i;
 	double		transformy;
 
-	i = 0;
+	i = -1;
 	dist_sprite(all, player);
 	sort_sprite(all);
-	while (i < all->info.nb_sprite)
+	while (++i < all->info.nb_sprite)
 	{
 		all->sprite = (t_sprite*)ft_find_struct_list(all->l_sprite, i);
 		distanceprojection = (all->info.window_width / 2)
@@ -112,6 +111,5 @@ void			put_sprite(t_all *all, t_player *player)
 			get_start(all);
 			draw_sprite(all, transformy);
 		}
-		i++;
 	}
 }

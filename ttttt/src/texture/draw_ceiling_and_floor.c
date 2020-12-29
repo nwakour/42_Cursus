@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:22 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 16:53:29 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 15:19:49 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,16 @@ void	draw_floor(t_all *all)
 {
 	int i;
 	int j;
-	int	color;
 
-	i = 0;
-	j = 0;
-	color = all->info.color_floor;
-	while (i < (all->info.window_height / 2))
+	i = -1;
+	while (++i < (all->info.window_height / 2))
 	{
-		while (j < all->info.window_width)
+		j = -1;
+		while (++j < all->info.window_width)
 		{
 			all->mlx.img_data[(i + all->info.window_height / 2) *
-			all->info.window_width + (j + 0)] = color;
-			j++;
+			all->info.window_width + j] = all->info.color_floor;
 		}
-		j = 0;
-		i++;
 	}
 }
 
@@ -38,20 +33,15 @@ void	draw_ceiling(t_all *all)
 {
 	int i;
 	int j;
-	int	color;
 
-	i = 0;
-	j = 0;
-	color = all->info.color_ceil;
-	while (i < (all->info.window_height / 2))
+	i = -1;
+	while (++i < (all->info.window_height / 2))
 	{
-		while (j < all->info.window_width)
+		j = -1;
+		while (++j < all->info.window_width)
 		{
-			all->mlx.img_data[(i + 0) *
-			all->info.window_width + (j + 0)] = color;
-			j++;
+			all->mlx.img_data[i *
+			all->info.window_width + j] = all->info.color_ceil;
 		}
-		j = 0;
-		i++;
 	}
 }

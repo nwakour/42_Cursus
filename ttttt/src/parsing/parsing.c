@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/28 16:53:12 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 16:08:45 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ static int	get_info(t_all *all, char *line)
 		return (SUCCESS);
 	else if (!all->tex[S].path && !path(&all->tex[S].path, line, "S ", 2))
 		return (SUCCESS);
-	else if ((all->info.color_floor == -1) && !get_color(&all->info.color_floor, line, "F "))
+	else if ((all->info.color_floor == -1) &&
+			!get_color(&all->info.color_floor, line, "F "))
 		return (SUCCESS);
-	else if ((all->info.color_ceil == -1) && !get_color(&all->info.color_ceil, line, "C "))
+	else if ((all->info.color_ceil == -1) &&
+			!get_color(&all->info.color_ceil, line, "C "))
 		return (SUCCESS);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:03 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 16:10:00 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 16:48:22 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ int				check_map(t_all *all, char *orientation)
 	int			j;
 	int			save;
 
-	i = 1;
+	i = 0;
 	save = 0;
-	while (all->map[i + 1])
+	while (all->map[++i])
 	{
 		if ((j = check_first_character(all->map[i])) == ERROR)
 			return (ERROR);
@@ -111,7 +111,6 @@ int				check_map(t_all *all, char *orientation)
 		}
 		if (check_last_character(all->map[i][save]) == ERROR)
 			return (ERROR);
-		i++;
 	}
 	return (SUCCESS);
 }

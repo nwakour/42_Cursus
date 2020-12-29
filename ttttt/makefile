@@ -21,10 +21,9 @@ SRC_CUB3D =	src/cub3d.c\
 			src/event.c\
 			src/mini_map.c\
 			src/texture/init_tex.c\
-			src/math/normalize_angle.c\
 			src/parsing/check_args.c\
 			src/parsing/free_all.c\
-			src/math/dist_to_point.c\
+			src/math.c\
 			src/parsing/parsing.c\
 			src/utile.c\
 			src/parsing/get_window_size.c\
