@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:54 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 16:35:42 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 18:51:32 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ void			init_player(t_all *all, t_player *player)
 	player->turn = 0;
 	player->walk = 0;
 	player_position(all, player);
-	player->walk_speed = 15;
-	player->turn_speed = 4 * (M_PI / 180);
+	player->walk_speed = 5;
+	player->turn_speed = 3 * (M_PI / 180);
 }

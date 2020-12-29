@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:24:00 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/28 17:09:54 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 19:01:22 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	put_tex(t_all *all, t_sprite *sprite, int x, int y)
 		return ;
 	color = all->tex[S].img_data[(textureoffsety * all->tex[S].width)
 	+ textureoffsetx];
-	if (color != 0x000000)
+	if (color != 0x0)
 		all->mlx.img_data[y * all->info.window_width + x] = color;
 }
 
@@ -91,10 +91,10 @@ double	cal_angle(t_player *player, double x, double y)
 	playertospriteangle = atan2(vecty, vectx);
 	playerangle = normalize_angle(player->rotation);
 	spriteangle = playerangle - playertospriteangle;
-	if (spriteangle < -3.14159)
-		spriteangle += 2.0 * 3.14159;
-	if (spriteangle > 3.14159)
-		spriteangle -= 2.0 * 3.14159;
+	if (spriteangle < -M_PI)
+		spriteangle += 2.0 * M_PI;
+	if (spriteangle > M_PI)
+		spriteangle -= 2.0 * M_PI;
 	spriteangle = fabs(spriteangle);
 	return (spriteangle);
 }

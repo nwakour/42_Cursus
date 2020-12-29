@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:26 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 18:34:12 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 17:52:41 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,9 @@ int		key_release(int key, void *param)
 	t_all *all;
 
 	all = (t_all*)param;
-	if (key == UP_KEY)
+	if (key == UP_KEY || key == DOWN_KEY)
 		all->player.walk = 0;
-	else if (key == DOWN_KEY)
-		all->player.walk = 0;
-	else if (key == RIGHT_KEY)
-		all->player.turn = 0;
-	else if (key == LEFT_KEY)
+	else if (key == RIGHT_KEY || key == LEFT_KEY)
 		all->player.turn = 0;
 	else if (key == RIGHT_ARROW || key == LEFT_ARROW)
 	{

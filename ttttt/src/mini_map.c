@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:12 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 14:35:27 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/29 17:02:20 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static	void	draw_map(t_all *all, char **map)
 			y = i * all->info.tile_size * MINI_MAP;
 			if (map[i][j] == '2')
 				draw_map_utile(all, y, x, 0xFF0000);
+			else if (map[i][j] == '1')
+				draw_map_utile(all, y, x, 4079166);
 			else if (map[i][j] == '0' || ft_strchr("NSEW", map[i][j]))
 				draw_map_utile(all, y, x, 16777215);
 		}
