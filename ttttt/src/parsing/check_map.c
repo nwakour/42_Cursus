@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:03 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/29 16:48:22 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/02 18:34:05 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static int		check_first_character(char *line)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	if (!line[i] || line[i] != '1')
+	if ((line[i] != '1' && line[i] != ' ' && line[i] != '\0'))
 	{
-		perror("Error\nThe map must be surrounded by a Wall\n");
+		ft_putstr_fd("Error\nThe map must be surrounded by a Wall\n", 1);
 		return (ERROR);
 	}
 	return (i);
@@ -31,7 +31,7 @@ static	int		check_last_character(char character)
 {
 	if (character != '1' && character != ' ')
 	{
-		perror("Error\nThe map must be surrounded by a Wall\n");
+		ft_putstr_fd("Error\nThe map must be surrounded by a Wall\n", 1);
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -50,14 +50,15 @@ static int		is_valide_character(char *orientation, char character)
 				*orientation = character;
 			else
 			{
-				perror("Error\nMultiplayer not available for the beta\n");
+				ft_putstr_fd("Error\nMultiplayer not available\n", 1);
 				return (ERROR);
 			}
 		}
 	}
 	else
 	{
-		perror("Error\nunknown character\n1 = wall\n0 = empty\n2 = sprite\nNSEW = player orientation\n");
+		ft_putstr_fd("Error\nunknown character\n1 = wall\n0 = empty\n", 1);
+		ft_putstr_fd("2 = sprite\nNSEW = player orientation\n", 1);
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -81,7 +82,7 @@ static int		check_character_around(char **map, int i, int j)
 	}
 	if (ret > 0)
 	{
-		perror("Error\nMap not closed\n");
+		ft_putstr_fd("Error\nMap not closed\n", 1);
 		return (ERROR);
 	}
 	else
@@ -100,7 +101,7 @@ int				check_map(t_all *all, char *orientation)
 	{
 		if ((j = check_first_character(all->map[i])) == ERROR)
 			return (ERROR);
-		while (all->map[i][++j])
+		while (all->map[i][j] && all->map[i][++j])
 		{
 			if ((is_valide_character(orientation, all->map[i][j])) == ERROR)
 				return (ERROR);

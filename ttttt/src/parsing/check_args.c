@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:21:58 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 12:37:39 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/31 16:45:43 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void			check_args(t_all *all, int argc, char **argv)
 		}
 		else
 		{
-			perror("Error\n--save to save the image\n");
+			ft_putstr_fd("Error\n--save to save the image\n", 1);
 			exit(ERROR);
 		}
 	}
 	else if (argc != 2)
 	{
-		perror("Error\nWrong argument\n");
+		ft_putstr_fd("Error\nWrong argument\n", 2);
 		exit(ERROR);
 	}
 	if (argc == 2)

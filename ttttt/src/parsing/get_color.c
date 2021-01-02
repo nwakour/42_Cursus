@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:33 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 15:42:43 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/31 16:47:48 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	char	*get_value_color2(char *line, int column)
 		line += skip_space(line);
 		if (*line)
 		{
-			perror("Error\nColor error\n");
+			ft_putstr_fd("Error\nColor error\n", 1);
 			return (0);
 		}
 	}
@@ -34,7 +34,7 @@ static char		*get_value_color(int *ptr, char *line, int column)
 {
 	if (!*line)
 	{
-		perror("Error\nColor format is\nF R,G,B\n");
+		ft_putstr_fd("Error\nColor format is\nF R,G,B\n", 1);
 		return (0);
 	}
 	line += skip_space(line);
@@ -43,13 +43,13 @@ static char		*get_value_color(int *ptr, char *line, int column)
 		*ptr = atoi(line);
 		if ((*ptr & 255) != *ptr)
 		{
-			perror("Error\nRGB has less than 256 value\n");
+			ft_putstr_fd("Error\nRGB has less than 256 value\n", 1);
 			return (0);
 		}
 	}
 	else
 	{
-		perror("Error\nColor format is\nF R,G,B\n");
+		ft_putstr_fd("Error\nColor format is\nF R,G,B\n", 1);
 		return (0);
 	}
 	return ((line = get_value_color2(line, column)));

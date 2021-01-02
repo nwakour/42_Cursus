@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/29 16:08:45 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/02 19:07:22 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	put_map_in_array(t_all *all,
 	tmp = all->info.list;
 	if (!all->map)
 	{
-		perror("Error\nAllocation failed\n");
+		ft_putstr_fd("Error\nAllocation failed\n", 1);
 		return (ERROR);
 	}
 	i = -1;
@@ -33,6 +33,11 @@ static int	put_map_in_array(t_all *all,
 	{
 		j = -1;
 		s = tmp->content;
+		if (s[0] == '\0')
+		{
+			ft_putstr_fd("Error\nempty line in the middle of the map\n", 1);
+			return (ERROR);
+		}
 		len = ft_strlen(s);
 		while (++j < len)
 			all->map[i][j] = s[j];
@@ -63,7 +68,7 @@ static int	get_info(t_all *all, char *line)
 		return (SUCCESS);
 	else
 	{
-		perror("Error\nWrong identifier\n");
+		ft_putstr_fd("Error\nWrong identifier\n", 1);
 		return (free_all(all, ERROR));
 	}
 }
@@ -71,25 +76,32 @@ static int	get_info(t_all *all, char *line)
 static int	get_map(t_list **list, int fd, char *line, int end)
 {
 	t_list	*new;
+	int		found;
 
 	end = 1;
+	found = 0;
 	while (end)
 	{
 		if ((end = get_next_line(fd, &line)) == ERROR)
 		{
-			perror("Error\nReading file failed\n");
+			ft_putstr_fd("Error\nReading file failed\n", 1);
 			return (ERROR);
 		}
-		if (!(new = ft_lstnew(line)))
+		if (line[0] != '\0' && !found)
+			found = 1;
+		if (found)
 		{
-			perror("Error\nAllocation failed\n");
-			return (ERROR);
+			if (!(new = ft_lstnew(line)))
+			{
+				ft_putstr_fd("Error\nAllocation failed\n", 1);
+				return (ERROR);
+			}
+			ft_lstadd_back(list, new);
 		}
-		ft_lstadd_back(list, new);
 	}
 	if (close(fd) != SUCCESS)
 	{
-		perror("Error\nClosing file failed\n");
+		ft_putstr_fd("Error\nClosing file failed\n", 1);
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -107,7 +119,7 @@ static int	read_file(t_all *all)
 	{
 		if ((end = get_next_line(all->info.fd, &line)) == ERROR)
 		{
-			perror("Error\nReading file failed\n");
+			ft_putstr_fd("Error\nReading file failed\n", 1);
 			return (ERROR);
 		}
 		if (end == 1 && line[0] != '\0')

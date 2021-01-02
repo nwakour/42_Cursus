@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:40 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 15:42:19 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/31 16:52:13 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int			check_file_ext(char *line, char *ext)
 		if (ft_strcmp(line + end, ext))
 		{
 			if (ext[1] == 'x')
-				perror("Error\nTexture must be .xpm\n");
+				ft_putstr_fd("Error\nTexture must be .xpm\n", 1);
 			else if (ext[1] == 'c')
-				perror("Error\nTexture must be .cub\n");
+				ft_putstr_fd("Error\nTexture must be .cub\n", 1);
 			return (ERROR);
 		}
 	}
 	else
 	{
-		perror("Error\nWrong file name\n");
+		ft_putstr_fd("Error\nWrong file name\n", 1);
 		return (ERROR);
 	}
 	return (SUCCESS);

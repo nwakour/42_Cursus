@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:57:11 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/21 17:30:37 by nwakour          ###   ########.fr       */
+/*   Updated: 2019/11/18 19:57:15 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 static int	free_return(char **ptr, char **ptr2, char **ptr3, int i)
@@ -90,6 +89,10 @@ static int	ft_write_buf(int fd, char **sta, char **line)
 	*line = ft_strjoin(*line, *sta);
 	return ((free_return(&buf, &c, sta, j)));
 }
+
+
+
+
 
 int			get_next_line(int fd, char **line)
 {

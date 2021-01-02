@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 13:38:06 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 16:42:04 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/31 16:51:24 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static	void	create_image(t_all *all)
 	if (!(all->mlx.img_p = mlx_new_image(all->mlx.mlx_p,
 		all->info.window_width, all->info.window_height)))
 	{
-		perror("Error\nFailed creating an image");
+		ft_putstr_fd("Error\nFailed creating an image", 1);
 		free_all(all, ERROR);
 	}
 	all->mlx.img_data = (int *)mlx_get_data_addr(all->mlx.img_p, &bpp,
@@ -29,7 +29,7 @@ static	void	create_image(t_all *all)
 	all->info.size = size_line;
 	if (!all->mlx.img_data)
 	{
-		perror("Error\nFailed creating image data");
+		ft_putstr_fd("Error\nFailed creating image data", 1);
 		free_all(all, ERROR);
 		exit(ERROR);
 	}

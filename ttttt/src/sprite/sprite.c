@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:56 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/29 18:57:06 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/01 16:35:43 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void			put_sprite(t_all *all, t_player *player)
 		all->sprite = (t_sprite*)ft_find_struct_list(all->l_sprite, i);
 		distanceprojection = (all->info.window_width / 2)
 		/ tan(all->info.fov_angle / 2);
-		all->sprite->size = all->info.tile_size * 0.5 / all->sprite->distance *
+		all->sprite->size = all->info.tile_size * 1.15 / all->sprite->distance *
 		distanceprojection;
 		if (sprite_visible(all, player) == 1)
 		{

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:44 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/26 16:25:09 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/31 16:49:04 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_width(char *line, int *window_width)
 		line++;
 	if (!ft_isspace(*line))
 	{
-		perror("Error\nCorrect resolution format is 'R Width Height'\n");
+		ft_putstr_fd("Error\nresolution format is 'R Width Height'\n", 1);
 		return (0);
 	}
 	line += skip_space(line);
@@ -32,7 +32,7 @@ char	*get_width(char *line, int *window_width)
 	}
 	else
 	{
-		perror("Error\nCorrect resolution format is 'R Width Height'\n");
+		ft_putstr_fd("Error\nresolution format is 'R Width Height'\n", 1);
 		return (0);
 	}
 	*window_width = size_width;
@@ -51,13 +51,13 @@ char	*get_height(char *line, int *window_height)
 	}
 	else
 	{
-		perror("Error\nCorrect resolution format is 'R Width Height'\n");
+		ft_putstr_fd("Error\nresolution format is 'R Width Height'\n", 1);
 		return (0);
 	}
 	line += skip_space(line);
 	if (*line)
 	{
-		perror("Error\nCorrect resolution format is 'R Width Height'\n");
+		ft_putstr_fd("Error\nresolution format is 'R Width Height'\n", 1);
 		return (0);
 	}
 	*window_height = size_height;
@@ -72,7 +72,7 @@ int		get_window_size(t_all *all, char *line)
 		return (ERROR);
 	if (all->info.window_width < 100 || all->info.window_height < 100)
 	{
-		perror("Error\nWidth and Height must be greater than 100\n");
+		ft_putstr_fd("Error\nWidth and Height must be greater than 100\n", 1);
 		return (ERROR);
 	}
 	return (SUCCESS);

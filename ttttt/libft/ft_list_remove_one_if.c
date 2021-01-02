@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:20:59 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/20 16:21:03 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/02 18:47:10 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	remove_front(t_list **begin_list, void (*free_fct)(void *))
 	prev = 0;
 }
 
-void	ft_list_remove_one_if(t_list **begin_list, void *data_ref,
+void	Jft_list_remove_one_if(t_list **begin_list, void *data_ref,
 		int (*cmp)(), void (*free_fct)(void *))
 {
 	t_list	*prev;

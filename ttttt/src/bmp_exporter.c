@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:21:51 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/29 16:45:46 by nwakour          ###   ########.fr       */
+/*   Updated: 2020/12/31 16:50:49 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static	int		create_file(t_all *all, char *file_name)
 	if (!((fd = open(file_name, O_WRONLY | O_CREAT |
 	O_TRUNC, S_IRUSR | S_IWUSR)) > 0))
 	{
-		perror("Error\nFailed creating .bmp\n");
+		ft_putstr_fd("Error\nFailed creating .bmp\n", 1);
 		free_all(all, ERROR);
 	}
 	return (fd);
