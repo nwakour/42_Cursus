@@ -6,31 +6,31 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:56 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/01 16:35:43 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/03 14:42:16 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static double	get_transformy(t_all *all, t_player *player)
+static double	get_transform_y(t_all *all, t_player *player)
 {
-	double		spritex;
-	double		spritey;
+	double		sprite_x;
+	double		sprite_y;
 	double		invdet;
-	double		transformx;
-	double		transformy;
+	double		transform_x;
+	double		transform_y;
 
-	spritex = all->sprite->x - player->x;
-	spritey = all->sprite->y - player->y;
+	sprite_x = all->sprite->x - player->x;
+	sprite_y = all->sprite->y - player->y;
 	invdet = 1.0 / (all->sprite->plan_x * all->sprite->dir_y -
 	all->sprite->dir_x * all->sprite->plan_y);
-	transformx = invdet * (all->sprite->dir_y *
-	spritex - all->sprite->dir_x * spritey);
-	transformy = invdet * (-all->sprite->plan_y *
-	spritex + all->sprite->plan_x * spritey);
+	transform_x = invdet * (all->sprite->dir_y *
+	sprite_x - all->sprite->dir_x * sprite_y);
+	transform_y = invdet * (-all->sprite->plan_y *
+	sprite_x + all->sprite->plan_x * sprite_y);
 	all->sprite->spritescreenx = (int)((all->info.window_width / 2) *
-	(1 + -transformx / transformy));
-	return (transformy);
+	(1 + -transform_x / transform_y));
+	return (transform_y);
 }
 
 static void		dist_sprite(t_all *all, t_player *player)
@@ -91,9 +91,9 @@ static	void	sort_sprite(t_all *all)
 
 void			put_sprite(t_all *all, t_player *player)
 {
-	double		distanceprojection;
+	double		dist_proj;
 	int			i;
-	double		transformy;
+	double		transform_y;
 
 	i = -1;
 	dist_sprite(all, player);
@@ -101,15 +101,15 @@ void			put_sprite(t_all *all, t_player *player)
 	while (++i < all->info.nb_sprite)
 	{
 		all->sprite = (t_sprite*)ft_find_struct_list(all->l_sprite, i);
-		distanceprojection = (all->info.window_width / 2)
+		dist_proj = (all->info.window_width / 2)
 		/ tan(all->info.fov_angle / 2);
 		all->sprite->size = all->info.tile_size * 1.15 / all->sprite->distance *
-		distanceprojection;
+		dist_proj;
 		if (sprite_visible(all, player) == 1)
 		{
-			transformy = get_transformy(all, player);
+			transform_y = get_transform_y(all, player);
 			get_start(all);
-			draw_sprite(all, transformy);
+			draw_sprite(all, transform_y);
 		}
 	}
 }

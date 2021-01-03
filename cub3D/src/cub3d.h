@@ -5,63 +5,137 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/18 13:07:39 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/20 13:04:22 by nwakour          ###   ########.fr       */
+/*   Created: 2020/10/20 16:22:11 by nwakour           #+#    #+#             */
+/*   Updated: 2021/01/03 15:28:29 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define PI 3.14159265358979323846264338327950288
-# define TWO_PI 6.283185307179586
-# define TILE_SIZE 64
-# define MAP_NUM_ROWS 14
-# define MAP_NUM_COLS 33
-# define MINI_MAP 0.3
-# define WINDOW_WIDTH (MAP_NUM_COLS * TILE_SIZE)
-# define WINDOW_HEIGHT (MAP_NUM_ROWS * TILE_SIZE)
-# define FOV_ANGLE (60 * (PI / 180))
-# define NUM_RAYS WINDOW_WIDTH
+# include <math.h>
+# include <mlx.h>
+# include <fcntl.h>
+# include "../libft/libft.h"
 
-# define TEXTURE_SIZE 512
 # define TEXTURE_NB 5
-# define TEX_NO 0
-# define TEX_SO 1
-# define TEX_WE 2
-# define TEX_EA 3
-# define TEX_S 4
-
-# define NO 0
-# define EA 1
-# define SO 2
-# define WE 3
-
+# define SUCCESS 0
+# define ERROR -1
 # define UP_KEY 13
 # define DOWN_KEY 1
-# define RIGHT_KEY 2
-# define LEFT_KEY 0
-# define ESP_KEY 53
-# define SPACE_KEY 49
+# define LEFT_KEY 123
+# define RIGHT_KEY 124
+# define RIGHT_ARROW 2
+# define LEFT_ARROW 0
 # define SHIFT_KEY 257
-# define ZERO_KEY 65438
+# define ESP_KEY 53
+# define MAX_VALUE 2147483647
+# define MINI_MAP 0.3
+# define WINDOW_WIDTH 2560
+# define WINDOW_HEIGHT 1440
+# define TEXTURE_NB 5
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
+# define S 4
 
-# include <mlx.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <limits.h>
-# include <math.h>
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-
-typedef struct		s_list
+typedef struct		s_ray
 {
-	void			*content;
-	struct s_list	*next;
-}					t_list;
+	double			x;
+	double			y;
+	double			x_step;
+	double			y_step;
+	double			hit_x;
+	double			hit_y;
+	double			ver_hit_x;
+	double			ver_hit_y;
+	double			hor_hit_y;
+	double			hor_hit_x;
+	double			ver_hit;
+	double			ray_angle;
+	int				ver_wall;
+	int				hor_wall;
+	int				ray_down;
+	int				ray_up;
+	int				ray_right;
+	int				ray_left;
+	double			dist;
+}					t_ray;
+
+typedef struct		s_player
+{
+	double			x;
+	double			y;
+	int				radius;
+	double			angle;
+	int				turn;
+	int				walk;
+	double			rotation;
+	double			walk_speed;
+	double			turn_speed;
+	char			position;
+	int				translation;
+}					t_player;
+
+typedef struct		s_info
+{
+	t_list			*list;
+	int				color_ceil;
+	int				color_floor;
+	int				fd;
+	unsigned int	screenshoot : 1;
+	char			orientation;
+	int				wall_strip_width;
+	int				tile_size;
+	int				rows_nb;
+	int				cols_nb;
+	int				window_width;
+	int				window_height;
+	double			num_rays;
+	int				nb_sprite;
+	double			fov_angle;
+	int				size;
+}					t_info;
+
+typedef struct		s_tex
+{
+	char			*path;
+	void			*tex_p;
+	int				*img_data;
+	double			*buffer;
+	int				bits;
+	int				size;
+	int				endian;
+	int				height;
+	int				width;
+}					t_tex;
+
+typedef struct		s_wall
+{
+	double			dist;
+	double			dist_plane;
+	int				s_height;
+	int				top;
+	int				bot;
+}					t_wall;
+
+typedef struct		s_sprite
+{
+	double			dir_y;
+	double			dir_x;
+	double			plan_y;
+	double			plan_x;
+	double			size;
+	double			distance;
+	double			x;
+	double			y;
+	int				spritescreenx;
+	int				start_y;
+	int				end_y;
+	int				start_x;
+	int				end_x;
+}					t_sprite;
 
 typedef struct		s_mlx
 {
@@ -74,223 +148,81 @@ typedef struct		s_mlx
 	int				endian;
 }					t_mlx;
 
-typedef struct		s_player
+typedef struct		s_bmp
 {
-	float			x;
-	float			y;
-	float			width;
-	float			height;
-	int				turn;
-	int				walk;
-	float			rotation;
-	float			walkspeed;
-	float			turnspeed;
-
-}					t_player;
-
-typedef struct		s_sprite
-{
-	float			diry;
-	float			dirx;
-	float			plany;
-	float			planx;
-	int				*data;
-	void			*ptr;
-	int				size_l;
-	float			*distance;
-	float			angle;
-	int				width;
-	int				bpp;
-	int				endian;
-	int				height;
-	float			*x;
-	float			*y;
-	char			*path;
-	int				nb_sprite;
-	float			*buffer;
-	int				spritescreenx;
-	int				drawstarty;
-	int				drawendy;
-	int				drawstartx;
-	int				drawendx;
-}					t_sprite;
-
-typedef struct		s_ray
-{
-	float			ray_angle;
-	float			inter_x;
-	float			inter_y;
-	float			step_x;
-	float			step_y;
-	float			hit_x;
-	float			hit_y;
-	float			ver_hit_x;
-	float			ver_hit_y;
-	float			hoz_hit_x;
-	float			hoz_hit_y;
-	float			dist;
-	float			was_hit_vert;
-	int				hit_ver;
-	int				hit_hoz;
-	int				ray_up;
-	int				ray_down;
-	int				ray_left;
-	int				ray_right;
-	int				wall_hit;
-	int				ray_cord;
-}					t_ray;
-
-typedef struct		s_draw
-{
-	int				start_x;
-	int				start_y;
-	int				end_x;
-	int				end_y;
-	int				height;
-	int				width;
-	int				color;
-}					t_draw;
-
-typedef struct		s_tex
-{
-	char			*path;
-	void			*tex_ptr;
-	int				*img_data;
-	int				width;
-	int				height;
-	int				bits;
-	int				size;
-	int				endian;
-}					t_tex;
-
-typedef struct		s_info
-{
-	int				res_width;
-	int				res_height;
-	int				floor;
-	int				ceilling;
-	int				save;
-	int				num_sprite;
-}					t_info;
-
-typedef struct		s_wall
-{
-	float			correct_wall_distance;
-	float			distance_projection_plane;
-	int				wall_strip_height;
-	int				wall_top;
-	int				wall_bottom;
-}					t_wall;
+	char			byte_type[2];
+	unsigned int	byte_size;
+	unsigned int	byte_reserved;
+	unsigned int	byte_offset;
+	unsigned		header_size;
+	int				image_width;
+	int				image_height;
+	unsigned short	color_planes;
+	unsigned short	bits_per_pixel;
+	unsigned int	compression;
+	unsigned int	image_size;
+	int				bits_xpels_per_meter;
+	int				bits_ypels_per_meter;
+	unsigned int	total_colors;
+	unsigned int	important_colors;
+}					t_bmp;
 
 typedef struct		s_all
 {
 	t_mlx			mlx;
-	t_player		player;
-	t_ray			ray[NUM_RAYS];
-	t_draw			draw;
-	t_tex			tex[TEXTURE_NB];
-	t_sprite		sprite[2];
 	t_info			info;
-	t_wall			wall;
+	t_player		player;
+	t_tex			tex[TEXTURE_NB];
+	t_list			*l_ray;
+	t_list			*l_sprite;
+	t_ray			*ray;
+	t_sprite		*sprite;
 	char			**map;
-	char			orientation;
 }					t_all;
 
-/*
-					**LIBFT
-*/
-char				*ft_strdup(const char *str);
-size_t				ft_strlen(const char *str);
-char				*ft_strjoin(char const *s1, char const *s2);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
-int					get_next_line(int fd, char **line);
-void				ft_lstadd_back(t_list **alst, t_list *new);
-t_list				*ft_lstnew(void *content);
-int					ft_lstsize(t_list *lst);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
-int					ft_isdigit(int c);
-int					ft_atoi(const char *str);
-char				*ft_strchr(const char *str, int c);
-void				*ft_bzero(void *ptr, size_t n);
-/*
-					**CUB3D
-*/
-void				render_all(t_all *all);
-int					update_all(t_all *all);
-void				set_all(t_all *all);
-void				ft_init_all(t_all *all);
-void				read_file(t_all *all);
-/*
-					**CHECK_FILE
-*/
-void				read_path(char *str, t_all *all, int t);
-int					read_floor_ceiling(char *str);
-void				read_resolution(char *str, t_info *info);
-/*
-					**texture
-*/
-int					take_texture(t_mlx *mlx, t_tex *tex);
-void				init_textute(t_all *all);
-int					put_texture(t_all *all, int i, int j, int wall_bot);
-/*
-					**COLLISION
-*/
-int					ft_collision(t_all *all, float x, float y);
-
-/*
-					**DRAW
-*/
-void				init_draw(t_draw *draw);
+int					free_all(t_all *all, int ret);
+int					parsing(t_all *all);
+int					skip_number(char *str);
+int					skip_space(char *str);
+int					get_window_size(t_all *all, char *line);
+int					get_color(int *num_color, char *line, char *cmp);
+int					path(char **dest, char *line, char *cmp, int n);
+int					delete_empty_line_map(t_list **begin);
+int					check_file_ext(char *line, char *ext);
+int					nb_cloumn(t_list *node);
+int					check_map(t_all *all, char *orientation);
+void				delete_space_in_map(t_all *all, int column);
+int					check_that_line_is_wall(char *line);
+void				free_content(void *content);
+void				init_tex(t_all *all);
+void				check_args(t_all *all, int nb_arg, char **arg_array);
+int					rows_cols_nb(t_info *info);
+int					key_pressed(int key, void *param);
+int					key_release(int key, void *param);
+int					key_exit(void *param);
+double				dist_to_point(double x1, double y1, double x2, double y2);
+void				player_movement(t_all *all, t_player *player);
+void				init_player(t_all *all, t_player *player);
+void				cast_all_rays(t_all *all, t_player *player);
+void				ray_horizontal(t_all *all, t_ray *ray, t_player *player);
+void				ray_vertical(t_all *all, t_ray *ray, t_player *player);
 void				projection_3d(t_all *all);
-void				drawblock(int *img_data, t_draw draw, int color);
-void				drawline(int *img_data, t_draw draw);
-void				draw_ceiling(t_all *all);
+double				normalize_angle(double angle);
+void				bmp_exporter(t_all *all, char *file_name);
+void				mini_map(t_all *all, t_player *player, char **map);
+void				put_sprite(t_all *all, t_player *player);
+void				init_sprite(t_all *all, char **map, char player_position);
+int					handling_event(t_all *all);
+int					game_loop(t_all *all);
+int					sprite_visible(t_all *all, t_player *player);
+double				cal_angle(t_player *player, double x, double y);
+void				get_start(t_all *all);
+void				draw_sprite(t_all *all, double transformy);
+void				put_tex(t_all *all, t_sprite *sprite, int x, int y);
+int					collision(t_all *all, double y, double x);
+int					close_window(int key, void *param);
 void				draw_floor(t_all *all);
-/*
-					**KEY
-*/
-int					exit_success(t_all *all);
-int					key_release_hook(int c, void *info);
-int					keys_set(t_all *all);
-int					key_hook(int key, void *param);
-int					key_press_hook(int c, t_all *all);
-/*
-					**MAP
-*/
-char				**list_to_map(t_all *all, t_list **list, int x, int y);
-char				**ft_read_map(t_all *all, int fd);
-int					ft_check_map(t_all *all, char *orientation);
-void				drawmap(t_all *all);
-/*
-					**MATH
-*/
-float				normalize_angle(float angle);
-float				dist_points(float x1, float y1, float x2, float y2);
-float				rad_to_angle(float rad);
-/*
-					**PLAYER
-*/
-void				init_player(t_player *player);
-void				player_move(t_all *all);
-void				draw_player(t_all *all);
-/*
-					**RAYS
-*/
-void				cast_ray(t_all *all, float ray_angle, int ray_num);
-void				cast_all_rays(t_all *all, t_ray *ray);
-void				render_rays(t_all *all);
-void				ray_ver(t_all *all, t_ray *ray, t_player *player);
-void				next_ray_ver(t_all *all, t_ray *ray, float next_ver_y, float next_ver_x);
-void				ray_hoz(t_all *all, t_ray *ray, t_player *player);
-void				next_ray_hoz(t_all *all, t_ray *ray, float next_hoz_y, float next_hoz_x);
-void				low_ray(t_ray *ray, t_player *player);
-void				ray_fac(t_ray *ray);
-void				init_ray(t_ray *ray);
-/*
-					**SPRITE
-*/
-void				generete_sprite(t_all *all);
-void				init_sprite(t_all *all, t_sprite *sprite, char **map, char player_position);
-void				render_all_sprites(t_all *all);
-void				ft_putsprite(t_all *all, t_sprite *sprite, t_player *player);
+void				draw_ceiling(t_all *all);
+void				player_collision(t_all *all, double y, double x);
+
 #endif

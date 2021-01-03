@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:24 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/02 18:39:03 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/03 16:01:19 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static int	header_empty_line_map(t_list **list, t_list *node)
 	if (!node)
 		return (ERROR);
 	line = node->content;
-	//if (ft_strlen(line))
-	//	return (ERROR);
+	if (!ft_strlen(line))
+		return (ERROR);
 	line += skip_space(line);
 	if (!*line)
 	{
@@ -78,7 +78,6 @@ static int	footer_empty_line_map(t_list **list)
 	if (!node)
 		return (ERROR);
 	line = node->content;
-	//line += skip_space(line);
 	if (!*line || (*line != '1' && *line != ' '))
 		return (ERROR);
 	(void)list;
@@ -94,7 +93,7 @@ int			delete_empty_line_map(t_list **list)
 	}
 	if (footer_empty_line_map(list) == ERROR)
 	{
-		ft_putstr_fd("Error\nWrong map format", 1);
+		ft_putstr_fd("Error\nWrong map format\n", 1);
 		return (ERROR);
 	}
 	(void)list;

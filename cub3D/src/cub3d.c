@@ -5,87 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/18 11:48:03 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/20 13:04:59 by nwakour          ###   ########.fr       */
+/*   Created: 2020/10/20 16:23:09 by nwakour           #+#    #+#             */
+/*   Updated: 2021/01/03 14:47:37 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_init_all(t_all *all)
+static void		init_mlx(t_all *all)
 {
-	t_mlx		mlx;
-	t_player	player;
-	t_draw		draw;
-	t_info		info;
-
-	mlx.mlx_p = NULL;
-	mlx.win_p = NULL;
-	mlx.img_p = NULL;
-	mlx.img_data = NULL;
-	info.ceilling = 0;
-	info.floor = 0;
-	info.num_sprite = 0;
-	info.res_height = 0;
-	info.res_width = 0;
-	info.save = 0;
-	init_player(&player);
-	init_draw(&draw);
-	all->mlx = mlx;
-	all->player = player;
-	all->draw = draw;
-	all->info = info;
-	all->orientation = '\0';
-	all->map = NULL;
+	if (!(all->mlx.mlx_p = mlx_init()))
+	{
+		ft_putstr_fd("Error\nFailed to init mlx\n", 1);
+		exit(free_all(all, ERROR));
+	}
 }
 
-void	set_all(t_all *all)
+static void		init_info(t_all *all)
 {
-	read_file(all);
-	if (!ft_check_map(all, &all->orientation))
-		return ;
-	init_textute(all);
-	player_move(all);
-	cast_all_rays(all, all->ray);
+	all->info.wall_strip_width = 1;
+	all->info.tile_size = (all->info.window_width / all->info.cols_nb);
+	if (all->info.tile_size == 0)
+	{
+		ft_putstr_fd("Error\nbla bla\n", 1);
+		exit(free_all(all, ERROR));
+	}
+	all->info.num_rays = (all->info.window_width / all->info.wall_strip_width);
+	all->info.fov_angle = (60 * (M_PI / 180));
 }
 
-int		update_all(t_all *all)
+static void		create_window(t_all *all)
 {
-	all->mlx.img_p = mlx_new_image(all->mlx.mlx_p,
-								WINDOW_WIDTH, WINDOW_HEIGHT);
-	all->mlx.img_data = (int*)mlx_get_data_addr(all->mlx.img_p, &all->mlx.bits,
-						&all->mlx.size, &all->mlx.endian);
-	player_move(all);
-	ft_putsprite(all, all->sprite, &all->player);
-	cast_all_rays(all, all->ray);
-	render_all(all);
-	return (0);
+	if (all->info.window_width > WINDOW_WIDTH)
+		all->info.window_width = WINDOW_WIDTH;
+	if (all->info.window_height > WINDOW_HEIGHT)
+		all->info.window_height = WINDOW_HEIGHT;
+	if (!all->info.screenshoot)
+	{
+		if (!(all->mlx.win_p = mlx_new_window(all->mlx.mlx_p,
+		all->info.window_width, all->info.window_height, "Cub3D")))
+		{
+			ft_putstr_fd("Error\nFailed to open a window\n", 1);
+			exit(free_all(all, ERROR));
+		}
+	}
 }
 
-void	render_all(t_all *all)
+static int		set_all(t_all *all, int argc, char **argv)
 {
-	projection_3d(all);
-	draw_ceiling(all);
-	draw_floor(all);
-	drawmap(all);
-	render_rays(all);
-	draw_player(all);
-	mlx_put_image_to_window(all->mlx.mlx_p, all->mlx.win_p,
-							all->mlx.img_p, 0, 0);
+	check_args(all, argc, argv);
+	if ((all->info.fd = open(argv[1], O_RDONLY)) < 0)
+	{
+		ft_putstr_fd("Error\nfailure open file\n", 1);
+		return (ERROR);
+	}
+	if (parsing(all) == ERROR)
+		return (ERROR);
+	init_mlx(all);
+	create_window(all);
+	init_tex(all);
+	init_info(all);
+	init_player(all, &all->player);
+	init_sprite(all, all->map, all->player.position);
+	return (SUCCESS);
 }
 
-int		main(void)
+int				main(int argc, char **argv)
 {
-	t_all all;
+	t_all		all;
 
-	ft_init_all(&all);
-	all.mlx.mlx_p = mlx_init();
-	all.mlx.win_p = mlx_new_window(all.mlx.mlx_p, WINDOW_WIDTH,
-					WINDOW_HEIGHT, "first");
-	set_all(&all);
-	update_all(&all);
-	keys_set(&all);
-	mlx_loop_hook(all.mlx.mlx_p, update_all, &all);
-	mlx_loop(all.mlx.mlx_p);
-	return (0);
+	ft_struct_bezero((void*)&all, sizeof(t_all));
+	if (set_all(&all, argc, argv) == ERROR)
+		return (ERROR);
+	if (!all.info.screenshoot)
+	{
+		handling_event(&all);
+		mlx_loop_hook(all.mlx.mlx_p, game_loop, &all);
+		mlx_loop(all.mlx.mlx_p);
+	}
+	else
+		game_loop(&all);
+	return (free_all(&all, SUCCESS));
 }

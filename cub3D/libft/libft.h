@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:30:59 by nwakour           #+#    #+#             */
-/*   Updated: 2019/10/19 17:31:00 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/03 16:18:45 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct		s_list
 int					ft_atoi(const char *str);
 void				*ft_bzero(void *ptr, size_t n);
 void				*ft_calloc(size_t count, size_t size);
+char				**ft_array_char(int row, int column);
+int					ft_isspace(int c);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 int					ft_isascii(int c);
@@ -51,6 +53,7 @@ size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlen(const char *str);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strnstr(const char *str, const char *to_find, size_t n);
 char				*ft_strrchr(const char *str, int c);
@@ -68,6 +71,11 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void*));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));
-int		get_next_line(int fd, char **line);
+void				ft_list_remove_one_if(t_list **list, void *data_ref,
+		int (*cmp)(), void (*free_fct)(void *));
+int					get_next_line(int fd, char **line);
+int					ft_struct_list(t_list **list, void **param, size_t size);
+void				ft_struct_bezero(void *param, size_t size);
+void				*ft_find_struct_list(t_list *list, size_t i);
 
 #endif

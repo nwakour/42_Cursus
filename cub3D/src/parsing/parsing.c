@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/02 19:07:22 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/03 16:11:56 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	put_map_in_array(t_all *all,
 	char	*s;
 	t_list	*tmp;
 
-	all->map = array_char(nb_line, nb_column);
+	all->map = ft_array_char(nb_line, nb_column);
 	tmp = all->info.list;
 	if (!all->map)
 	{
