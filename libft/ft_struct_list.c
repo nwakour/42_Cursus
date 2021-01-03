@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_struct_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/19 21:38:04 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 16:28:21 by nwakour          ###   ########.fr       */
+/*   Created: 2020/11/06 16:34:29 by nwakour           #+#    #+#             */
+/*   Updated: 2020/12/25 15:46:27 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *l_new)
+int		ft_struct_list(t_list **list, void **param, size_t size)
 {
-	if (alst && l_new)
+	t_list *new;
+
+	if (!(*param = malloc(size)))
+		return (0);
+	ft_struct_bezero((void*)*param, size);
+	if (*list == NULL)
 	{
-		l_new->next = *alst;
-		*alst = l_new;
+		if (!(*list = ft_lstnew(*param)))
+			return (0);
 	}
+	else
+	{
+		if (!(new = ft_lstnew(*param)))
+			return (0);
+		ft_lstadd_back(list, new);
+	}
+	return (1);
 }

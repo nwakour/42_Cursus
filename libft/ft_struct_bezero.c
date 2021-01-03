@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_struct_bezero.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/19 21:38:04 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 16:28:21 by nwakour          ###   ########.fr       */
+/*   Created: 2020/11/06 16:45:37 by nwakour           #+#    #+#             */
+/*   Updated: 2020/11/06 18:25:35 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *l_new)
+void	ft_struct_bezero(void *param, size_t size)
 {
-	if (alst && l_new)
-	{
-		l_new->next = *alst;
-		*alst = l_new;
-	}
+	char	*s;
+	size_t	i;
+
+	s = (char*)param;
+	i = -1;
+	while (++i < size)
+		s[i] = 0;
 }
