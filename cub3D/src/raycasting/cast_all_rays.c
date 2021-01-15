@@ -6,33 +6,11 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:21:55 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/28 17:09:32 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/12 15:53:28 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-static	void	init_struct_ray(t_ray *ray)
-{
-	ray->x = 0;
-	ray->y = 0;
-	ray->x_step = 0;
-	ray->y_step = 0;
-	ray->hit_x = 0;
-	ray->hit_y = 0;
-	ray->ver_hit = 0;
-	ray->ver_hit_x = 0;
-	ray->ver_hit_y = 0;
-	ray->hor_hit_y = 0;
-	ray->hor_hit_x = 0;
-	ray->ver_wall = 0;
-	ray->hor_wall = 0;
-	ray->ray_down = 0;
-	ray->ray_up = 0;
-	ray->ray_right = 0;
-	ray->ray_left = 0;
-	ray->dist = 0;
-}
 
 static	void	ray_facing(t_ray *ray)
 {
@@ -98,9 +76,10 @@ void			cast_all_rays(t_all *all, t_player *player)
 		all->ray = (t_ray*)ft_find_struct_list(all->l_ray, i);
 		if (all->l_ray == NULL || all->ray == NULL)
 			ft_struct_list(&all->l_ray, (void**)&all->ray, sizeof(t_ray));
+		else
+			ft_struct_bezero((void*)all->ray, sizeof(t_ray));
 		ray_angle = normalize_angle(ray_angle);
 		all->ray->ray_angle = ray_angle;
-		init_struct_ray(all->ray);
 		ray_facing(all->ray);
 		ray_horizontal(all, all->ray, player);
 		ray_vertical(all, all->ray, player);

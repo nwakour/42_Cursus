@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:19 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/29 16:43:44 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/11 18:47:02 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ double	dist_to_point(double x1, double y1, double x2, double y2)
 
 double	normalize_angle(double angle)
 {
-	angle = remainder(angle, (2 * M_PI));
+	angle = fmod(angle, (2 * M_PI));
 	if (angle < 0)
-		angle = (2 * M_PI) + angle;
+		angle += 2 * M_PI;
 	return (angle);
 }

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:33 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/31 16:47:48 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 17:56:49 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ int				get_color(int *num_color, char *line, char *cmp)
 {
 	int			color[3];
 
+	if (*num_color != -1)
+	{
+		ft_putstr_fd("Error\nDuplicate parametres\n", 1);
+		return (ERROR);
+	}
 	if (ft_memcmp(line, cmp, 2))
 		return (ERROR);
 	line += 2;

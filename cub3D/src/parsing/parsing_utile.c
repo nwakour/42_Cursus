@@ -6,22 +6,27 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:24 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 16:01:19 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 19:31:45 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int			rows_cols_nb(t_info *info)
+int			rows_cols_nb(t_all *all)
 {
-	if ((info->rows_nb = ft_lstsize(info->list)) < 3)
+	if ((all->info.rows_nb = ft_lstsize(all->info.list)) < 3)
 	{
 		ft_putstr_fd("Error\nMore rows are needed\n", 1);
 		return (ERROR);
 	}
-	if ((info->cols_nb = nb_cloumn(info->list)) < 3)
+	if ((all->info.cols_nb = nb_cloumn(all->info.list)) < 3)
 	{
 		ft_putstr_fd("Error\nMore columns are needed \n", 1);
+		return (ERROR);
+	}
+	if (!(all->map = ft_array_char(all->info.rows_nb, all->info.cols_nb)))
+	{
+		ft_putstr_fd("Error\nAllocation failed\n", 1);
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -38,14 +43,14 @@ int			check_that_line_is_wall(char *line)
 			i++;
 		else
 		{
-			ft_putstr_fd("Error\nThe map must be ssurrounded by a wall\n", 1);
+			ft_putstr_fd("Error\nThe map must be surrounded by a wall\n", 1);
 			return (ERROR);
 		}
 	}
 	return (SUCCESS);
 }
 
-static int	header_empty_line_map(t_list **list, t_list *node)
+static int	header_empty_line_map(t_list **list, t_list *node, int found_space)
 {
 	char	*line;
 	t_list	*next;
@@ -53,45 +58,54 @@ static int	header_empty_line_map(t_list **list, t_list *node)
 	if (!node)
 		return (ERROR);
 	line = node->content;
-	if (!ft_strlen(line))
+	if (ft_strlen(line) && !found_space)
+		found_space = 1;
+	if (!ft_strlen(line) && found_space)
 		return (ERROR);
 	line += skip_space(line);
 	if (!*line)
 	{
 		next = node->next;
-		ft_list_remove_one_if(list, node->content,
+		ft_lstclear_one_if(list, node->content,
 		&ft_strcmp, &free_content);
-		return (header_empty_line_map(list, next));
+		return (header_empty_line_map(list, next, found_space));
 	}
-	else if (*line != '1')
+	if (*line != '1')
 		return (ERROR);
-	(void)list;
 	return (SUCCESS);
 }
 
-static int	footer_empty_line_map(t_list **list)
+static int	footer_empty_line_map(t_list **list, t_list *node)
 {
 	char	*line;
-	t_list	*node;
+	t_list	*last;
 
-	node = ft_lstlast(*list);
+	last = ft_lstlast(*list);
 	if (!node)
 		return (ERROR);
-	line = node->content;
-	if (!*line || (*line != '1' && *line != ' '))
+	line = last->content;
+	if (!ft_strlen(line))
 		return (ERROR);
-	(void)list;
+	line += skip_space(line);
+	if (!*line)
+	{
+		ft_lstclear_last(list, &free_content);
+		last = ft_lstlast(*list);
+		return (footer_empty_line_map(list, last));
+	}
+	if (*line != '1')
+		return (ERROR);
 	return (SUCCESS);
 }
 
 int			delete_empty_line_map(t_list **list)
 {
-	if ((header_empty_line_map(list, *list)) == ERROR)
+	if (header_empty_line_map(list, *list, 0) == ERROR)
 	{
 		ft_putstr_fd("Error\nWrong map format\n", 1);
 		return (ERROR);
 	}
-	if (footer_empty_line_map(list) == ERROR)
+	if (footer_empty_line_map(list, *list) == ERROR)
 	{
 		ft_putstr_fd("Error\nWrong map format\n", 1);
 		return (ERROR);

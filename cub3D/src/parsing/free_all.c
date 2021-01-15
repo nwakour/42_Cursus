@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:30 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 16:06:19 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 18:50:01 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,8 @@ static	void	free_texture(t_all *all)
 			free(all->tex[i].path);
 		if (all->tex[i].tex_p)
 			mlx_destroy_image(all->mlx.mlx_p, all->tex[i].tex_p);
-		if (all->tex[i].buffer)
-			free(all->tex[i].buffer);
 		all->tex[i].path = 0;
 		all->tex[i].tex_p = 0;
-		all->tex[i].buffer = 0;
 		all->tex[i].img_data = 0;
 	}
 }
@@ -83,5 +80,6 @@ int				free_all(t_all *all, int ret)
 	all->l_sprite = 0;
 	all->sprite = 0;
 	all->ray = 0;
+	system("leaks Cub3D");
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:26 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/29 17:52:41 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/11 15:46:09 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,15 @@ int		key_pressed(int key, void *param)
 	else if (key == DOWN_KEY)
 		all->player.walk = -1;
 	else if (key == RIGHT_KEY)
-		all->player.turn = 1;
+		all->player.side_walk = 1;
 	else if (key == LEFT_KEY)
+		all->player.side_walk = -1;
+	else if (key == RIGHT_ARROW)
+		all->player.turn = 1;
+	else if (key == LEFT_ARROW)
 		all->player.turn = -1;
 	else if (key == ESP_KEY)
 		exit(free_all(all, SUCCESS));
-	else if (key == RIGHT_ARROW)
-	{
-		all->player.translation = 1;
-		all->player.walk = 1;
-	}
-	else if (key == LEFT_ARROW)
-	{
-		all->player.translation = -1;
-		all->player.walk = -1;
-	}
 	return (0);
 }
 
@@ -48,12 +42,9 @@ int		key_release(int key, void *param)
 	if (key == UP_KEY || key == DOWN_KEY)
 		all->player.walk = 0;
 	else if (key == RIGHT_KEY || key == LEFT_KEY)
-		all->player.turn = 0;
+		all->player.side_walk = 0;
 	else if (key == RIGHT_ARROW || key == LEFT_ARROW)
-	{
-		all->player.translation = 0;
-		all->player.walk = 0;
-	}
+		all->player.turn = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:58 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/31 16:19:28 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/11 19:12:22 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void		init_position_sprite(t_info info, t_sprite *sprite,
 					id++;
 				else
 				{
-					sprite->x = j * info.tile_size + info.tile_size / 2;
-					sprite->y = i * info.tile_size + info.tile_size / 2;
-					sprite->distance = 0;
+					sprite->x = (j + 0.5f) * info.tile_size;
+					sprite->y = (i + 0.5f) * info.tile_size;
+					sprite->dist = 0;
 					return ;
 				}
 			}
@@ -62,31 +62,7 @@ static int		count_sprite(char **map)
 	return (nb_sprite);
 }
 
-static void		init_vect(t_sprite *sprite, char player_position)
-{
-	if (player_position == 'E')
-	{
-		sprite->dir_x = 1;
-		sprite->plan_y = -0.6;
-	}
-	else if (player_position == 'S')
-	{
-		sprite->dir_y = 1;
-		sprite->plan_x = 0.6;
-	}
-	else if (player_position == 'W')
-	{
-		sprite->dir_x = -1;
-		sprite->plan_y = 0.6;
-	}
-	else if (player_position == 'N')
-	{
-		sprite->dir_y = -1;
-		sprite->plan_x = -0.6;
-	}
-}
-
-void			init_sprite(t_all *all, char **map, char player_position)
+void			init_sprite(t_all *all, char **map)
 {
 	int i;
 
@@ -96,6 +72,5 @@ void			init_sprite(t_all *all, char **map, char player_position)
 	{
 		ft_struct_list(&all->l_sprite, (void**)&all->sprite, sizeof(t_sprite));
 		init_position_sprite(all->info, all->sprite, map, i);
-		init_vect(all->sprite, player_position);
 	}
 }

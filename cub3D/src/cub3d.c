@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:09 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 14:47:37 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/11 18:44:07 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int		set_all(t_all *all, int argc, char **argv)
 	init_tex(all);
 	init_info(all);
 	init_player(all, &all->player);
-	init_sprite(all, all->map, all->player.position);
+	init_sprite(all, all->map);
 	return (SUCCESS);
 }
 

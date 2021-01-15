@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:44 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/31 16:49:04 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 17:53:26 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ char	*get_height(char *line, int *window_height)
 
 int		get_window_size(t_all *all, char *line)
 {
+	if (all->info.window_width != -1)
+	{
+		ft_putstr_fd("Error\nDuplicate parametres\n", 1);
+		return (ERROR);
+	}
 	if (!(line = get_width(line, &all->info.window_width)))
 		return (ERROR);
 	if (!(line = get_height(line, &all->info.window_height)))

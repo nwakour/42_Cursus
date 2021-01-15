@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:11 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 15:28:29 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 19:19:16 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <math.h>
 # include <mlx.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include "../libft/libft.h"
 
 # define TEXTURE_NB 5
@@ -23,10 +24,10 @@
 # define ERROR -1
 # define UP_KEY 13
 # define DOWN_KEY 1
-# define LEFT_KEY 123
-# define RIGHT_KEY 124
-# define RIGHT_ARROW 2
-# define LEFT_ARROW 0
+# define LEFT_KEY 0
+# define RIGHT_KEY 2
+# define RIGHT_ARROW 124
+# define LEFT_ARROW 123
 # define SHIFT_KEY 257
 # define ESP_KEY 53
 # define MAX_VALUE 2147483647
@@ -71,11 +72,11 @@ typedef struct		s_player
 	double			angle;
 	int				turn;
 	int				walk;
+	int				side_walk;
 	double			rotation;
 	double			walk_speed;
 	double			turn_speed;
 	char			position;
-	int				translation;
 }					t_player;
 
 typedef struct		s_info
@@ -84,7 +85,7 @@ typedef struct		s_info
 	int				color_ceil;
 	int				color_floor;
 	int				fd;
-	unsigned int	screenshoot : 1;
+	unsigned int	screenshoot;
 	char			orientation;
 	int				wall_strip_width;
 	int				tile_size;
@@ -103,7 +104,6 @@ typedef struct		s_tex
 	char			*path;
 	void			*tex_p;
 	int				*img_data;
-	double			*buffer;
 	int				bits;
 	int				size;
 	int				endian;
@@ -122,19 +122,10 @@ typedef struct		s_wall
 
 typedef struct		s_sprite
 {
-	double			dir_y;
-	double			dir_x;
-	double			plan_y;
-	double			plan_x;
 	double			size;
-	double			distance;
+	double			dist;
 	double			x;
 	double			y;
-	int				spritescreenx;
-	int				start_y;
-	int				end_y;
-	int				start_x;
-	int				end_x;
 }					t_sprite;
 
 typedef struct		s_mlx
@@ -196,7 +187,7 @@ int					check_that_line_is_wall(char *line);
 void				free_content(void *content);
 void				init_tex(t_all *all);
 void				check_args(t_all *all, int nb_arg, char **arg_array);
-int					rows_cols_nb(t_info *info);
+int					rows_cols_nb(t_all *all);
 int					key_pressed(int key, void *param);
 int					key_release(int key, void *param);
 int					key_exit(void *param);
@@ -211,18 +202,13 @@ double				normalize_angle(double angle);
 void				bmp_exporter(t_all *all, char *file_name);
 void				mini_map(t_all *all, t_player *player, char **map);
 void				put_sprite(t_all *all, t_player *player);
-void				init_sprite(t_all *all, char **map, char player_position);
+void				init_sprite(t_all *all, char **map);
 int					handling_event(t_all *all);
 int					game_loop(t_all *all);
-int					sprite_visible(t_all *all, t_player *player);
-double				cal_angle(t_player *player, double x, double y);
-void				get_start(t_all *all);
-void				draw_sprite(t_all *all, double transformy);
-void				put_tex(t_all *all, t_sprite *sprite, int x, int y);
 int					collision(t_all *all, double y, double x);
 int					close_window(int key, void *param);
 void				draw_floor(t_all *all);
 void				draw_ceiling(t_all *all);
-void				player_collision(t_all *all, double y, double x);
+int					close_file(int fd);
 
 #endif

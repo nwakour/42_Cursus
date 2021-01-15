@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear_last.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 17:47:31 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 17:05:49 by nwakour          ###   ########.fr       */
+/*   Created: 2021/01/13 19:05:55 by nwakour           #+#    #+#             */
+/*   Updated: 2021/01/13 19:29:04 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *str, int c)
+void		ft_lstclear_last(t_list **list, void (*del)(void*))
 {
-	int		i;
-	char	*s;
+	t_list	*last;
+	t_list	*prev;
+	int		size;
 
-	i = ft_strlen(str);
-	s = (char*)str;
-	if (c == '\0')
-		return (s + i);
-	while (i != 0)
+	if (!list || !*list || !del)
+		return ;
+	if ((*list)->next == NULL)
 	{
-		if (s[i] == (char)c)
-			return (s + i);
-		i--;
+		ft_lstdelone(*list, del);
+		return ;
 	}
-	if (s[0] == (char)c)
-		return (s);
-	return (NULL);
+	size = ft_lstsize(*list) - 1;
+	prev = *list;
+	while (--size)
+		prev = prev->next;
+	last = prev->next;
+	ft_lstdelone(last, del);
+	prev->next = NULL;
 }

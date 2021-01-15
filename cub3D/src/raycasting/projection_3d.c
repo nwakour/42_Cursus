@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:52 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/29 15:24:54 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/11 18:42:11 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void		projection_3d(t_all *all)
 		all->ray = (t_ray*)ft_find_struct_list(all->l_ray, i);
 		wall.dist = all->ray->dist * cos(all->ray->ray_angle -
 		all->player.rotation);
-		all->tex[S].buffer[i] = wall.dist;
 		wall.dist_plane = (all->info.window_width / 2) /
 		tan(all->info.fov_angle / 2);
 		wall.s_height = (all->info.tile_size / wall.dist) *

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:30:59 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 16:30:36 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 19:26:45 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,16 @@ int					ft_lstsize(t_list *lst);
 void				ft_lstadd_front(t_list **alst, t_list *new);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void*));
-void				ft_lstclear(t_list **lst, void (*del)(void *));
+void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstiter(t_list *lst, void (*f)(void*));
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
-								void (*del)(void *));
-void				ft_list_remove_one_if(t_list **list, void *data_ref,
-		int (*cmp)(), void (*free_fct)(void *));
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void*),
+								void (*del)(void*));
+void				ft_lstclear_one_if(t_list **list, void *ref,
+					int (*f)(), void (*del)(void*));
 int					get_next_line(int fd, char **line);
 int					ft_struct_list(t_list **list, void **param, size_t size);
 void				ft_struct_bezero(void *param, size_t size);
 void				*ft_find_struct_list(t_list *list, size_t i);
+void				ft_lstclear_last(t_list **list, void (*del)(void*));
 
 #endif

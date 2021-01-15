@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 19:06:53 by nwakour           #+#    #+#              #
-#    Updated: 2021/01/03 16:21:38 by nwakour          ###   ########.fr        #
+#    Updated: 2021/01/13 19:30:49 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ SRC_LIBFT = libft/ft_bzero.c libft/ft_strlen.c libft/ft_calloc.c libft/ft_strncm
 	libft/ft_memmove.c libft/ft_strchr.c libft/ft_strrchr.c libft/ft_split.c libft/ft_struct_bezero.c libft/ft_find_struct_list.c libft/ft_struct_list.c\
 	libft/ft_putstr_fd.c libft/ft_putnbr_fd.c libft/ft_memchr.c libft/ft_strlcpy.c\
 	libft/ft_putendl_fd.c libft/ft_itoa.c libft/ft_strmapi.c libft/ft_strtrim.c libft/ft_substr.c libft/ft_strjoin.c\
-	libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_lstadd_front.c libft/ft_strcmp.c\
-	libft/ft_lstclear.c libft/ft_lstdelone.c libft/ft_lstiter.c libft/ft_lstlast.c libft/ft_list_remove_one_if.c\
+	libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_lstadd_front.c libft/ft_strcmp.c libft/ft_lstclear_last.c\
+	libft/ft_lstclear.c libft/ft_lstdelone.c libft/ft_lstiter.c libft/ft_lstlast.c libft/ft_lstclear_one_if.c\
 	libft/ft_lstmap.c libft/ft_lstsize.c libft/get_next_line.c libft/ft_array_char.c libft/ft_isspace.c\
 
 SRC_CUB3D =	src/cub3d.c\
@@ -52,7 +52,6 @@ SRC_CUB3D =	src/cub3d.c\
 			src/bmp_exporter.c\
 			src/sprite/init_sprite.c\
 			src/sprite/sprite.c\
-			src/sprite/sprite_utile.c\
 			src/parsing/parsing_utile.c\
 
 SRCS = ${SRC_CUB3D} ${SRC_LIBFT}

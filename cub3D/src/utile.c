@@ -6,30 +6,11 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:24:13 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/27 16:13:37 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/05 17:18:11 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void		delete_space_in_map(t_all *all, int column)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (all->map[++i])
-	{
-		j = -1;
-		while (all->map[i][++j])
-		{
-			if (all->map[i][j] == ' ')
-				all->map[i][j] = '1';
-		}
-		while (j < column)
-			all->map[i][j++] = '1';
-	}
-}
 
 int			skip_space(char *str)
 {
@@ -67,4 +48,14 @@ int			nb_cloumn(t_list *list)
 		tmp = tmp->next;
 	}
 	return (size);
+}
+
+int			close_file(int fd)
+{
+	if (close(fd) != SUCCESS)
+	{
+		ft_putstr_fd("Error\nClosing file failed\n", 1);
+		return (ERROR);
+	}
+	return (SUCCESS);
 }

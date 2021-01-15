@@ -6,14 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 16:11:56 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 18:48:39 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	put_map_in_array(t_all *all,
-			int nb_line, int nb_column)
+static int	map_in_array(t_all *all)
 {
 	int		i;
 	int		j;
@@ -21,15 +20,9 @@ static int	put_map_in_array(t_all *all,
 	char	*s;
 	t_list	*tmp;
 
-	all->map = ft_array_char(nb_line, nb_column);
 	tmp = all->info.list;
-	if (!all->map)
-	{
-		ft_putstr_fd("Error\nAllocation failed\n", 1);
-		return (ERROR);
-	}
 	i = -1;
-	while (++i < nb_line)
+	while (++i < all->info.rows_nb)
 	{
 		j = -1;
 		s = tmp->content;
@@ -46,60 +39,55 @@ static int	put_map_in_array(t_all *all,
 	return (SUCCESS);
 }
 
-static int	get_info(t_all *all, char *line)
+static int	get_info(t_all *all, char *line, int *lines)
 {
-	if ((all->info.window_width == -1) && !get_window_size(all, line))
-		return (SUCCESS);
-	else if (!all->tex[NO].path && !path(&all->tex[NO].path, line, "NO ", 3))
-		return (SUCCESS);
-	else if (!all->tex[SO].path && !path(&all->tex[SO].path, line, "SO ", 3))
-		return (SUCCESS);
-	else if (!all->tex[WE].path && !path(&all->tex[WE].path, line, "WE ", 3))
-		return (SUCCESS);
-	else if (!all->tex[EA].path && !path(&all->tex[EA].path, line, "EA ", 3))
-		return (SUCCESS);
-	else if (!all->tex[S].path && !path(&all->tex[S].path, line, "S ", 2))
-		return (SUCCESS);
-	else if ((all->info.color_floor == -1) &&
-			!get_color(&all->info.color_floor, line, "F "))
-		return (SUCCESS);
-	else if ((all->info.color_ceil == -1) &&
-			!get_color(&all->info.color_ceil, line, "C "))
-		return (SUCCESS);
-	else
-	{
-		ft_putstr_fd("Error\nWrong identifier\n", 1);
-		return (free_all(all, ERROR));
-	}
+	if (line[0] == 'R' && (get_window_size(all, line) == ERROR))
+		return (ERROR);
+	if (line[0] == 'N' && (path(&all->tex[NO].path, line, "NO ", 3) == ERROR))
+		return (ERROR);
+	if (line[0] == 'S' && line[1] == 'O' &&
+		(path(&all->tex[SO].path, line, "SO ", 3) == ERROR))
+		return (ERROR);
+	if (line[0] == 'W' && (path(&all->tex[WE].path, line, "WE ", 3) == ERROR))
+		return (ERROR);
+	if (line[0] == 'E' && (path(&all->tex[EA].path, line, "EA ", 3) == ERROR))
+		return (ERROR);
+	if (line[0] == 'S' && line[1] == ' ' &&
+		(path(&all->tex[S].path, line, "S ", 2) == ERROR))
+		return (ERROR);
+	if (line[0] == 'F' &&
+		(get_color(&all->info.color_floor, line, "F ") == ERROR))
+		return (ERROR);
+	if (line[0] == 'C' &&
+		(get_color(&all->info.color_ceil, line, "C ") == ERROR))
+		return (ERROR);
+	ft_lstclear_one_if(&all->info.list, line, ft_strcmp, free_content);
+	(*lines)++;
+	return (SUCCESS);
 }
 
-static int	get_map(t_list **list, int fd, char *line, int end)
+static int	read_file(t_all *all)
 {
+	char	*line;
 	t_list	*new;
-	int		found;
+	int		end;
 
 	end = 1;
-	found = 0;
 	while (end)
 	{
-		if ((end = get_next_line(fd, &line)) == ERROR)
+		if ((end = get_next_line(all->info.fd, &line)) == ERROR)
 		{
 			ft_putstr_fd("Error\nReading file failed\n", 1);
 			return (ERROR);
 		}
-		if (line[0] != '\0' && !found)
-			found = 1;
-		if (found)
+		if (!(new = ft_lstnew(line)))
 		{
-			if (!(new = ft_lstnew(line)))
-			{
-				ft_putstr_fd("Error\nAllocation failed\n", 1);
-				return (ERROR);
-			}
-			ft_lstadd_back(list, new);
+			ft_putstr_fd("Error\nAllocation failed\n", 1);
+			return (ERROR);
 		}
+		ft_lstadd_back(&all->info.list, new);
 	}
-	if (close(fd) != SUCCESS)
+	if (close(all->info.fd) == ERROR)
 	{
 		ft_putstr_fd("Error\nClosing file failed\n", 1);
 		return (ERROR);
@@ -107,30 +95,31 @@ static int	get_map(t_list **list, int fd, char *line, int end)
 	return (SUCCESS);
 }
 
-static int	read_file(t_all *all)
+static int	get_data(t_all *all)
 {
+	t_list	*tmp;
 	char	*line;
-	int		end;
 	int		lines;
 
-	end = 1;
+	tmp = all->info.list;
 	lines = 0;
-	while (lines != 8 && end)
+	while (tmp && lines < 8 && (line = tmp->content))
 	{
-		if ((end = get_next_line(all->info.fd, &line)) == ERROR)
+		if (line[0] != '\0' && ft_strchr("RNSWEFC", line[0]))
 		{
-			ft_putstr_fd("Error\nReading file failed\n", 1);
+			if (get_info(all, line, &lines) == ERROR)
+				return (ERROR);
+		}
+		else if (line[0] == '\0')
+			ft_lstclear_one_if(&all->info.list, line, ft_strcmp, free_content);
+		else
+		{
+			ft_putstr_fd("Error\nWrong identif\n", 1);
 			return (ERROR);
 		}
-		if (end == 1 && line[0] != '\0')
-		{
-			if (get_info(all, line) == ERROR)
-				return (ERROR);
-			else
-				lines++;
-		}
+		tmp = all->info.list;
 	}
-	if (!end || get_map(&all->info.list, all->info.fd, line, end) == ERROR)
+	if (lines < 8 || !tmp)
 		return (ERROR);
 	return (SUCCESS);
 }
@@ -140,22 +129,23 @@ int			parsing(t_all *all)
 	all->info.window_width = -1;
 	all->info.color_floor = -1;
 	all->info.color_ceil = -1;
-	if (read_file(all) == ERROR)
+	if ((read_file(all)) == ERROR)
 		return (free_all(all, ERROR));
-	if ((delete_empty_line_map(&all->info.list) == ERROR))
+	if ((get_data(all)) == ERROR)
 		return (free_all(all, ERROR));
-	if ((rows_cols_nb(&all->info)) == ERROR)
+	if ((delete_empty_line_map(&all->info.list)) == ERROR)
 		return (free_all(all, ERROR));
-	if ((put_map_in_array(all,
-		all->info.rows_nb, all->info.cols_nb)) == ERROR)
+	if ((rows_cols_nb(all)) == ERROR)
 		return (free_all(all, ERROR));
-	ft_lstclear(&all->info.list, &free_content);
-	if (check_that_line_is_wall(all->map[0]) == ERROR)
+	if ((map_in_array(all)) == ERROR)
 		return (free_all(all, ERROR));
-	if (check_that_line_is_wall(all->map[all->info.rows_nb - 1]) == ERROR)
+	if ((check_that_line_is_wall(all->map[0])) == ERROR)
 		return (free_all(all, ERROR));
-	if (check_map(all, &all->info.orientation) == ERROR)
+	if ((check_that_line_is_wall(all->map[all->info.rows_nb - 1])) == ERROR)
 		return (free_all(all, ERROR));
-	all->info.list = 0;
+	if ((check_map(all, &all->info.orientation)) == ERROR)
+		return (free_all(all, ERROR));
+	if (all->info.orientation == '\0')
+		return (free_all(all, ERROR));
 	return (SUCCESS);
 }

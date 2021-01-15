@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:40 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/31 16:52:13 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/13 17:54:57 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int			check_file_ext(char *line, char *ext)
 
 int			path(char **dest, char *line, char *cmp, int n)
 {
+	if (*dest)
+	{
+		ft_putstr_fd("Error\nDuplicate parametres\n", 1);
+		return (ERROR);
+	}
 	if (ft_memcmp(line, cmp, n))
 		return (ERROR);
 	line += 2;
