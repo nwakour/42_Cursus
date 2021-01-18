@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:30:59 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 19:26:45 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/16 19:18:26 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct		s_list
 }					t_list;
 
 int					ft_atoi(const char *str);
+long long			ft_atol(const char *str);
 void				*ft_bzero(void *ptr, size_t n);
 void				*ft_calloc(size_t count, size_t size);
 char				**ft_array_char(int row, int column);

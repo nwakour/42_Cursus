@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:30 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 18:50:01 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/17 15:48:53 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ int				free_all(t_all *all, int ret)
 	all->l_sprite = 0;
 	all->sprite = 0;
 	all->ray = 0;
-	system("leaks Cub3D");
 	return (ret);
 }

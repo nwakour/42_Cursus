@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:11 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 19:19:16 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/17 15:40:31 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ typedef struct		s_info
 	int				cols_nb;
 	int				window_width;
 	int				window_height;
+	int				real_width;
+	int				real_height;
 	double			num_rays;
 	int				nb_sprite;
 	double			fov_angle;
-	int				size;
 }					t_info;
 
 typedef struct		s_tex
@@ -209,6 +210,6 @@ int					collision(t_all *all, double y, double x);
 int					close_window(int key, void *param);
 void				draw_floor(t_all *all);
 void				draw_ceiling(t_all *all);
-int					close_file(int fd);
+int					correct_size(t_all *all);
 
 #endif

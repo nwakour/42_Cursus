@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 08:02:08 by nwakour           #+#    #+#             */
-/*   Updated: 2019/10/17 08:15:52 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/15 17:04:34 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,5 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putchar_fd(unb % 10 + '0', fd);
 	}
 	else
-	{
 		ft_putchar_fd(unb % 10 + '0', fd);
-	}
 }

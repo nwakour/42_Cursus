@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 18:31:13 by nwakour           #+#    #+#             */
-/*   Updated: 2019/10/12 18:34:30 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/15 17:05:05 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ char	*ft_strchr(const char *str, int c)
 	while (i <= (int)ft_strlen(str))
 	{
 		if (*s == c)
-		{
 			return (s);
-		}
 		s++;
 		i++;
 	}

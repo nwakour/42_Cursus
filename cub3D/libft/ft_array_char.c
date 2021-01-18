@@ -6,11 +6,11 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:21:12 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/03 16:21:00 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/15 17:03:33 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 char		**ft_array_char(int line, int column)
 {

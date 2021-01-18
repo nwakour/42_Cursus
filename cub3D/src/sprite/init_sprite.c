@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:58 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/11 19:12:22 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/16 17:21:56 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void		init_position_sprite(t_info info, t_sprite *sprite,
 				{
 					sprite->x = (j + 0.5f) * info.tile_size;
 					sprite->y = (i + 0.5f) * info.tile_size;
-					sprite->dist = 0;
 					return ;
 				}
 			}

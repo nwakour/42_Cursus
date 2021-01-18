@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:23:21 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 18:48:39 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/16 15:21:38 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static int	get_data(t_all *all)
 			ft_lstclear_one_if(&all->info.list, line, ft_strcmp, free_content);
 		else
 		{
-			ft_putstr_fd("Error\nWrong identif\n", 1);
+			ft_putstr_fd("Error\nWrong or missing identifier\n", 1);
 			return (ERROR);
 		}
 		tmp = all->info.list;
@@ -126,9 +126,6 @@ static int	get_data(t_all *all)
 
 int			parsing(t_all *all)
 {
-	all->info.window_width = -1;
-	all->info.color_floor = -1;
-	all->info.color_ceil = -1;
 	if ((read_file(all)) == ERROR)
 		return (free_all(all, ERROR));
 	if ((get_data(all)) == ERROR)
@@ -146,6 +143,9 @@ int			parsing(t_all *all)
 	if ((check_map(all, &all->info.orientation)) == ERROR)
 		return (free_all(all, ERROR));
 	if (all->info.orientation == '\0')
+	{
+		ft_putstr_fd("Error\nPlayer not found\n", 1);
 		return (free_all(all, ERROR));
+	}
 	return (SUCCESS);
 }

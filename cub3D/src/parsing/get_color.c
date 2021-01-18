@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:33 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 17:56:49 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/16 19:31:27 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static	char	*get_value_color2(char *line, int column)
 
 static char		*get_value_color(int *ptr, char *line, int column)
 {
+	long long	nb;
+
 	if (!*line)
 	{
 		ft_putstr_fd("Error\nColor format is\nF R,G,B\n", 1);
@@ -40,12 +42,13 @@ static char		*get_value_color(int *ptr, char *line, int column)
 	line += skip_space(line);
 	if (ft_isdigit(*line))
 	{
-		*ptr = atoi(line);
-		if ((*ptr & 255) != *ptr)
+		nb = ft_atol(line);
+		if (nb > 255 || nb < 0)
 		{
-			ft_putstr_fd("Error\nRGB has less than 256 value\n", 1);
+			ft_putstr_fd("Error\nRGB should have less than 256 value\n", 1);
 			return (0);
 		}
+		*ptr = nb;
 	}
 	else
 	{

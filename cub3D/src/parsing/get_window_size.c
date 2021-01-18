@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/20 16:22:44 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 17:53:26 by nwakour          ###   ########.fr       */
+/*   Created: 2021/01/17 15:34:05 by nwakour           #+#    #+#             */
+/*   Updated: 2021/01/17 15:40:01 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-char	*get_width(char *line, int *window_width)
+char static		*get_width(char *line, int *window_width)
 {
-	int	size_width;
+	long long	size_width;
 
 	line += skip_space(line);
 	if (*line == 'R')
@@ -27,7 +27,7 @@ char	*get_width(char *line, int *window_width)
 	line += skip_space(line);
 	if (ft_isdigit(*line))
 	{
-		size_width = atoi(line);
+		size_width = ft_atol(line);
 		line += skip_number(line);
 	}
 	else
@@ -35,18 +35,20 @@ char	*get_width(char *line, int *window_width)
 		ft_putstr_fd("Error\nresolution format is 'R Width Height'\n", 1);
 		return (0);
 	}
+	if (size_width > MAX_VALUE)
+		size_width = WINDOW_WIDTH;
 	*window_width = size_width;
 	return (line);
 }
 
-char	*get_height(char *line, int *window_height)
+char static		*get_height(char *line, int *window_height)
 {
-	int	size_height;
+	long long	size_height;
 
 	line += skip_space(line);
 	if (ft_isdigit(*line))
 	{
-		size_height = atoi(line);
+		size_height = ft_atol(line);
 		line += skip_number(line);
 	}
 	else
@@ -60,13 +62,41 @@ char	*get_height(char *line, int *window_height)
 		ft_putstr_fd("Error\nresolution format is 'R Width Height'\n", 1);
 		return (0);
 	}
+	if (size_height > MAX_VALUE)
+		size_height = WINDOW_HEIGHT;
 	*window_height = size_height;
 	return (line);
 }
 
-int		get_window_size(t_all *all, char *line)
+int				correct_size(t_all *all)
 {
-	if (all->info.window_width != -1)
+	if (all->info.window_width > WINDOW_WIDTH)
+	{
+		all->info.real_width = WINDOW_WIDTH;
+		all->info.window_width = WINDOW_WIDTH;
+	}
+	if (all->info.window_height > WINDOW_HEIGHT)
+	{
+		all->info.real_height = WINDOW_HEIGHT;
+		all->info.window_height = WINDOW_HEIGHT;
+	}
+	all->info.real_height = all->info.window_height;
+	all->info.real_width = all->info.window_width;
+	if (all->info.real_height < 0 || all->info.real_width < 0)
+	{
+		ft_putstr_fd("Error\nwrong R value\n", 1);
+		return (ERROR);
+	}
+	if (all->info.window_width < 50)
+		all->info.window_width = 100;
+	if (all->info.window_height < 100)
+		all->info.window_height = 50;
+	return (SUCCESS);
+}
+
+int				get_window_size(t_all *all, char *line)
+{
+	if (all->info.window_width != -1 || all->info.window_height != -1)
 	{
 		ft_putstr_fd("Error\nDuplicate parametres\n", 1);
 		return (ERROR);
@@ -75,10 +105,7 @@ int		get_window_size(t_all *all, char *line)
 		return (ERROR);
 	if (!(line = get_height(line, &all->info.window_height)))
 		return (ERROR);
-	if (all->info.window_width < 100 || all->info.window_height < 100)
-	{
-		ft_putstr_fd("Error\nWidth and Height must be greater than 100\n", 1);
+	if (correct_size(all) == ERROR)
 		return (ERROR);
-	}
 	return (SUCCESS);
 }

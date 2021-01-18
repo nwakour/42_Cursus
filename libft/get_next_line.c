@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:57:11 by nwakour           #+#    #+#             */
-/*   Updated: 2019/11/18 19:57:15 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/15 17:13:59 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static int	free_return(char **ptr, char **ptr2, char **ptr3, int i)

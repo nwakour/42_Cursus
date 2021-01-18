@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/17 22:15:53 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/15 17:06:18 by nwakour          ###   ########.fr       */
+/*   Created: 2021/01/16 19:15:05 by nwakour           #+#    #+#             */
+/*   Updated: 2021/01/16 19:18:05 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+long long	ft_atol(const char *str)
 {
-	unsigned int	i;
-	char			*str;
+	long long	i;
+	long long	sum;
+	int			sign;
 
 	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
+	sum = 0;
+	sign = 1;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if (!(str = ((char*)malloc(sizeof(char) * (i + 1)))))
-		return (NULL);
-	i = 0;
-	while (s[i])
+	if (str[i] == '-')
+		sign = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] <= '9' && str[i] >= '0')
 	{
-		str[i] = f(i, s[i]);
+		sum = (sum * 10) + str[i] - '0';
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	return (sign * sum);
 }

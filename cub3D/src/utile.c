@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:24:13 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/05 17:18:11 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/17 15:23:02 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,4 @@ int			nb_cloumn(t_list *list)
 		tmp = tmp->next;
 	}
 	return (size);
-}
-
-int			close_file(int fd)
-{
-	if (close(fd) != SUCCESS)
-	{
-		ft_putstr_fd("Error\nClosing file failed\n", 1);
-		return (ERROR);
-	}
-	return (SUCCESS);
 }

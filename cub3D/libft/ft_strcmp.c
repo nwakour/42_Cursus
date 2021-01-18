@@ -6,11 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 17:28:48 by nwakour           #+#    #+#             */
-/*   Updated: 2020/10/21 17:28:51 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/01/15 17:14:42 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(char *s1, char *s2)
+#include "libft.h"
+
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
 
