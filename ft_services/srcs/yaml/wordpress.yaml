@@ -1,43 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: wordpress
   labels:
-    app: nginx
+    app: wordpress
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: wordpress
   template:
     metadata:
       labels:
-        app: nginx
+        app: wordpress
     spec:
       containers:
       - imagePullPolicy: Never
-        image: nginx_service
-        name: nginx
+        image: wordpress_service
+        name: wordpress
         ports:
-        - containerPort: 80
-          name: http
-        - containerPort: 443
-          name: https
+        - containerPort: 5050
+          name: wordpress
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: wordpress
   annotations:
     metallb.universe.tf/allow-shared-ip: shared
 spec:
   selector:
-    app: nginx
+    app: wordpress
   ports:
-    -  name: http
-       port: 80
-       targetPort: 80
-    -  name: https
-       port: 443
-       targetPort: 443
+    -  name: wordpress
+       port: 5050
+       targetPort: 5050
   type: LoadBalancer

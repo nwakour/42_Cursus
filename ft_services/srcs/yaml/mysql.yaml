@@ -32,5 +32,6 @@ spec:
   ports:
     -  name: mysql
        port: 3306
+       targetPort: 3306
   type: ClusterIP
   clusterIP: 10.98.112.191

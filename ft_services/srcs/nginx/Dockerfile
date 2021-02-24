@@ -13,8 +13,6 @@ COPY nginx-selfsigned.key ./etc/ssl/private/nginx-selfsigned.key
 
 COPY nginx.sh ./nginx.sh
 
-COPY health.sh /
-
 RUN echo "<h1 style='color : green;padding-left : 45vw'>ALLOHA!</h1>" > /var/www/localhost/htdocs/index.html;
 
 CMD sh nginx.sh
