@@ -1,5 +1,5 @@
 FROM alpine:3.12
-EXPOSE 5050
+EXPOSE 5000
 RUN apk update && apk upgrade
 
 RUN apk add nginx wget
@@ -9,8 +9,8 @@ RUN apk add php7 php7-fpm php7-opcache && apk add php7-json php7-mysqli && apk a
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-COPY wordpress.sh /wordpress.sh
+COPY phpmyadmin.sh /phpmyadmin.sh
 
-COPY wp-config.php /wp-config.php
+COPY config.inc.php /config.inc.php
 
-CMD sh wordpress.sh
+CMD sh phpmyadmin.sh
