@@ -1,3 +1,4 @@
+#!bin/bash
 ssh-keygen -A
 mkdir -p /run/nginx
 echo "root:root"| chpasswd

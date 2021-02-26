@@ -10,6 +10,8 @@ COPY mariadb-server.cnf /etc/my.cnf.d
 
 COPY wordpress.sql /
 
+COPY phpmyadmin.sql /
+
 COPY mysql.sh /
 
 CMD sh mysql.sh

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - imagePullPolicy: Never
+        image: influxdb_service
+        name: influxdb
+        ports:
+        - containerPort: 8086
+          name: influxdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  selector:
+    app: influxdb
+  ports:
+    -  name: influxdb
+       port: 8086
+       targetPort: 8086
+  type: LoadBalancer
