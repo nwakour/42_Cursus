@@ -1,6 +1,16 @@
 #!bin/bash
+mkdir -p /etc/telegraf
+cp telegraf.conf /etc/telegraf
+#cp influxdb.conf /etc/
 
-wget https://dl.influxdata.com/telegraf/releases/telegraf-1.17.3_linux_amd64.tar.gz
-tar xf telegraf-1.17.3_linux_amd64.tar.gz
-
-top
+# mkdir -p /run/openrc
+# touch /run/openrc/softlevel
+# openrc reboot
+# rc-service telegraf start
+# rc-service influxdb start
+mkdir -p /var/run/
+touch  /var/run/utmp
+nohup influxd run &
+influx -execute "CREATE DATABASE telegraf"
+influx -execute "CREATE USER admin WITH PASSWORD 'admin' WITH ALL PRIVILEGES"
+telegraf
