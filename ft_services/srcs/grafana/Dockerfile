@@ -9,5 +9,6 @@ RUN apk add libc6-compat
 RUN apk add wget
 
 COPY grafana.sh /
+COPY grafana.db /
 
 CMD sh grafana.sh
