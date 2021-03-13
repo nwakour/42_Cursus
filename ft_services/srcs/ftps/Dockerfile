@@ -13,4 +13,6 @@ COPY vsftpd.key /vsftpd.key
 
 COPY ftps.sh /ftps.sh
 
+COPY health.sh /
+
 CMD sh ftps.sh

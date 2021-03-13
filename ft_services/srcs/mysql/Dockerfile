@@ -14,6 +14,6 @@ COPY wordpress.sql /
 
 COPY phpmyadmin.sql /
 
-COPY mysql.sh /
+COPY run.sh /
 
-CMD sh mysql.sh
+CMD sh run.sh

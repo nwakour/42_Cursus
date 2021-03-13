@@ -13,4 +13,6 @@ COPY phpmyadmin.sh /phpmyadmin.sh
 
 COPY config.inc.php /config.inc.php
 
+COPY health.sh /
+
 CMD sh phpmyadmin.sh

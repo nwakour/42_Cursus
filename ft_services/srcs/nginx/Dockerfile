@@ -15,6 +15,8 @@ COPY nginx.sh ./nginx.sh
 
 RUN echo "<h1 style='color : green;padding-left : 45vw'>ALLOHA!</h1>" > /var/www/localhost/htdocs/index.html;
 
+COPY health.sh /
+
 CMD sh nginx.sh
 
 EXPOSE 80 443 22

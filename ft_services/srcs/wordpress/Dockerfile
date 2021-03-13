@@ -13,4 +13,6 @@ COPY wordpress.sh /wordpress.sh
 
 COPY wp-config.php /wp-config.php
 
+COPY health.sh /
+
 CMD sh wordpress.sh

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:34:29 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/25 15:46:27 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/11 15:46:03 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ int		ft_struct_list(t_list **list, void **param, size_t size)
 		ft_lstadd_back(list, new);
 	}
 	return (1);
+}
+t_list *list;
+t_pip *pipe;
+while (1)
+{
+	ft_struct_list(&list, &pipes, sizeof(t_pip));
+	full(pip);
 }
