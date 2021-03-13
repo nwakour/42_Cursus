@@ -56,7 +56,7 @@ static void			ft_free(char **str)
 	free(str);
 }
 
-static void			ft_allo(char **str, const char *src, char c)
+static void			ft_allo(char **str, const char *src, const char *ref, char c)
 {
 	char	*res;
 
@@ -66,9 +66,10 @@ static void			ft_allo(char **str, const char *src, char c)
 		return ;
 	}
 	res = *str;
-	while (*src != c && *src)
+	while (*ref != c && *ref)
 	{
 		*res = *src;
+		ref++;
 		res++;
 		src++;
 	}
@@ -90,7 +91,7 @@ char				**ft_split_ref(char const *s, char const *ref, char c)
 		if (*ref != c && i == 0)
 		{
 			i = 1;
-			ft_allo(str, s, c);
+			ft_allo(str, s, ref, c);
 			str++;
 		}
 		if (*ref == c && i == 1)

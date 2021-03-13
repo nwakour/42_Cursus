@@ -17,11 +17,9 @@ char	*ft_strdup(const char *str)
 	unsigned int	i;
 	unsigned int	j;
 	char			*cp;
-	char			*str1;
 
 	i = 0;
 	j = 0;
-	str1 = (char*)str;
 	while (str[i] != '\0')
 		i++;
 	if (!(cp = (char*)malloc(sizeof(char) * (i + 1))))

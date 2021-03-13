@@ -76,7 +76,7 @@ void	get_pips(t_all *all, char *line, char *line_ref)
 	t_list	*tmp;
 	t_list	*tmp_ref;
 
-	str = ft_split_ref(line, all->ref_line, '|');
+	str = ft_split_ref(line, line_ref, '|');
 	ref = ft_split(line_ref, '|');
 	double_char_to_list(&all->l_pip, str);
 	double_char_to_list(&all->l_pip_ref, ref);

@@ -54,7 +54,7 @@ static char	*ft_smartstrchr(const char *str, int c)
 
 static int	checking(char **line, int fd)
 {
-	if (fd < 0 || fd > OPEN_MAX || line == NULL
+	if (fd < 0 || fd > FOPEN_MAX || line == NULL
 		|| 1000 <= 0 || read(fd, NULL, 0))
 		return (-1);
 	if ((*line = ft_strdup("")) == NULL)
@@ -94,7 +94,7 @@ static int	ft_write_buf(int fd, char **sta, char **line)
 int			get_next_line(int fd, char **line)
 {
 	int			i;
-	static char	*sta[OPEN_MAX] = {0};
+	static char	*sta[FOPEN_MAX] = {0};
 	char		*s;
 
 	i = 1;

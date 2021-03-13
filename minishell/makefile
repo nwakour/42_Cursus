@@ -41,7 +41,7 @@ FLAGS = -Wall -Wextra -Werror
 all : $(NAME)
 
 $(NAME) : ${OBJS}
-		gcc -g ${FLAGS} -o $(NAME) ${OBJS}
+		gcc -fsanitize=address -g ${FLAGS} -o $(NAME) ${OBJS}
 
 .c.o : ${SRCS}
 		gcc -g ${FLAGS} -c ${INCL} $< -o ${<:.c=.o}
