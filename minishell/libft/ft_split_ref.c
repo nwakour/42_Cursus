@@ -6,9 +6,11 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 06:45:50 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/13 18:59:35 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/15 15:39:33 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 #include "libft.h"
 
@@ -60,7 +62,7 @@ static void			ft_allo(char **str, const char *src, const char *ref, char c)
 {
 	char	*res;
 
-	if (!(*str = malloc((ft_fndlen(src, c) + 1) * sizeof(char))))
+	if (!(*str = malloc((ft_fndlen(ref, c) + 1) * sizeof(char))))
 	{
 		ft_free(str);
 		return ;
@@ -69,9 +71,9 @@ static void			ft_allo(char **str, const char *src, const char *ref, char c)
 	while (*ref != c && *ref)
 	{
 		*res = *src;
-		ref++;
 		res++;
 		src++;
+		ref++;
 	}
 	*res = '\0';
 }
@@ -83,6 +85,8 @@ char				**ft_split_ref(char const *s, char const *ref, char c)
 	int		i;
 
 	if (!s || !ref || !(str = malloc((ft_wordnbr(ref, c) + 1) * sizeof(char *))))
+		return (NULL);
+	if (ft_strlen(s) != ft_strlen(ref))
 		return (NULL);
 	res = str;
 	i = 0;

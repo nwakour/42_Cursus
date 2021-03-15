@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 14:56:01 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/13 19:44:31 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/15 19:20:49 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,45 @@
 void	mini_env(void)
 {
 	ft_putstr_fd("\033[0;35m minishell-> \033[0m", 1);
+}
+
+void	read_data(t_all *all)
+{
+	t_list *tmp;
+	t_cmd	*cmd;
+	int		i;
+
+	tmp = all->l_cmd;
+	while (tmp)
+	{
+		cmd = (t_cmd*)tmp->content;
+		printf("cmd = %s\n", cmd->cmd);
+		i = -1;
+		while (cmd->flag[++i])
+			printf("flags = %s\n", cmd->flag[i]);
+		i = -1;
+		while (cmd->arg[++i])
+			printf("args = %s\n", cmd->arg[i]);
+		i = -1;
+		while (cmd->var[++i])
+			printf("vars = %s\n", cmd->var[i]);
+		tmp = tmp->next;
+	}
+}
+void    ft_echo(int n, char **arg)
+{
+	int i;
+
+	i = 0;
+	while (arg[i])
+	{
+    	ft_putstr_fd(arg[i], 1);
+		i++;
+		if (arg[i])
+			ft_putstr_fd(" ", 1);
+	}
+    if (!n)
+        ft_putstr_fd("\n", 1);
 }
 
 void	free_content(void *content)
@@ -45,28 +84,75 @@ void	double_char_to_list(t_list **list, char **str)
 	}
 }
 
-void	execute_cmd(t_all *all, t_list *l_cmd)
+void	execute_cmd(t_all *all, t_cmd *cmd)
 {
-	t_list *tmp;
+	int flag;
 
-	tmp = l_cmd;
-	all->col_count = 0;
-	while (tmp)
+	flag = 0;
+	if (!ft_strcmp(cmd->cmd, "echo"))
 	{
-		ft_putstr_fd((char*)tmp->content, 1);
-		tmp = tmp->next;
-		if (tmp)
-			ft_putstr_fd(" -> ", 1);
+		if (cmd->flag[0])
+			flag = 1;
+		ft_echo(flag, cmd->arg);
 	}
+	else
+		read_data(all);
+}
+
+int		str_n_char(char *str, char c)
+{
+	int i;
+	int nb;
+
+	i = -1;
+	nb = 0;
+	while (str[++i])
+	{
+		if (str[i] == c)
+			nb++;
+	}
+	return (nb);
 }
 
 void	get_cmd(t_all *all, char *line, char *ref_line)
 {
 	char	**str;
+	int		flags;
+	int		vars;
+	int		args;
+	t_cmd	*cmd;
+	int		i;
 
 	str = ft_split_ref(line, ref_line,' ');
-	double_char_to_list(&all->l_cmd, str);
-	execute_cmd(all, all->l_cmd);
+	flags = str_n_char(ref_line, '-');
+	vars = str_n_char(ref_line, '$');
+	args = 0;
+	while (str[args])
+		args++;
+	i = args;
+	args = args - flags - vars - 1;
+	if (!i || !ft_struct_list(&all->l_cmd, (void*)&cmd, sizeof(t_cmd)))
+		return ;
+	cmd->flag = (char**)(malloc((flags + 1) * sizeof(char*)));
+	cmd->flag[flags] = 0;
+	cmd->arg = (char**)(malloc((args + 1) * sizeof(char*)));
+	cmd->arg[args] = 0;
+	cmd->var = (char**)(malloc((vars + 1) * sizeof(char*)));
+	cmd->var[vars] = 0;
+	while( i > 0 && str[--i])
+	{
+		if (i == 0)
+			cmd->cmd = str[i];
+		else if (str[i][0] == '$' && vars)
+			cmd->var[--vars] = str[i];
+		else if (str[i][0] == '-' && flags)
+			cmd->flag[--flags] = str[i];
+		else
+			cmd->arg[--args] = str[i];
+	}
+	execute_cmd(all, cmd);
+	//double_char_to_list(&all->l_cmd, str);
+	//execute_cmd(all, all->l_cmd);
 }
 
 void	get_pips(t_all *all, char *line, char *line_ref)
@@ -87,20 +173,21 @@ void	get_pips(t_all *all, char *line, char *line_ref)
 		if (ft_strchr(tmp_ref->content, ' '))
 		{
 			get_cmd(all, tmp->content, tmp_ref->content);
-			if (all->l_cmd)
-				ft_lstclear(&all->l_cmd, &free_content);
+			//if (all->l_cmd)
+			//	ft_lstclear(&all->l_cmd, &free_content);
 		}
 		else
 		{
-			all->l_cmd = ft_lstnew(tmp->content);
-			execute_cmd(all, all->l_cmd);
-			if (all->l_cmd)
-				ft_lstclear(&all->l_cmd, &free_content);
+			//all->l_cmd = ft_lstnew(tmp->content);
+			//execute_cmd(all, all->l_cmd);
+			get_cmd(all, tmp->content, tmp_ref->content);
+			//if (all->l_cmd)
+			//	ft_lstclear(&all->l_cmd, &free_content);
 		}
 		tmp = tmp->next;
 		tmp_ref = tmp_ref->next;
-		if (tmp)
-			ft_putstr_fd(" + ", 1);
+		// if (tmp)
+		// 	ft_putstr_fd(" + ", 1);
 	}
 }
 
@@ -131,20 +218,21 @@ void	get_colons(t_all *all, char *line)
 		else if (ft_strchr(tmp_ref->content, ' '))
 		{
 			get_cmd(all, tmp->content, tmp_ref->content);
-			if (all->l_cmd)
-				ft_lstclear(&all->l_cmd, &free_content);
+			// if (all->l_cmd)
+			// 	ft_lstclear(&all->l_cmd, &free_content);
 		}
 		else
 		{
-			all->l_cmd = ft_lstnew(tmp->content);
-			execute_cmd(all, all->l_cmd);
-			if (all->l_cmd)
-				ft_lstclear(&all->l_cmd, &free_content);
+			get_cmd(all, tmp->content, tmp_ref->content);
+			// all->l_cmd = ft_lstnew(tmp->content);
+			// execute_cmd(all, all->l_cmd);
+			// if (all->l_cmd)
+			// 	ft_lstclear(&all->l_cmd, &free_content);
 		}
 		tmp = tmp->next;
 		tmp_ref = tmp_ref->next;
-		if (tmp)
-			ft_putstr_fd("\n", 1);
+		// if (tmp)
+		// 	ft_putstr_fd("\n", 1);
 	}
 }
 
@@ -173,15 +261,16 @@ void	get_data(t_all *all)
 	else if (ft_strchr(all->ref_line, ' '))
 	{
 		get_cmd(all, all->line, all->ref_line);
-		if (all->l_cmd)
-			ft_lstclear(&all->l_cmd, &free_content);
+		// if (all->l_cmd)
+		// 	ft_lstclear(&all->l_cmd, &free_content);
 	}
 	else
 	{
-		all->l_cmd = ft_lstnew(all->line);
-		execute_cmd(all, all->l_cmd);
-		if (all->l_cmd)
-			ft_lstclear(&all->l_cmd, &free_content);
+		get_cmd(all, all->line, all->ref_line);
+		// all->l_cmd = ft_lstnew(all->line);
+		// execute_cmd(all, all->l_cmd);
+		// if (all->l_cmd)
+		// 	ft_lstclear(&all->l_cmd, &free_content);
 	}
 }
 
@@ -213,14 +302,34 @@ void	skip_back_s(t_all *all, int *i)
 	all->ref_line[++*i] = TEXT;
 }
 
-void	handle_quotes(t_all *all, int d, int *i, char c)
+void	handle_d_quotes(t_all *all, int d, int *i, char c)
 {
 	all->ref_line[*i] = d + 48;
 	while (all->line[++*i] != '\0')
 	{
-		if (all->line[*i] == '\\' && all->line[*i + 1] == c)
+		if (all->line[*i] == '\\' && c == '\'')
+		{
+			all->ref_line[*i] = d + 48 + 1;
+			break ;
+		}
+		else if (all->line[*i] == '\\' && all->line[*i + 1] == c)
 			skip_back_s(all, i);
 		else if (all->line[*i] == c)
+		{
+			all->ref_line[*i] = d + 48 + 1;
+			break ;
+		}
+		else
+			all->ref_line[*i] = TEXT;
+	}
+}
+
+void	handle_s_quotes(t_all *all, int d, int *i, char c)
+{
+	all->ref_line[*i] = d + 48;
+	while (all->line[++*i] != '\0')
+	{
+		if (all->line[*i] == c)
 		{
 			all->ref_line[*i] = d + 48 + 1;
 			break ;
@@ -241,9 +350,9 @@ void	parse(t_all *all)
 		if ((ret = cor_char(all->line[i])) == BACK_S)
 			skip_back_s(all, &i);
 		else if (ret == OPEN_S_Q)
-			handle_quotes(all, OPEN_S_Q, &i, '\'');
+			handle_s_quotes(all, OPEN_S_Q, &i, '\'');
 		else if (ret == OPEN_D_Q)
-			handle_quotes(all, OPEN_D_Q, &i, '\"');
+			handle_d_quotes(all, OPEN_D_Q, &i, '\"');
 		else if (ret == FLAG)
 			all->ref_line[i] = FLAG;
 		else if (ret == SPACE)
@@ -268,19 +377,19 @@ int		main(void)
 		ft_struct_bezero(&all, sizeof(t_all));
 		mini_env();
 		get_next_line(0, &all.line);
-		//get_data(&all);
-		//if (all.line)
-			//free(all.line);
 		all.ref_line = ft_strdup(all.line);
 		parse(&all);
-		ft_putstr_fd(all.line, 1);
-		printf("\n");
-		ft_putstr_fd(all.ref_line, 1);
-		printf("\n");
+		//ft_putstr_fd(all.line, 1);
+		//printf("\n");
+		//ft_putstr_fd(all.ref_line, 1);
+		//printf("\n");
 		get_data(&all);
-		printf("\n");
-		//if (all.line)
-		//	free(all.line);
+		if (all.l_cmd)
+			ft_lstclear(&all.l_cmd, &free_content);
+		//read_data(&all);
+		//printf("\n");
+		if (all.line)
+			free(all.line);
 	}
 	return (0);
 }
