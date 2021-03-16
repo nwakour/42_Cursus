@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 14:59:03 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/15 17:31:34 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/16 14:48:37 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct		s_all
 	t_list	*l_pip;
 	t_list	*l_pip_ref;
 	t_list	*l_cmd;
-	t_cmd	*cmd;
 	char	*line;
 	char	*ref_line;
 	int		col_count;

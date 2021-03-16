@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 14:56:01 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/15 19:20:49 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/16 19:27:41 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,77 @@ void	read_data(t_all *all)
 		tmp = tmp->next;
 	}
 }
+
+void	remove_zero_ref(char **s, char **ref)
+{
+	int		zeros;
+	int		i;
+	int		len;
+	char	*new_s;
+	char	*new_ref;
+	int		j;
+
+	if (!*s || !*ref || ((len = ft_strlen(*s)) != (int)ft_strlen(*ref)))
+		return ;
+	i = -1;
+	zeros = 0;
+	while ((*ref)[++i] != '\0')
+	{
+		if ((*ref)[i] != 'a' && (*ref)[i] != ' ' && (*ref)[i] != 45)
+			zeros++;
+	}
+	if (!zeros)
+		return ;
+	len -= zeros;
+	i = -1;
+	if (!(new_s = ((char*)malloc((len) * sizeof(char)))))
+			return ;
+	if (!(new_ref = ((char*)malloc((len) * sizeof(char)))))
+			return ;
+	j = 0;
+	while ((*s)[++i] != '\0')
+	{
+		if ((*ref)[i] == 'a' || (*ref)[i] == ' ' || (*ref)[i] == 45)
+		{
+			new_ref[j] = (*ref)[i];
+			new_s[j] = (*s)[i];
+			j++;
+		}
+	}
+	new_ref[j] = '\0';
+	new_s[j] = '\0';
+	//free(*s);
+	//free(*ref);
+	*s = new_s;
+	*ref = new_ref;
+}
+
+/*char	*remove_quotes(char *s)
+{
+	int		len;
+	int		i;
+	char	*str;
+
+	if(!s)
+		return (NULL);
+	len = ft_strlen(s);
+	
+	if ((s[0] == '\'' && s[len - 1] == '\'') ||
+		(s[0] == '\"' && s[len - 1] == '\"'))
+	{
+		if (!(str = ((char*)malloc((len - 1) * sizeof(char)))))
+			return (NULL);
+		len -= 2;
+		i = -1;
+		while (++i < len && len > 0)
+			str[i] = s[i + 1];
+		str[i] = '\0';
+		free(s);
+		return (str);
+	}
+	return (s);
+}*/
+
 void    ft_echo(int n, char **arg)
 {
 	int i;
@@ -123,6 +194,7 @@ void	get_cmd(t_all *all, char *line, char *ref_line)
 	t_cmd	*cmd;
 	int		i;
 
+	remove_zero_ref(&line, &ref_line);
 	str = ft_split_ref(line, ref_line,' ');
 	flags = str_n_char(ref_line, '-');
 	vars = str_n_char(ref_line, '$');
@@ -151,8 +223,6 @@ void	get_cmd(t_all *all, char *line, char *ref_line)
 			cmd->arg[--args] = str[i];
 	}
 	execute_cmd(all, cmd);
-	//double_char_to_list(&all->l_cmd, str);
-	//execute_cmd(all, all->l_cmd);
 }
 
 void	get_pips(t_all *all, char *line, char *line_ref)
@@ -170,24 +240,9 @@ void	get_pips(t_all *all, char *line, char *line_ref)
 	tmp_ref = all->l_pip_ref;
 	while (tmp)
 	{
-		if (ft_strchr(tmp_ref->content, ' '))
-		{
-			get_cmd(all, tmp->content, tmp_ref->content);
-			//if (all->l_cmd)
-			//	ft_lstclear(&all->l_cmd, &free_content);
-		}
-		else
-		{
-			//all->l_cmd = ft_lstnew(tmp->content);
-			//execute_cmd(all, all->l_cmd);
-			get_cmd(all, tmp->content, tmp_ref->content);
-			//if (all->l_cmd)
-			//	ft_lstclear(&all->l_cmd, &free_content);
-		}
+		get_cmd(all, tmp->content, tmp_ref->content);
 		tmp = tmp->next;
 		tmp_ref = tmp_ref->next;
-		// if (tmp)
-		// 	ft_putstr_fd(" + ", 1);
 	}
 }
 
@@ -215,24 +270,10 @@ void	get_colons(t_all *all, char *line)
 				ft_lstclear(&all->l_pip_ref, &free_content);
 			}
 		}
-		else if (ft_strchr(tmp_ref->content, ' '))
-		{
-			get_cmd(all, tmp->content, tmp_ref->content);
-			// if (all->l_cmd)
-			// 	ft_lstclear(&all->l_cmd, &free_content);
-		}
 		else
-		{
 			get_cmd(all, tmp->content, tmp_ref->content);
-			// all->l_cmd = ft_lstnew(tmp->content);
-			// execute_cmd(all, all->l_cmd);
-			// if (all->l_cmd)
-			// 	ft_lstclear(&all->l_cmd, &free_content);
-		}
 		tmp = tmp->next;
 		tmp_ref = tmp_ref->next;
-		// if (tmp)
-		// 	ft_putstr_fd("\n", 1);
 	}
 }
 
@@ -258,20 +299,8 @@ void	get_data(t_all *all)
 			ft_lstclear(&all->l_pip_ref, &free_content);
 		}
 	}
-	else if (ft_strchr(all->ref_line, ' '))
-	{
-		get_cmd(all, all->line, all->ref_line);
-		// if (all->l_cmd)
-		// 	ft_lstclear(&all->l_cmd, &free_content);
-	}
 	else
-	{
 		get_cmd(all, all->line, all->ref_line);
-		// all->l_cmd = ft_lstnew(all->line);
-		// execute_cmd(all, all->l_cmd);
-		// if (all->l_cmd)
-		// 	ft_lstclear(&all->l_cmd, &free_content);
-	}
 }
 
 int		cor_char(char c)
@@ -379,10 +408,10 @@ int		main(void)
 		get_next_line(0, &all.line);
 		all.ref_line = ft_strdup(all.line);
 		parse(&all);
-		//ft_putstr_fd(all.line, 1);
-		//printf("\n");
-		//ft_putstr_fd(all.ref_line, 1);
-		//printf("\n");
+		ft_putstr_fd(all.line, 1);
+		printf("\n");
+		ft_putstr_fd(all.ref_line, 1);
+		printf("\n");
 		get_data(&all);
 		if (all.l_cmd)
 			ft_lstclear(&all.l_cmd, &free_content);
@@ -393,3 +422,5 @@ int		main(void)
 	}
 	return (0);
 }
+
+
