@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 14:59:03 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/16 14:48:37 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/19 17:59:26 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@
 # define SPACE 32
 # define FLAG 45
 # define SKIP 48
+# define GREAT 62
+# define LESS 60
+# define GREATER 63
 
 typedef struct		s_cmd
 {
 	char	*cmd;
 	char	**arg;
 	char	**flag;
-	char	**var;
+	int		fd;
+	char	**f_name;
+	int		valid;
 }					t_cmd;
 
 typedef struct		s_all
@@ -45,7 +50,8 @@ typedef struct		s_all
 	t_list	*l_cmd;
 	char	*line;
 	char	*ref_line;
-	int		col_count;
+	char	**env;
+	int		ex;
 }					t_all;
 
 #endif

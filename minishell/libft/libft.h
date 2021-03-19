@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:30:59 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/13 19:00:40 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/19 18:38:30 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <limits.h>
+# include <fcntl.h>
 
 typedef struct		s_list
 {
