@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 14:56:01 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/19 19:17:01 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/22 10:46:57 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	remove_zero_ref(char **s, char **ref)
 	zeros = 0;
 	while ((*ref)[++i] != '\0')
 	{
-		if ((*ref)[i] != 'a' && (*ref)[i] != ' ' && (*ref)[i] != 45 && (*ref)[i] != 36 && (*ref)[i] != 62 && (*ref)[i] != 60 && (*ref)[i] != 63)
+		if ((*ref)[i] != 'a' && (*ref)[i] != ' ' && (*ref)[i] != 45 && (*ref)[i] != 36
+			&& (*ref)[i] != 62 && (*ref)[i] != 60 && (*ref)[i] != 63)
 			zeros++;
 	}
 	if (!zeros)
@@ -68,7 +69,8 @@ void	remove_zero_ref(char **s, char **ref)
 	j = 0;
 	while ((*s)[++i] != '\0')
 	{
-		if ((*ref)[i] == 'a' || (*ref)[i] == ' ' || (*ref)[i] == 45 || (*ref)[i] == 36 || (*ref)[i] == 62 || (*ref)[i] == 60 || (*ref)[i] == 63)
+		if ((*ref)[i] == 'a' || (*ref)[i] == ' ' || (*ref)[i] == 45 || (*ref)[i] == 36
+			|| (*ref)[i] == 62 || (*ref)[i] == 60 || (*ref)[i] == 63)
 		{
 			new_ref[j] = (*ref)[i];
 			new_s[j] = (*s)[i];
@@ -95,6 +97,7 @@ void	ft_echo(int n, char **arg, int fd)
 	}
 	if (!n)
 		ft_putstr_fd("\n", fd);
+	
 }
 
 int     ft_cd(char* path)
@@ -161,7 +164,10 @@ void	execute_cmd(t_all *all, t_cmd *cmd)
 			i = -1;
 			while (cmd->f_name[++i])
 			{
-				cmd->fd = open((cmd->f_name[i] + 1), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+				if (cmd->f_name[i][0] == '?')
+					cmd->fd = open((cmd->f_name[i] + 1), O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+				else
+					cmd->fd = open((cmd->f_name[i] + 1), O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 				if (cmd->f_name[i + 1])
 					close(cmd->fd);
 			}
@@ -237,6 +243,7 @@ char	*check_env(char **env, char *str)
 void	get_cmd(t_all *all, char *line, char *ref_line)
 {
 	char	**str;
+	char	**str_ref;
 	int		flags;
 	int		args;
 	int		redirs;
@@ -245,6 +252,7 @@ void	get_cmd(t_all *all, char *line, char *ref_line)
 
 	remove_zero_ref(&line, &ref_line);
 	str = ft_split_ref(line, ref_line, ' ');
+	str_ref = ft_split(ref_line, ' ');
 	flags = str_n_char(ref_line, '-');
 	redirs = str_n_char(ref_line, '>');
 	redirs += str_n_char(ref_line, '<');
@@ -266,11 +274,19 @@ void	get_cmd(t_all *all, char *line, char *ref_line)
 	{
 		if (i == 0)
 			cmd->cmd = str[i];
-		else if (str[i][0] == '<' || str[i][0] == '>' || str[i][0] == '?')
-			cmd->f_name[--redirs] = str[i];
-		else if (str[i][0] == '$')
+		else if (str_ref[i][0] == '<' || str_ref[i][0] == '>' || str_ref[i][0] == '?')
+		{
+			if (str_ref[i][0] == '?')
+			{
+				cmd->f_name[--redirs] = str[i];
+				cmd->f_name[redirs][0] = '?';
+			}
+			else
+				cmd->f_name[--redirs] = str[i];
+		}
+		else if (str_ref[i][0] == '$')
 			cmd->arg[--args] = check_env(all->env, str[i]);
-		else if (str[i][0] == '-' && flags)
+		else if (str_ref[i][0] == '-' && flags)
 			cmd->flag[--flags] = str[i];
 		else
 			cmd->arg[--args] = str[i];
@@ -453,11 +469,8 @@ void	parse(t_all *all)
 			{
 				all->ref_line[i] = GREATER;
 				all->ref_line[++i] = SKIP;
-				while (all->line[i] && all->line[i] == ' ')
-				{
-					all->ref_line[i] = SKIP;
-					i++;
-				}
+				while (all->line[i + 1] && all->line[i + 1] == ' ')
+					all->ref_line[++i] = SKIP;
 			}
 			else
 			{
@@ -500,6 +513,5 @@ int		main(int argc, char **argv, char **env)
 		if (all.ex)
 			break ;
 	}
-	//system("leaks a.out");
 	return (0);
 }
