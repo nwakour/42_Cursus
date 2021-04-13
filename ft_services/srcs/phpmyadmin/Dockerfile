@@ -9,10 +9,10 @@ RUN apk add php7 php7-fpm php7-opcache && apk add php7-json php7-mysqli && apk a
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-COPY phpmyadmin.sh /phpmyadmin.sh
+COPY run.sh /run.sh
 
 COPY config.inc.php /config.inc.php
 
 COPY health.sh /
 
-CMD sh phpmyadmin.sh
+CMD sh run.sh

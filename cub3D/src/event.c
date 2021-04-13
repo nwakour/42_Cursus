@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:22:26 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/11 15:46:09 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/03/19 17:04:24 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		key_exit(void *param)
 
 int		handling_event(t_all *all)
 {
-	mlx_hook(all->mlx.win_p, 2, 0, key_pressed, all);
+	mlx_hook(all->mlx.win_p, 2, 0, &key_pressed, all);
 	mlx_hook(all->mlx.win_p, 3, 0, key_release, all);
 	mlx_hook(all->mlx.win_p, 17, 0L, key_exit, all);
 	return (0);

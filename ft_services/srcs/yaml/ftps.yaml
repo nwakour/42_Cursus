@@ -11,26 +11,28 @@ spec:
     -  name: ftps
        port: 21
        targetPort: 21
-    -  name: ftps-port-one
+    -  name: ftps-port0
        port: 2100
        targetPort: 2100
-    -  name: ftps-port-zero
+    -  name: ftps-port1
        port: 2101
        targetPort: 2101
+    -  name: ftps-port2
+       port: 2102
+       targetPort: 2102
+    -  name: ftps-port3
+       port: 2103
+       targetPort: 2103
+    -  name: ftps-port4
+       port: 2104
+       targetPort: 2104
+    -  name: ftps-port5
+       port: 2105
+       targetPort: 2105
+    -  name: ftps-port6
+       port: 2106
+       targetPort: 2106
   type: LoadBalancer
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ftps
-  labels:
-    app: ftps
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -63,15 +65,16 @@ spec:
         - containerPort: 21
           name: ftps
         - containerPort: 2100
-          name: ftps-port-one
+          name: ftps-port0
         - containerPort: 2101
-          name: ftps-port-zero
-        volumeMounts:
-          - name: ftps
-            mountPath: /home/admin
-      volumes:
-      - name: ftps
-        persistentVolumeClaim:
-          claimName: ftps
-
-          
+          name: ftps-port1
+        - containerPort: 2102
+          name: ftps-port2
+        - containerPort: 2103
+          name: ftps-port3
+        - containerPort: 2104
+          name: ftps-port4
+        - containerPort: 2105
+          name: ftps-port5
+        - containerPort: 2106
+          name: ftps-port6

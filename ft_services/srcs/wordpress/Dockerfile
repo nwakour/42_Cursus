@@ -9,10 +9,10 @@ RUN apk add php7 php7-fpm php7-opcache && apk add php7-json php7-mysqli && apk a
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-COPY wordpress.sh /wordpress.sh
+COPY run.sh /run.sh
 
 COPY wp-config.php /wp-config.php
 
 COPY health.sh /
 
-CMD sh wordpress.sh
+CMD sh run.sh

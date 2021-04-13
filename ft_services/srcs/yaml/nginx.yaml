@@ -14,6 +14,9 @@ spec:
     -  name: https
        port: 443
        targetPort: 443
+    -  name: ssh
+       port: 22
+       targetPort: 22
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -41,9 +44,8 @@ spec:
           name: http
         - containerPort: 443
           name: https
-        volumeMounts:
-          - name: nginx
-            mountPath: /var/www/localhost/htdocs
+        - containerPort: 22
+          name: "ssh"
         livenessProbe:
           exec:
             command:
@@ -51,7 +53,3 @@ spec:
             - health.sh
           initialDelaySeconds: 30
           periodSeconds: 30
-      volumes:
-      - name: nginx
-        persistentVolumeClaim:
-          claimName: ftps

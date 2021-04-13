@@ -14,6 +14,8 @@ COPY wordpress.sql /
 
 COPY phpmyadmin.sql /
 
+COPY health.sh /
+
 COPY run.sh /
 
 CMD sh run.sh

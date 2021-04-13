@@ -1,6 +1,6 @@
 #!bin/bash
 minikube delete
-minikube start
+minikube start --driver virtualbox
 minikube addons enable metallb
 eval $(minikube docker-env)
 docker build -t ftps_service ./srcs/ftps/.
@@ -21,4 +21,3 @@ kubectl apply -f srcs/yaml/mysql.yaml
 kubectl apply -f srcs/yaml/wordpress.yaml
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
 kubectl apply -f srcs/yaml/grafana.yaml
-
