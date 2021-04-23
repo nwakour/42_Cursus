@@ -33,6 +33,13 @@ spec:
       - imagePullPolicy: Never
         image: grafana_service
         name: grafana
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - health.sh
+          initialDelaySeconds: 30
+          periodSeconds: 10
         ports:
         - containerPort: 3000
           name: grafana

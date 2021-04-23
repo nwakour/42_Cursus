@@ -33,13 +33,13 @@ spec:
       - imagePullPolicy: Never
         image: wordpress_service
         name: wordpress
-        ports:
-        - containerPort: 5050
-          name: wordpress
         livenessProbe:
           exec:
             command:
             - sh
             - health.sh
           initialDelaySeconds: 30
-          periodSeconds: 30
+          periodSeconds: 10
+        ports:
+        - containerPort: 5050
+          name: wordpress

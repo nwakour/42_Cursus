@@ -60,7 +60,7 @@ spec:
             - sh
             - health.sh
           initialDelaySeconds: 30
-          periodSeconds: 30
+          periodSeconds: 10
         ports:
         - containerPort: 21
           name: ftps

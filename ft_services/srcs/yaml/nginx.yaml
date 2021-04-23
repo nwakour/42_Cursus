@@ -39,6 +39,13 @@ spec:
       - imagePullPolicy: Never
         image: nginx_service
         name: nginx
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - health.sh
+          initialDelaySeconds: 30
+          periodSeconds: 10
         ports:
         - containerPort: 80
           name: http
@@ -46,10 +53,3 @@ spec:
           name: https
         - containerPort: 22
           name: "ssh"
-        livenessProbe:
-          exec:
-            command:
-            - sh
-            - health.sh
-          initialDelaySeconds: 30
-          periodSeconds: 30

@@ -1,14 +1,3 @@
 #!bin/bash
-ps | grep -v grep | grep influxd
-return=$?
-if [ $return -ne 0 ]; 
-then
-	exit $return
-fi
-
-ps | grep -v grep | grep telegraf
-return=$?
-if [ $return -ne 0 ]; 
-then
-	exit $return
-fi
+if ps | grep influxd | grep -vc grep; then exit 0; else exit 1 ; fi
+if ps | grep telegraf | grep -vc grep; then exit 0; else exit 1 ; fi

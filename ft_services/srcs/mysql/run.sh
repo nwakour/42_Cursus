@@ -15,4 +15,5 @@ mysql -u root -e "CREATE DATABASE phpmyadmin; use phpmyadmin; source phpmyadmin.
 mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO admin@'%'; FLUSH PRIVILEGES;"
 rc-service mariadb restart
 
+/usr/bin/telegraf&
 top

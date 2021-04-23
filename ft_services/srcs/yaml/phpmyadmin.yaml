@@ -33,13 +33,13 @@ spec:
       - imagePullPolicy: Never
         image: phpmyadmin_service
         name: phpmyadmin
-        ports:
-        - containerPort: 5000
-          name: phpmyadmin
         livenessProbe:
           exec:
             command:
             - sh
             - health.sh
           initialDelaySeconds: 30
-          periodSeconds: 30
+          periodSeconds: 10
+        ports:
+        - containerPort: 5000
+          name: phpmyadmin

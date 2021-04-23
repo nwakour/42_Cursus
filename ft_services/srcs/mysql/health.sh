@@ -1,8 +1,2 @@
 #! /bin/sh
-
-ps | grep -v grep | grep mysqld
-return=$?
-if [ $return -ne 0 ]; 
-then
-	exit $return
-fi
+if ps | grep mysqld | grep -vc grep; then exit 0; else exit 1 ; fi

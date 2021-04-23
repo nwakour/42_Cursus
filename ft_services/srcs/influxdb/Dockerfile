@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.12
 EXPOSE 8086
 
 RUN apk update && apk upgrade
