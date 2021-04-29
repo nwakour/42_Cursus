@@ -14,6 +14,4 @@ mysql -u root -e "CREATE DATABASE wp_db; use wp_db; source wordpress.sql;"
 mysql -u root -e "CREATE DATABASE phpmyadmin; use phpmyadmin; source phpmyadmin.sql;"
 mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO admin@'%'; FLUSH PRIVILEGES;"
 rc-service mariadb restart
-
-/usr/bin/telegraf&
 top

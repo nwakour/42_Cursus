@@ -32,6 +32,18 @@ spec:
     -  name: ftps-port6
        port: 2106
        targetPort: 2106
+    -  name: ftps-port7
+       port: 2107
+       targetPort: 2107
+    -  name: ftps-port8
+       port: 2108
+       targetPort: 2108
+    -  name: ftps-port9
+       port: 2109
+       targetPort: 2109
+    -  name: ftps-port10
+       port: 2110
+       targetPort: 2110
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -78,3 +90,11 @@ spec:
           name: ftps-port5
         - containerPort: 2106
           name: ftps-port6
+        - containerPort: 2107
+          name: ftps-port7
+        - containerPort: 2108
+          name: ftps-port8
+        - containerPort: 2109
+          name: ftps-port9
+        - containerPort: 2110
+          name: ftps-port10
