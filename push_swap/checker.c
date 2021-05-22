@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/21 19:03:47 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/22 20:43:25 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		main(int argc, char **argv)
 	t_ilist *a;
 	t_ilist *b;
 	t_ilist *new;
-	char *line;
+	// char *line;
 
 	a = NULL;
 	b = NULL;
@@ -73,13 +73,34 @@ int		main(int argc, char **argv)
 				return (0);
 			ft_int_lstadd_back(&a, new);
 		}
-		line = ft_strdup("");
-		while (1)
+		int tmp = 2147483647;
+		srand(time(NULL));
+		for (int i = 0; i < 1000000; ++i)
 		{
-			print_t_ilists(a, b);
-			get_next_line(0, &line);
-			corr_op(&a, &b, line);
+			if (i % 1000 == 0)
+				srand(time(NULL));
+			int d = ai(a, b);
+			a = NULL;
+			int j = -1;
+			while (++j < argc - 1)
+			{
+				if (!(new = ft_int_lstnew(nbs[j])))
+					return (0);
+				ft_int_lstadd_back(&a, new);
+			}
+			if (d < tmp)
+				tmp = d;
+			printf("%d\n", tmp);
 		}
+		printf("%d\n", tmp);
+		// system("leaks checker");
+		// line = ft_strdup("");
+		// while (1)
+		// {
+		// 	print_t_ilists(a, b);
+		// 	get_next_line(0, &line);
+		// 	corr_op(&a, &b, line);
+		// }
 	}
 	free(nbs);
 	return (0);

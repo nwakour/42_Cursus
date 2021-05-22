@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:09:16 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/21 17:58:33 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/22 17:36:39 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 #include "libft/libft.h"
+#include <time.h>
 
 typedef struct		s_ilist
 {
@@ -34,4 +35,5 @@ void 	rev_rotate(t_ilist **stack);
 void	corr_op(t_ilist **a, t_ilist **b, char *opp);
 void    print_t_ilists(t_ilist *A, t_ilist *B);
 
+int	ai(t_ilist *a, t_ilist *b);
 #endif

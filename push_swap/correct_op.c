@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 16:46:41 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/21 19:06:47 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/22 14:11:31 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void op_rr(t_ilist **stack, int len)
 
 void corr_op(t_ilist **a, t_ilist **b, char *opp)
 {
-	printf("%s\n", opp);
+	// printf("%s\n", opp);
 	if (!opp || opp[0] == '\0' || opp[1] == '\0')
 		return;
 	else if (opp[0] == 's')
