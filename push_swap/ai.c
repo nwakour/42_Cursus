@@ -6,21 +6,21 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 13:40:36 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/22 21:25:53 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/23 19:57:22 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 int g_nb = 2147483647;
 
-static void free_all(t_ilist **a, t_ilist **b, char **done)
+static void free_all(t_ilist **a, t_ilist **b, int *done)
 {
 	t_ilist *next_node;
 	t_ilist *current;
 
-	if (done && *done)
-		free(*done);
-	*done = NULL;
+	if (done)
+		free(done);
+	done = NULL;
 	next_node = (*a);
 	current = (*a);
 	while (next_node)
@@ -39,7 +39,7 @@ static void free_all(t_ilist **a, t_ilist **b, char **done)
 	}
 }
 
-static int is_sorted(t_ilist *a, t_ilist *b, char *done, int nnb)
+static int is_sorted(t_ilist *a, t_ilist *b, int *done, int nnb)
 {
 	t_ilist *tmp;
 	int nb;
@@ -58,36 +58,36 @@ static int is_sorted(t_ilist *a, t_ilist *b, char *done, int nnb)
 	}
 	if (b)
 		return (0);
-	
-	(void)done;
 	// if (nnb < g_nb)
 	// 	g_nb = nnb;
+	(void)done;
 	if (nnb <= g_nb)
 	{
 		g_nb = nnb;
-		printf("%s\n", done);
-		print_t_ilists(a, b);
-		printf("%d\n", nnb);
+		printf("{");
+		for (int i = 0; done[i] != 0; ++i)
+			printf("%d,", done[i]);
+		printf("}\n");
+		// print_t_ilists(a, b);
+		printf("%d\n", g_nb);
 	}
-	free_all(&a, &b, &done);
+	// free_all(&a, &b, done);
 	return (1);
 }
 
-static void add_poss(char **oper, char *add)
+static void add_poss(int *opper, int add)
 {
 	int i;
 
 	i = 0;
-	while (oper[i] && oper[i][0] != 'z')
+	while (i < 11 && opper[i] != 0)
 		i++;
-	oper[i][0] = add[0];
-	oper[i][1] = add[1];
-	oper[i][2] = add[2];
+	opper[i] = add;
 	if (i < 10)
-		oper[++i][0] = 'z';
+		opper[++i] = 0;
 }
 
-static int is_poss(t_ilist *a, t_ilist *b, char **oper)
+static int is_poss(t_ilist *a, t_ilist *b, int *opper, int last)
 {
 	int a_len;
 	int b_len;
@@ -98,33 +98,66 @@ static int is_poss(t_ilist *a, t_ilist *b, char **oper)
 	poss_nb = 0;
 	if (a_len > 1)
 	{
-		add_poss(oper, "sa");
-		add_poss(oper, "ra");
-		add_poss(oper, "rra");
-		poss_nb += 3;
+		if (last != SA)
+		{
+			add_poss(opper, SA);
+			poss_nb += 1;
+		}
+		if (last != RRA)
+		{
+			add_poss(opper, RA);
+			poss_nb += 1;
+		}
+		if (last != RA)
+		{
+			add_poss(opper, RRA);
+			poss_nb += 1;
+		}
 	}
 	if (b_len > 1)
 	{
-		add_poss(oper, "sb");
-		add_poss(oper, "rb");
-		add_poss(oper, "rrb");
-		poss_nb += 3;
+		if (last != SB)
+		{
+			add_poss(opper, SB);
+			poss_nb += 1;
+		}
+		if (last != RRB)
+		{
+			add_poss(opper, RB);
+			poss_nb += 1;
+		}
+		if (last != RB)
+		{
+			add_poss(opper, RRB);
+			poss_nb += 1;
+		}
 	}
 	if (b_len > 1 && a_len > 1)
 	{
-		add_poss(oper, "ss");
-		add_poss(oper, "rr");
-		add_poss(oper, "rrr");
-		poss_nb += 3;
+		if (last != SS)
+		{
+			add_poss(opper, SS);
+			poss_nb += 1;
+		}
+		if (last != RRR)
+		{
+			add_poss(opper, RR);
+			poss_nb += 1;
+		}
+		if (last != RR)
+		{
+			add_poss(opper, RRR);
+			poss_nb += 1;
+		}
 	}
-	if (b_len > 0)
+	if (b_len > 0 && last != PB)
 	{
-		add_poss(oper, "pa");
+		add_poss(opper, PA);
 		poss_nb += 1;
 	}
-	if (a_len > 0)
+	if (a_len > 0 && last != PA)
 	{
-		add_poss(oper, "pb");
+		add_poss(opper, PB);
 		poss_nb += 1;
 	}
 	return poss_nb;
@@ -142,131 +175,114 @@ static void cp_list(t_ilist *list, t_ilist **cp)
 	}
 }
 
-static void add_done(char **done, char *opp)
+static void add_done(int *done, int opper)
 {
 	int i;
-	int len;
-	int j;
-
 	i = 0;
-	j = 0;
-	len = ft_strlen(opp);
 	
-	while ((*done)[i])
+	while (done[i] != 0)
 		i++;
-	while (j < len)
-	{
-		(*done)[i] = opp[j];
-		j++;
-		i++;
-	}
-	(*done)[i] = '\n';
-	(*done)[++i] = '\0';
+	done[i] = opper;
+	done[++i] = 0;
 }
 
-static void corr_ai_op(t_ilist **a, t_ilist **b, char *opp, char **done, int *nb)
+static void corr_ai_op(t_ilist **a, t_ilist **b, int opper, int *done, int *nb, int *last)
 {
-	if (opp[0] == 's')
+
+	if (opper == SA)
+		swap(a);
+	else if (opper == SB)
+		swap(b);
+	else if (opper == SS)
 	{
-		if (opp[1] == 'a' && opp[2] == '\0')
-			swap(a);
-		else if (opp[1] == 'b' && opp[2] == '\0')
-			swap(b);
-		else if (opp[1] == 's' && opp[2] == '\0')
-		{
-			swap(a);
-			swap(b);
-		}
+		swap(a);
+		swap(b);
 	}
-	else if (opp[0] == 'p')
+	else if (opper == PA)
+		push(a, b);
+	else if (opper == PB)
+		push(b, a);
+	else if (opper == RA)
+		rotate(a);
+	else if (opper == RB)
+		rotate(b);
+	else if (opper == RR)
 	{
-		if (opp[1] == 'a' && opp[2] == '\0')
-			push(a, b);
-		else if (opp[1] == 'b' && opp[2] == '\0')
-			push(b, a);
+		rotate(a);
+		rotate(b);
 	}
-	else if (opp[0] == 'r' && opp[2] == '\0')
+	else if (opper == RRA)
+		rev_rotate(a);
+	else if (opper == RRB)
+		rev_rotate(b);
+	else if (opper == RRR)
 	{
-		if (opp[1] == 'a')
-			rotate(a);
-		else if (opp[1] == 'b')
-			rotate(b);
-		else if (opp[1] == 'r')
-		{
-			rotate(a);
-			rotate(b);
-		}
+		rev_rotate(a);
+		rev_rotate(b);
 	}
-	else if (opp[0] == 'r' && opp[1] == 'r')
-	{
-		if (opp[2] == 'a' && opp[3] == '\0')
-			rev_rotate(a);
-		else if (opp[2] == 'b' && opp[3] == '\0')
-			rev_rotate(b);
-		else if (opp[2] == 'r' && opp[3] == '\0')
-		{
-			rev_rotate(a);
-			rev_rotate(b);
-		}
-	}
-	add_done(done, opp);
+	(*last) = opper;
+	add_done(done, opper);
 	(*nb)++;
 }
 
-static int inter(t_ilist *a, t_ilist *b, int sorted, char **oper, char **done, int nb)
+static int inter(t_ilist *a, t_ilist *b, int sorted, int *dones, int nb, int last)
 {
-	t_ilist *cp_a = NULL;
-	t_ilist *cp_b = NULL;
+	int opper[11] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+	t_ilist *cp_a;
+	t_ilist *cp_b;
 	int poss_nb;
 	int random;
-	char *other_done;
+	int *other_dones;
 
-	if (sorted)
-		return (1);
-	if (nb > 100)
-		return (0);
-	other_done = (char *)malloc(sizeof(char) * 100000);
-	for (int i = 0; (*done)[i] != '\0'; ++i)
+	srand(time(NULL));
+	if (sorted || nb > 1000)
 	{
-		other_done[i] = (*done)[i];
-		if ((*done)[i + 1] == '\0')
-			other_done[i + 1] = '\0';
+		free_all(&a, &b, dones);
+		return (1);
 	}
-	if ((*done)[0] == '\0')
-			other_done[0] = '\0';
-	cp_list(a, &cp_a);
-	cp_list(b, &cp_b);
-	oper[0][0] = 'z';
-	poss_nb = is_poss(cp_a, cp_b, oper);
-	// if (poss_nb == 0)
-	// 	return 0;
-	// else
-	random = ((rand() % poss_nb));
-	corr_ai_op(&cp_a, &cp_b, oper[random], &other_done, &nb);
-	free_all(&a, &b, done);
-	return (inter(cp_a, cp_b, is_sorted(cp_a, cp_b, other_done, nb), oper, &other_done ,nb));
+	opper[0] = 0;
+	poss_nb = is_poss(a, b, opper, last);
+	if (poss_nb == 0)
+		return (1);
+	// int save = poss_nb;
+	// int old_last = last;
+	for (int i = 0; i < 11; ++i)
+	{
+		cp_a = NULL;
+		cp_b = NULL;
+		other_dones = (int*)malloc(sizeof(int) * 1001);
+		other_dones[0] = 0;
+		for (int j = 0; dones[j] != 0; ++j)
+		{
+			other_dones[j] = dones[j];
+			if (dones[j + 1] == 0)
+				other_dones[j + 1] = 0;
+		}
+		// printf("d\n");
+		cp_list(a, &cp_a);
+		cp_list(b, &cp_b);
+		random = ((rand() % poss_nb));
+		corr_ai_op(&cp_a, &cp_b, opper[random], other_dones, &nb, &last);
+		opper[random] = opper[poss_nb - 1];
+		opper[poss_nb - 1] = 0;
+		poss_nb--;
+		inter(cp_a, cp_b, is_sorted(cp_a, cp_b, other_dones, nb), other_dones, nb, last);
+		if (poss_nb == 0)
+			break;
+		// last = old_last;
+		// opper[0] = 0;
+		// poss_nb = is_poss(a, b, opper, last);
+		nb--;
+	}
+	free_all(&a, &b, dones);
+	return 1;
 }
 
 int ai(t_ilist *a, t_ilist *b)
 {
-	char *oper[] = {"sa","sb","ss","pa","pb","ra","rb","rr","rra","rrb","rrr"};
-	char **opper;
-	char *done;
-	done = (char *)malloc(sizeof(char) * 100000);
-	done[0] = '\0';
-	opper = (char **)malloc(sizeof(char*) * 12);
-	for (int i = 0; i < 11; ++i)
-	{
-		opper[i] = ft_strdup(oper[i]);
-	}
-	opper[11] = NULL;
-	inter(a, b, 0, opper, &done, 0);
-	for (int i = 0; i < 12; ++i)
-	{
-		free(opper[i]);
-	}
-	// free(done);
-	free(opper);
-	// printf("%d\n", g_nb);
+	int *done;
+	done = (int *)malloc(sizeof(int) * 1001);
+	done[0] = 0;
+	inter(a, b, 0, done, 0, 0);
 	return (g_nb);
 }

@@ -9,7 +9,7 @@
 			"request": "launch",
 			"name": "Debug",
 			"program": "${workspaceFolder}/checker",
-			"args": ["8","5"],
+			"args": ["8","2","6","5","4","3"],
 			"cwd": "${workspaceFolder}"
 		}
 	]

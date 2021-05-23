@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 19:06:53 by nwakour           #+#    #+#              #
-#    Updated: 2021/05/22 20:43:04 by nwakour          ###   ########.fr        #
+#    Updated: 2021/05/23 18:41:29 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,10 @@ FLAGS = -Wall -Wextra -Werror
 all : $(NAME)
 
 $(NAME) : ${OBJS}
-		gcc -Ofast -g ${FLAGS} -o $(NAME) ${OBJS}
+		gcc -g -Ofast ${FLAGS} -o $(NAME) ${OBJS}
 
 .c.o : ${SRCS}
-		gcc -Ofast -g ${FLAGS} -c ${INCL} $< -o ${<:.c=.o}
+		gcc -g -Ofast ${FLAGS} -c ${INCL} $< -o ${<:.c=.o}
 clean :
 		rm -f ${OBJS}
 

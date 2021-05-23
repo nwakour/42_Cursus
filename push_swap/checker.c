@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/22 20:43:25 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/23 18:36:36 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int		check_dup(int *nbs, int size)
 	int tmp;
 
 	i = -1;
-	while (++i <= size)
+	while (++i < size)
 	{
 		tmp = nbs[i];
-		j = 0;
-		while (nbs[++j])
+		j = -1;
+		while (++j < size)
 		{
 			if (tmp == nbs[j] && i != j)
 				return (0);
@@ -47,38 +47,35 @@ int		check_digit(char **nbs)
 int		main(int argc, char **argv)
 {
 	int *nbs;
-	int i;
+	int z;
 	t_ilist *a;
 	t_ilist *b;
 	t_ilist *new;
 	// char *line;
 
 	a = NULL;
+	z = 0;
 	b = NULL;
 	if (argc < 2)
 		return (0);
 	nbs = (int*)malloc(sizeof(int) * (argc - 1));
-	i = 0;
-	while (argv[++i])
-		nbs[i - 1] = ft_atoi(argv[i]);
-	if (!check_digit(argv) || !check_dup(nbs, argc))
+	while (argv[++z])
+		nbs[z - 1] = ft_atoi(argv[z]);
+	if (!check_digit(argv) || !check_dup(nbs, argc - 1))
 		printf("KO\n");
 	else
 	{
 		printf("OK\n");
-		i = -1;
-		while (++i < argc - 1)
+		z = -1;
+		while (++z < argc - 1)
 		{
-			if (!(new = ft_int_lstnew(nbs[i])))
+			if (!(new = ft_int_lstnew(nbs[z])))
 				return (0);
 			ft_int_lstadd_back(&a, new);
 		}
 		int tmp = 2147483647;
-		srand(time(NULL));
-		for (int i = 0; i < 1000000; ++i)
+		for (int i = 0; i < 1; ++i)
 		{
-			if (i % 1000 == 0)
-				srand(time(NULL));
 			int d = ai(a, b);
 			a = NULL;
 			int j = -1;

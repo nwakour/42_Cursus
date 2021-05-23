@@ -6,30 +6,22 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 15:00:26 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/22 16:02:54 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/23 18:40:33 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include<stdio.h>
 #include <stdlib.h>
 
-void add1(char *str)
-{
-	str[5] = '2';
-	printf("in %s\n", str);
-}
 
 int main()
 {
-	char *str;
+	int nb;
+	char *s;
 
-	str = (char*)malloc(sizeof(char) * 11);
-	for (int i = 0; i < 10; ++i)
+	nb = 1000000000;
+	for (int i = 0; i < nb ; ++i)
 	{
-		str[i] = '1';
+		//s = malloc(100);
 	}
-	str[10] = '\0';
-	printf("before %s\n", str);
-	add1(str);
-	printf("after %s\n", str);
 }

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:09:16 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/22 17:36:39 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/23 12:24:50 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 
 #include "libft/libft.h"
 #include <time.h>
+
+#define SA 1
+#define SB 2
+#define SS 3
+#define PA 4
+#define PB 5
+#define RA 6
+#define RB 7
+#define RR 8
+#define RRA 9
+#define RRB 10
+#define RRR 11
 
 typedef struct		s_ilist
 {
