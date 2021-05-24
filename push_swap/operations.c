@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:36 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/21 19:07:02 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/24 21:48:03 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,38 @@
 
 void swap(t_ilist **stack)
 {
-	t_ilist *tmp;
+	short nb;
 
-	tmp = (*stack);
-	(*stack) = (*stack)->next;
-	tmp->next = (*stack)->next;
-	(*stack)->next = tmp;
+	nb = (*stack)->nb;
+	(*stack)->nb = (*stack)->next->nb;
+	(*stack)->next->nb = nb;
 }
 
 void push(t_ilist **a , t_ilist **b)
 {
-	t_ilist *tmp;
+	t_ilist *next;
+	t_ilist *prev;
 
-	tmp = (*b)->next;
-	ft_int_lstadd_front(a, (*b));
-	(*b) = tmp;
+	next = (*b)->next;
+	prev = (*b)->prev;
+	ft_int_lstadd_next(a, (*b));
+	
+	(*a) = (*a)->prev;
+	if (next != NULL)
+	{
+		(*b) = next;
+		prev->next = (*b);
+		(*b)->prev = prev;
+	}
+	else
+		(*b) = NULL;
 }
-
 void rotate(t_ilist **stack)
 {
-	t_ilist *tmp;
-
-	tmp = *stack;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = (*stack);
-	(*stack) = (*stack)->next;
-	tmp->next->next = NULL;
+	*stack = (*stack)->next;
 }
 
 void rev_rotate(t_ilist **stack)
 {
-	t_ilist *tmp;
-	t_ilist *rot;
-
-	tmp = *stack;
-	while (tmp->next->next)
-		tmp = tmp->next;
-	rot = tmp->next;
-	rot->next = (*stack);
-	tmp->next = NULL;
-	(*stack) = rot;
+	*stack = (*stack)->prev;
 }

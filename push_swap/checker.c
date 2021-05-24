@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/23 18:36:36 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/24 21:24:18 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,18 @@ int		main(int argc, char **argv)
 		{
 			if (!(new = ft_int_lstnew(nbs[z])))
 				return (0);
-			ft_int_lstadd_back(&a, new);
+			ft_int_lstadd_next(&a, new);
 		}
-		int tmp = 2147483647;
+		// int tmp = 2147483647;
+		// print_t_ilists(a,b,z,0);
 		for (int i = 0; i < 1; ++i)
 		{
-			int d = ai(a, b);
-			a = NULL;
-			int j = -1;
-			while (++j < argc - 1)
-			{
-				if (!(new = ft_int_lstnew(nbs[j])))
-					return (0);
-				ft_int_lstadd_back(&a, new);
-			}
-			if (d < tmp)
-				tmp = d;
-			printf("%d\n", tmp);
+			int d = ai(a, b, z);
+			// if (d < tmp)
+			// 	tmp = d;
+			printf("%d\n", d);
 		}
-		printf("%d\n", tmp);
+		// printf("%d\n", tmp);
 		// system("leaks checker");
 		// line = ft_strdup("");
 		// while (1)

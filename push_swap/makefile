@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 19:06:53 by nwakour           #+#    #+#              #
-#    Updated: 2021/05/23 18:41:29 by nwakour          ###   ########.fr        #
+#    Updated: 2021/05/24 21:21:11 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC_LIBFT = libft/ft_bzero.c libft/ft_strlen.c libft/ft_calloc.c libft/ft_strncm
 	libft/ft_lstclear.c libft/ft_lstdelone.c libft/ft_lstiter.c libft/ft_lstlast.c libft/ft_lstclear_one_if.c\
 	libft/ft_lstmap.c libft/ft_lstsize.c libft/get_next_line.c libft/ft_array_char.c libft/ft_isspace.c libft/ft_isstingdigit.c libft/ft_atol.c\
 
-SRC_SHELL =	checker.c correct_op.c int_list.c operations.c show_stack.c ai.c
+SRC_SHELL =	checker.c int_list.c operations.c show_stack.c ai.c
 
 SRCS = ${SRC_SHELL} ${SRC_LIBFT}
 

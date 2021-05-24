@@ -21,48 +21,53 @@ t_ilist	*ft_int_lstnew(int nb)
 		return (NULL);
 	head->nb = nb;
 	head->next = NULL;
+	head->prev = NULL;
 	return (head);
 }
 
-void	ft_int_lstadd_back(t_ilist **alst, t_ilist *l_new)
+void	ft_int_lstadd_next(t_ilist **alst, t_ilist *l_new)
 {
-	t_ilist	*last;
-
-	if (!l_new)
-		return ;
-	last = *alst;
-	l_new->next = NULL;
-	if ((*alst) == NULL)
-		(*alst) = l_new;
-	else
+	if (alst && *alst && l_new)
 	{
-		while (last->next != NULL)
-			last = last->next;
-		last->next = l_new;
+		if ((*alst)->next != NULL)
+		{
+			l_new->prev = (*alst)->prev;
+			l_new->next = (*alst);
+			(*alst)->prev->next = l_new;
+			(*alst)->prev = l_new;
+		}
+		else
+		{
+			(*alst)->next = l_new;
+			(*alst)->prev = l_new;
+			l_new->next = (*alst);
+			l_new->prev = (*alst);
+		}
 	}
-}
-
-void	ft_int_lstadd_front(t_ilist **alst, t_ilist *l_new)
-{
-	if (alst && l_new)
-	{
-		l_new->next = *alst;
+	else if (l_new)
 		*alst = l_new;
-	}
 }
 
-int		ft_int_lstsize(t_ilist *lst)
+void	ft_int_lstadd_prev(t_ilist **alst, t_ilist *l_new)
 {
-	int		i;
-	t_ilist	*element;
 
-	element = lst;
-	i = 0;
-	while (element)
+	if (alst && *alst && l_new)
 	{
-		i++;
-		element = element->next;
+		if ((*alst)->next != NULL)
+		{
+			l_new->prev = (*alst);
+			l_new->next = (*alst)->next;
+			(*alst)->next->prev = l_new;
+			(*alst)->next = l_new;
+		}
+		else
+		{
+			(*alst)->next = l_new;
+			(*alst)->prev = l_new;
+			l_new->next = (*alst);
+			l_new->prev = (*alst);
+		}
 	}
-	return (i);
+	else if (l_new)
+		*alst = l_new;
 }
-
