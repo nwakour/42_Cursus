@@ -6,39 +6,29 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 15:00:26 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/24 21:52:17 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/25 15:41:35 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 
-void    print_t_ilists(t_ilist *a, t_ilist *b, int size_a, int size_b)
+void    print_t_ilists(short *a, short *b, short a_start, short b_start, short a_end, short b_end)
 {
     printf("\t ____________________________ \n");
     printf("\t|____ %c _____|\t|____ %c _____|\n",
         'a', 'b');
-    while (size_a || size_b)
+    while (a_start < a_end || b_start < b_end)
     {
-        if (size_a && size_b)
+        if (a_start < a_end && b_start < b_end)
+            printf("\t[%11d ]\t[%11d ]\n", a[a_start++], b[b_start++]);
+        else if (a_start < a_end)
         {
-            printf("\t[%11d ]\t[%11d ]\n", a->nb, b->nb);
-            a = a->next;
-            b = b->next;
-			size_a--;
-			size_b--;
+            printf("\t[%11d ]\t[%11c ]\n", a[a_start++], ' ');
         }
-        else if (size_a && !size_b)
+       else if (b_start < b_end)
         {
-            printf("\t[%11d ]\t[%11c ]\n", a->nb, ' ');
-            a = a->next;
-			size_a--;
-        }
-        else if (size_b && !size_a)
-        {
-            printf("\t[%11c ]\t[%11d ]\n", ' ', b->nb);
-            b = b->next;
-			size_b--;
+            printf("\t[%11c ]\t[%11d ]\n", ' ', b[b_start++]);
         }
     }
     printf("\t------------------------------\n");
@@ -47,23 +37,43 @@ void    print_t_ilists(t_ilist *a, t_ilist *b, int size_a, int size_b)
 
 int main()
 {
-	t_ilist *a = NULL;
-	t_ilist *b = NULL;
+	
+	short *a;
+	short *b;
+	short size = 5;
+	short a_start;
+	short b_start;
+	short a_end;
+	short b_end;
 
-	// a = ft_int_lstnew(1);
-	ft_int_lstadd_next(&a, ft_int_lstnew(8));
-	ft_int_lstadd_next(&a, ft_int_lstnew(2));
-	ft_int_lstadd_next(&a, ft_int_lstnew(6));
-	ft_int_lstadd_next(&a, ft_int_lstnew(5));
-	ft_int_lstadd_next(&a, ft_int_lstnew(4));
+	a = (short*)malloc(sizeof(int) * size * 5);
+	b = (short*)malloc(sizeof(int) * size * 5);
+	
+	a_start = size * 2;
+	a_end = size * 3;
+	b_start = size * 3;
+	b_end = size * 3;
 
-	ft_int_lstadd_next(&b, ft_int_lstnew(1));
-	// printf("%d\n", a->nb);
-	print_t_ilists(a,b,5, 1);
-	push(&b,&a);
-	push(&b,&a);
-	rotate(&a);
-	print_t_ilists(a,b,3, 3);
+	a[10] = 8;
+	a[11] = 2;
+	a[12] = 6;
+	a[13] = 5;
+	a[14] = 4;
+
+	print_t_ilists(a, b, a_start, b_start, a_end, b_end);
+	push(b,a, &b_start, &a_start);
+	push(b,a, &b_start, &a_start);
+	rotate(a, &a_start, &a_end);
+	rotate(b, &b_start, &b_end);
+	swap(a, a_start);
+	swap(b, b_start);
+	push(a,b, &a_start, &b_start);
+	push(a,b, &a_start, &b_start);
+	rotate(a, &a_start, &a_end);
+	print_t_ilists(a, b, a_start, b_start, a_end, b_end);
+	// push(b,a, &a_start, &b_start);
+	// push(&b,&a);
+	// rotate(&a);
 	// rotate(&b);
 	// swap(&a);
 	// swap(&b);

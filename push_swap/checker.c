@@ -6,17 +6,17 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/24 21:24:18 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/05/25 16:04:44 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int		check_dup(int *nbs, int size)
+short	check_dup(short *nbs, short size)
 {
-	int i;
-	int j;
-	int tmp;
+	short i;
+	short j;
+	short tmp;
 
 	i = -1;
 	while (++i < size)
@@ -32,9 +32,9 @@ int		check_dup(int *nbs, int size)
 	return (1);
 }
 
-int		check_digit(char **nbs)
+short		check_digit(char **nbs)
 {
-	int i;
+	short i;
 
 	i = 0;
 	while (nbs[++i])
@@ -46,19 +46,21 @@ int		check_digit(char **nbs)
 }
 int		main(int argc, char **argv)
 {
-	int *nbs;
-	int z;
-	t_ilist *a;
-	t_ilist *b;
-	t_ilist *new;
+	short *nbs;
+	short *stack_a;
+	short *stack_b;
+	short z;
+	short j;
+	t_index index;
+	// t_ilist *a;
+	// t_ilist *b;
+	// t_ilist *new;
 	// char *line;
 
-	a = NULL;
 	z = 0;
-	b = NULL;
 	if (argc < 2)
 		return (0);
-	nbs = (int*)malloc(sizeof(int) * (argc - 1));
+	nbs = (short*)malloc(sizeof(short) * (argc - 1));
 	while (argv[++z])
 		nbs[z - 1] = ft_atoi(argv[z]);
 	if (!check_digit(argv) || !check_dup(nbs, argc - 1))
@@ -67,21 +69,26 @@ int		main(int argc, char **argv)
 	{
 		printf("OK\n");
 		z = -1;
+		j = (argc - 1) * 2;
+		stack_a = (short*)malloc(sizeof(short)* (argc - 1) * 5);
+		stack_b = (short*)malloc(sizeof(short)* (argc - 1) * 5);
 		while (++z < argc - 1)
 		{
-			if (!(new = ft_int_lstnew(nbs[z])))
-				return (0);
-			ft_int_lstadd_next(&a, new);
+			stack_a[j++] = nbs[z];
+			// if (!(new = ft_int_lstnew(nbs[z])))
+			// 	return (0);
+			// ft_int_lstadd_next(&a, new);
 		}
 		// int tmp = 2147483647;
 		// print_t_ilists(a,b,z,0);
-		for (int i = 0; i < 1; ++i)
-		{
-			int d = ai(a, b, z);
+		index.a_start = (argc - 1) * 2;
+		index.a_end = (argc - 1) * 3;
+		index.b_start = (argc - 1) * 3;
+		index.b_end = (argc - 1) * 3;
+		int d = ai(stack_a, stack_b, &index);
 			// if (d < tmp)
 			// 	tmp = d;
-			printf("%d\n", d);
-		}
+		printf("%d\n", d);
 		// printf("%d\n", tmp);
 		// system("leaks checker");
 		// line = ft_strdup("");
