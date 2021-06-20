@@ -41,13 +41,13 @@ pa
 pb
 pb
 rr
-ss
+sa
 pa
 pa
 ra
 
-A    8 2 6 5 4
-B   
+A   2 4 5 6 8 
+B  
 
 A 8 2 6 5 4 3
 sa

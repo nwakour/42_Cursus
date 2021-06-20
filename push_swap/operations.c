@@ -6,32 +6,32 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:36 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/25 15:41:14 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/06/16 16:29:14 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void swap(short *stack, short start)
+void swap(int *stack, int start)
 {
-	short nb;
+	int nb;
 
 	nb = stack[start];
 	stack[start] = stack[(start + 1)];
 	stack[start + 1] = nb;
 }
 
-void push(short *a , short *b, short *a_start, short *b_start)
+void push(int *a, int *b, int *a_start, int *b_start)
 {
 	a[--(*a_start)] = b[(*b_start)++];
 }
 
-void rotate(short *stack, short *start, short *end)
+void rotate(int *stack, int *start, int *end)
 {
 	stack[(*end)++] = stack[(*start)++];
 }
 
-void rev_rotate(short *stack, short *start, short *end)
+void rev_rotate(int *stack, int *start, int *end)
 {
 	stack[--(*start)] = stack[--(*end)];
 }

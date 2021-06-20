@@ -1,11 +1,11 @@
 section     .text
-            global _ft_strlen
+            global	_ft_strlen
 
 _ft_strlen:
-            mov  rax, -1
+            mov		rax, -1
 
 loop:
-            inc rax
-            cmp byte [rdi + rax], 0
-            jne loop
+            inc		rax
+            cmp		byte [rdi + rax], 0
+            jne		loop
             ret

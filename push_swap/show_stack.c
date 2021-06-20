@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 17:55:40 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/25 15:50:56 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/06/16 16:29:46 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    print_t_ilists(short *a, short *b, short a_start, short b_start, short a_end, short b_end)
+void    print_t_ilists(int *a, int *b, int a_start, int b_start, int a_end, int b_end)
 {
     printf("\t ____________________________ \n");
     printf("\t|____ %c _____|\t|____ %c _____|\n",

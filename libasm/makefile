@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/26 14:48:32 by nwakour           #+#    #+#              #
-#    Updated: 2021/01/30 17:19:09 by nwakour          ###   ########.fr        #
+#    Updated: 2021/05/29 16:14:24 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,40 +14,28 @@
 
 NAME = libasm.a
 
-CSRC = main.c
-ASRC = ft_strlen.s\
+SRC = ft_strlen.s\
 		ft_write.s\
 		ft_strcpy.s\
 		ft_strcmp.s\
 		ft_read.s\
-		ft_atoi_base.s\
 		ft_strdup.s
 
-AOBJ = $(ASRC:.s=.o)
+ASM_COMPILER = nasm -f macho64
 
+all:	$(NAME)
 
-CFLAGS = -Wall -Werror -Wextra
-NFLAGS = -g -f macho64 -o
-all: $(NAME)
+%o		:	%s
+	$(ASM_COMPILER) $<
 
-$(NAME):
-	nasm $(NFLAGS) ft_strlen.o ft_strlen.s
-	nasm $(NFLAGS) ft_write.o ft_write.s
-	nasm $(NFLAGS) ft_strcpy.o ft_strcpy.s
-	nasm $(NFLAGS) ft_strcmp.o ft_strcmp.s
-	nasm $(NFLAGS) ft_read.o ft_read.s
-	nasm $(NFLAGS) ft_strdup.o ft_strdup.s
-	nasm $(NFLAGS) ft_atoi_base.o ft_atoi_base.s
-	ar rc $(NAME) $(AOBJ)
-	ranlib $(NAME)
-	gcc $(CFLAGS) $(NAME) $(CSRC)
-	/bin/rm -f $(AOBJ)
-	/bin/rm -f $(NAME)
+$(NAME) :	$(SRC:.s=.o)
+	ar -rc  libasm.a $(SRC:.s=.o)
+	ranlib libasm.a
 
 clean:
-	/bin/rm -f $(AOBJ)
+		rm -f $(SRC:.s=.o)
 
-fclean: clean
-	/bin/rm -f $(NAME)
+fclean:	clean
+		rm -f $(NAME) a.out
 
-re: fclean all
+re:		fclean all

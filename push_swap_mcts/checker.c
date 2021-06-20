@@ -6,11 +6,30 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/25 16:04:44 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/06/15 15:40:09 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int is_sorted(short *a, t_index *index)
+{
+	short nb;
+	int j;
+	// print_t_ilists(a, b);
+	if ((index->b_end - index->b_start)|| !(index->a_end - index->a_start))
+		return (0);
+	j = index->a_start;
+	nb = a[j];
+	while (++j < index->a_end)
+	{
+		if (nb > a[j])
+			return (0);
+		else
+			nb = a[j];
+	}
+	return (1);
+}
 
 short	check_dup(short *nbs, short size)
 {
@@ -69,9 +88,9 @@ int		main(int argc, char **argv)
 	{
 		printf("OK\n");
 		z = -1;
-		j = (argc - 1) * 2;
-		stack_a = (short*)malloc(sizeof(short)* (argc - 1) * 5);
-		stack_b = (short*)malloc(sizeof(short)* (argc - 1) * 5);
+		j = (argc - 1) * 2000;
+		stack_a = (short*)malloc(sizeof(short)* (argc - 1) * 5000);
+		stack_b = (short*)malloc(sizeof(short)* (argc - 1) * 5000);
 		while (++z < argc - 1)
 		{
 			stack_a[j++] = nbs[z];
@@ -81,14 +100,20 @@ int		main(int argc, char **argv)
 		}
 		// int tmp = 2147483647;
 		// print_t_ilists(a,b,z,0);
-		index.a_start = (argc - 1) * 2;
-		index.a_end = (argc - 1) * 3;
-		index.b_start = (argc - 1) * 3;
-		index.b_end = (argc - 1) * 3;
-		int d = ai(stack_a, stack_b, &index);
+		index.a_start = (argc - 1) * 2000;
+		index.a_end = j;
+		index.b_start = j;
+		index.b_end = j;
+		// int nb = 0;
+		if (!is_sorted(stack_a, &index))
+		{
+			tree_travesal(stack_a, stack_b, &index);
+			print_t_ilists(stack_a, stack_b, index.a_start, index.b_start, index.a_end, index.b_end);
+		}
+		// int d = ai(stack_a, stack_b, &index);
 			// if (d < tmp)
 			// 	tmp = d;
-		printf("%d\n", d);
+		// printf("%d\n", d);
 		// printf("%d\n", tmp);
 		// system("leaks checker");
 		// line = ft_strdup("");
@@ -97,8 +122,7 @@ int		main(int argc, char **argv)
 		// 	print_t_ilists(a, b);
 		// 	get_next_line(0, &line);
 		// 	corr_op(&a, &b, line);
-		// }
 	}
-	free(nbs);
+	// free(nbs);
 	return (0);
 }

@@ -1,0 +1,9 @@
+{
+	"files.associations": {
+		"iterator": "c",
+		"limits": "c",
+		"__node_handle": "c",
+		"__locale": "c",
+		"locale": "c"
+	}
+}
