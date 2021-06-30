@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/06/20 13:50:06 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/06/29 16:25:10 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		main(int argc, char **argv)
 	int z;
 	int j;
 	t_index index;
+	t_pivot pivot;
 
 	z = 0;
 	if (argc < 2)
@@ -103,18 +104,17 @@ int		main(int argc, char **argv)
 		index.b_start = j;
 		index.b_end = j;
 		line = ft_strdup("");
-		while (1)
-		{
-			print_t_ilists(stack_a, stack_b, index.a_start, index.b_start, index.a_end, index.b_end);
+		// while (1)
+		// {
+		print_t_ilists(stack_a, stack_b, index.a_start, index.b_start, index.a_end, index.b_end);
 			// get_next_line(0, &line);
 			// corr_op(stack_a, stack_b, &index, line);
-			int pivot = get_pivot(stack_a, index.a_start, index.a_end, index.a_end - index.a_start);
-			printf("%d %d\n", pivot, index.a_end - index.a_start);
-			sort_stack(stack_a, stack_b, &index, pivot);
-			print_t_ilists(stack_a, stack_b, index.a_start, index.b_start, index.a_end, index.b_end);
-			
-			break;
-		}
+		// get_pivot(stack_a, index.a_start, index.a_end, index.a_end - index.a_start, &pivot);
+			// printf("%d %d\n", pivot, index.a_end - index.a_start);
+		sort_stack(stack_a, stack_b, &index, &pivot);
+		print_t_ilists(stack_a, stack_b, index.a_start, index.b_start, index.a_end, index.b_end);
+		// 	break;
+		// }
 	}
 	return (0);
 }

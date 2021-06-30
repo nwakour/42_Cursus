@@ -1,17 +1,15 @@
 #include <stdio.h>
 
-int normalize_range(int max, int min, int a)
+int normalize_range(int len, int a)
 {
-	int range;
-
-	while (a > max)
-		a = a - max;
+	while (a > len)
+		a = a - len;
 	return a;
 }
 
 int main()
 {
-	int nor = normalize_range(9 , 0, 15);
+	int nor = normalize_range(10, 35);
 	printf("%d\n", nor);
 	return 0;
 }

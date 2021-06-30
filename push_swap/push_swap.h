@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:09:16 by nwakour           #+#    #+#             */
-/*   Updated: 2021/06/18 14:31:49 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/06/21 16:06:16 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,19 @@ typedef struct		s_index
 	int	b_end;
 }					t_index;
 
+typedef struct		s_pivot
+{
+	int	limits[3];
+	int	off_set[3];
+}					t_pivot;
+
 void swap(int *stack, int start);
 void push(int *a , int *b, int *a_start, int *b_start);
 void rotate(int *stack, int *start, int *end);
 void rev_rotate(int *stack, int *start, int *end);
 void    print_t_ilists(int *a, int *b, int a_start, int b_start, int a_len, int b_len);
 void corr_op(int *a, int *b, t_index *index, char *opp);
-void sort_stack(int *a, int *b, t_index *index, int pivot);
-int get_pivot(int *stack, int start, int end, int len);
+void sort_stack(int *a, int *b, t_index *index, t_pivot *pivot);
+void get_pivot(int *stack, int start, int end, int len, t_pivot *pivot);
 
 #endif
