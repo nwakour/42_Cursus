@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:49:22 by nwakour           #+#    #+#             */
-/*   Updated: 2021/06/30 16:20:55 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/06/30 19:20:54 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int short_stack_value(int *a, t_index *index)
 		if (stack[i] > stack[i + 1])
 			count = 0;
 		count++;
-		// if (count > best[0] || (count == best[0] && (i - count) > 1 && (i - count) < 5))
+		// if (count > best[0] || (count == best[0] && (i - count) > 1 && (i - count) < 5)
 		if (count > best[0])
 		{
 			best[0] = count;
