@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 16:23:35 by nwakour           #+#    #+#             */
-/*   Updated: 2021/05/21 14:04:45 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/11 17:45:14 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_isstingdigit(char *s)
 	int i;
 
 	i = -1;
-	if (s[0] == '-')
+	if (s[0] == '-' || s[0] == '+')
 	{
 		i++;
 		if (s[1] == '\0')
@@ -28,7 +28,7 @@ int		ft_isstingdigit(char *s)
 		if (s[i] >= '0' && s[i] <= '9')
 			continue;
 		else
-		return (0);
+			return (0);
 	}
 	return (1);
 }

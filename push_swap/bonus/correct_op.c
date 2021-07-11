@@ -6,91 +6,109 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 16:46:41 by nwakour           #+#    #+#             */
-/*   Updated: 2021/06/16 17:17:13 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/11 20:06:12 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker.h"
 
-static void op_s(int *stack, int start , int end)
+void swap(t_ilist *stack)
 {
-	if (end - start <= 1)
+	long	tmp;
+
+	if (!stack || !stack->next)
 		return ;
-	else
-		swap(stack, start);
+	tmp = stack->nb;
+	stack->nb = stack->next->nb;
+	stack->next->nb = tmp;
 }
 
-static void op_p(int *a, int *b, int *a_start, int *b_start, int len_b)
+void push(t_ilist **a , t_ilist **b)
 {
-	if (len_b == 0)
+	t_ilist *tmp;
+
+	if (!b || !(*b))
 		return ;
-	else
-		push(a, b, a_start, b_start);
+	tmp = (*b)->next;
+	ft_int_lstadd_front(a, (*b));
+	(*b) = tmp;
 }
 
-static void op_r(int *stack, int *start, int *end)
+void rotate(t_ilist **stack)
 {
-	if ((*end) - (*start) <= 1)
+	t_ilist *tmp;
+
+	if (!stack || !(*stack) || !(*stack)->next)
 		return ;
-	else
-		rotate(stack, start, end);
+	tmp = *stack;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = (*stack);
+	(*stack) = (*stack)->next;
+	tmp->next->next = NULL;
 }
 
-static void op_rr(int *stack, int *start, int *end)
+void rev_rotate(t_ilist **stack)
 {
-	if ((*end) - (*start) <= 1)
+	t_ilist *tmp;
+	t_ilist *rot;
+
+	if (!stack || !(*stack) || !(*stack)->next)
 		return ;
-	else
-		rev_rotate(stack, start, end);
+	tmp = *stack;
+	while (tmp->next->next)
+		tmp = tmp->next;
+	rot = tmp->next;
+	rot->next = (*stack);
+	tmp->next = NULL;
+	(*stack) = rot;
 }
 
-void corr_op(int *a, int *b, t_index *index, char *opp)
+void corr_op(t_ilist *a, t_ilist *b, char *opp)
 {
 	if (!opp || opp[0] == '\0' || opp[1] == '\0')
 		return;
 	else if (opp[0] == 's')
 	{
 		if (opp[1] == 'a' && opp[2] == '\0')
-			op_s(a, index->a_start, index->a_end);
+			swap(a);
 		else if (opp[1] == 'b' && opp[2] == '\0')
-			op_s(b, index->b_start, index->b_end);
+			swap(b);
 		else if (opp[1] == 's' && opp[2] == '\0')
 		{
-			op_s(a, index->a_start, index->a_end);
-			op_s(b, index->b_start, index->b_end);
+			swap(a);
+			swap(b);
 		}
 	}
 	else if (opp[0] == 'p')
 	{
 		if (opp[1] == 'a' && opp[2] == '\0')
-			op_p(a, b, &index->a_start, &index->b_start, index->b_end - index->b_start);
+			push(a, b);
 		else if (opp[1] == 'b' && opp[2] == '\0')
-			op_p(b, a, &index->b_start, &index->a_start, index->a_end - index->a_start);
+			push(b, a);
 	}
 	else if (opp[0] == 'r' && opp[2] == '\0')
 	{
 		if (opp[1] == 'a')
-			op_r(a, &index->a_start, &index->a_end);
+			rotate(a);
 		else if (opp[1] == 'b')
-			op_r(b, &index->b_start, &index->b_end);
+			rotate(b);
 		else if (opp[1] == 'r')
 		{
-			op_r(a, &index->a_start, &index->a_end);
-			op_r(b, &index->b_start, &index->b_end);
+			rotate(a);
+			rotate(b);
 		}
 	}
 	else if (opp[0] == 'r' && opp[1] == 'r')
 	{
 		if (opp[2] == 'a' && opp[3] == '\0')
-			op_rr(a, &index->a_start, &index->a_end);
+			rev_rotate(a);
 		else if (opp[2] == 'b' && opp[3] == '\0')
-			op_rr(b, &index->b_start, &index->b_end);
+			rev_rotate(b);
 		else if (opp[2] == 'r' && opp[3] == '\0')
 		{
-			op_rr(a, &index->a_start, &index->a_end);
-			op_rr(b, &index->b_start, &index->b_end);
+			rev_rotate(a);
+			rev_rotate(b);
 		}
 	}
-	else
-		printf("---nothing\n");
 }

@@ -6,50 +6,50 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 19:06:53 by nwakour           #+#    #+#              #
-#    Updated: 2021/06/18 14:29:58 by nwakour          ###   ########.fr        #
+#    Updated: 2021/07/11 20:28:31 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re
+.PHONY: 		all fclean clean re
 
-NAME = push_swap
+NAME			=	push_swap
 
-CC = gcc
+SRCS			=	srcs/push_swap.c srcs/operations.c srcs/show_stack.c srcs/init_list.c srcs/dup.c srcs/algo.c srcs/parse.c
 
-SRC_LIBFT = libft/ft_bzero.c libft/ft_strlen.c libft/ft_calloc.c libft/ft_strncmp.c libft/ft_strdup.c\
-	libft/ft_atoi.c libft/ft_isdigit.c libft/ft_isascii.c libft/ft_isprint.c libft/ft_isalpha.c\
-	libft/ft_isalnum.c libft/ft_toupper.c libft/ft_tolower.c libft/ft_strnstr.c libft/ft_putchar_fd.c\
-	libft/ft_strlcat.c libft/ft_memset.c libft/ft_memcpy.c libft/ft_memccpy.c libft/ft_memcmp.c\
-	libft/ft_memmove.c libft/ft_strchr.c libft/ft_strrchr.c libft/ft_split.c libft/ft_struct_bezero.c\
-	libft/ft_find_struct_list.c libft/ft_struct_list.c libft/ft_split_ref.c libft/ft_strndup.c libft/ft_straddone.c\
-	libft/ft_putstr_fd.c libft/ft_putnbr_fd.c libft/ft_memchr.c libft/ft_strcutone.c libft/ft_strlcpy.c\
-	libft/ft_putendl_fd.c libft/ft_itoa.c libft/ft_strmapi.c libft/ft_strtrim.c libft/ft_substr.c libft/ft_strjoin.c\
-	libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_lstadd_front.c libft/ft_strcmp.c libft/ft_lstclear_last.c\
-	libft/ft_lstclear.c libft/ft_lstdelone.c libft/ft_lstiter.c libft/ft_lstlast.c libft/ft_lstclear_one_if.c\
-	libft/ft_lstmap.c libft/ft_lstsize.c libft/get_next_line.c libft/ft_array_char.c libft/ft_isspace.c libft/ft_isstingdigit.c libft/ft_atol.c\
+OBJS			=	${SRCS:.c=.o}
 
-SRC_SHELL =	push_swap.c operations.c show_stack.c correct_op.c algo.c
+NAME_BONUS		=	checker
 
-SRCS = ${SRC_SHELL} ${SRC_LIBFT}
+SRCS_BONUS		=	bonus/checker.c bonus/correct_op.c bonus/init_list.c bonus/parse.c
 
-INCL = -Iincludes/
+OBJS_BONUS		=	${SRCS_BONUS:.c=.o}
 
-OBJS = ${SRCS:.c=.o}
+CC				=	gcc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS           =	-Wall -Wextra -Werror -fsanitize=address
 
-all : $(NAME)
+RM				=	rm -f
 
-$(NAME) : ${OBJS}
-		gcc -g -fsanitize=address ${FLAGS} -o $(NAME) ${OBJS}
+INCL 			=	-Iincludes/
 
+all:			$(NAME)
+
+$(NAME):	$(OBJS)
+				@$(CC) -o $(NAME) $(SRCS) $(FLAGS)
 .c.o : ${SRCS}
-		gcc -g -fsanitize=address ${FLAGS} -c ${INCL} $< -o ${<:.c=.o}
-clean :
-		rm -f ${OBJS}
+				@$(CC) $(FLAGS) -c ${INCL} $< -o ${<:.c=.o}
 
-fclean : clean
-		rm -f $(NAME)
+bonus:			$(NAME_BONUS)
 
-re : fclean
-		make all
+$(NAME_BONUS):	$(OBJS_BONUS)
+						@$(CC) -o $(NAME_BONUS) $(SRCS_BONUS) $(FLAGS)
+.c.o :			${SRCS_BONUS}
+						@$(CC) $(FLAGS) -c ${INCL} $< -o ${<:.c=.o}
+
+clean:
+				@$(RM) $(OBJS) $(OBJS_BONUS)
+
+fclean:			clean
+				@$(RM) $(NAME) $(NAME_BONUS)
+
+re:				fclean all
