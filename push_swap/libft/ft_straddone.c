@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 17:22:25 by nwakour           #+#    #+#             */
-/*   Updated: 2021/04/07 17:55:46 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:42:41 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,21 @@ char	*ft_straddone(const char *str, size_t d, char c)
 	unsigned int	j;
 	unsigned int	z;
 	char			*cp;
-	
 
 	i = 0;
-	j = 0;
-	z = 0;
+	j = -1;
+	z = -1;
 	while (str[i] != '\0')
 		i++;
-	if (!(cp = (char*)malloc(sizeof(char) * (i + 2))))
+	cp = (char *)malloc(sizeof(char) * (i + 2));
+	if (!cp)
 		return (NULL);
-	while (j < (sizeof(char) * (i + 1)))
+	while (++j < (sizeof(char) * (i + 1)))
 	{
-		if (z == d)
-		{	
+		if (++z == d)
 			cp[z] = c;
-			z++;
-		}
 		else
-		{
 			cp[z] = str[j];
-			j++;
-			z++;
-		}
 	}
 	cp[z] = '\0';
 	return (cp);

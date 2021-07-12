@@ -6,31 +6,42 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:21:12 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/15 17:03:33 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:31:23 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		**ft_array_char(int line, int column)
+static void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+	{
+		free(array[i]);
+		array[i] = NULL;
+	}
+	free(array);
+}
+
+char	**ft_array_char(int line, int column)
 {
 	char	**array;
 	int		i;
 	int		j;
 
 	i = -1;
-	if (!(array = malloc(sizeof(char*) * (line + 1))))
-		return (0);
+	array = malloc(sizeof(char *) * (line + 1));
+	if (!array)
+		return (NULL);
 	while (++i < line)
 	{
-		if (!(array[i] = malloc(sizeof(char) * (column + 1))))
+		array[i] = malloc(sizeof(char) * (column + 1));
+		if (!array[i])
 		{
-			while (++i <= 0)
-			{
-				free(array[i]);
-				array[i] = 0;
-			}
-			return (0);
+			free_array(array);
+			return (NULL);
 		}
 		j = -1;
 		while (++j < column)

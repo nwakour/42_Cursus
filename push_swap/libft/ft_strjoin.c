@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 21:57:31 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/15 17:05:50 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:46:39 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
-	if ((str = (char*)malloc(len + 1)) == NULL)
+	str = (char *)malloc(len + 1);
+	if (!str)
 		return (NULL);
 	while (s1[i] != 0)
 		str[j++] = s1[i++];

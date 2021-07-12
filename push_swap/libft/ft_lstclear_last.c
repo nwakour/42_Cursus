@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 19:05:55 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 19:29:04 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:34:44 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_lstclear_last(t_list **list, void (*del)(void*))
+void	ft_lstclear_last(t_list **list, void (*del)(void*))
 {
 	t_list	*last;
 	t_list	*prev;

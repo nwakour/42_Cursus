@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 12:50:47 by nwakour           #+#    #+#             */
-/*   Updated: 2021/04/29 16:23:26 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:33:19 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 	{

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:08:12 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/11 16:12:11 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 14:54:47 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,33 @@ void	orgin_stack(t_ilist *a, t_ilist *dup)
 
 void	index_stack(t_ilist *stack, t_ilist *dupli)
 {
-    t_ilist *tmp;
-    int i;
-    
-    while (stack)
-    {
-        i = 0;
-        tmp = dupli;
-        while (tmp)
-        {
-            if (stack->nb == tmp->nb)
+	t_ilist	*tmp;
+	int		i;
+
+	while (stack)
+	{
+		i = 0;
+		tmp = dupli;
+		while (tmp)
+		{
+			if (stack->nb == tmp->nb)
 			{
-                stack->nb = i;
+				stack->nb = i;
 				break ;
 			}
-            tmp = tmp->next;
+			tmp = tmp->next;
 			i++;
-        }
-        stack = stack->next;
-    }
+		}
+		stack = stack->next;
+	}
 }
 
 void	pre_sort(t_ilist *stack)
 {
-	t_ilist *tmp;
-	long nb;
-	int len;
-	int i;
+	t_ilist	*tmp;
+	long	nb;
+	int		len;
+	int		i;
 
 	len = ft_int_lstsize(stack);
 	i = -1;

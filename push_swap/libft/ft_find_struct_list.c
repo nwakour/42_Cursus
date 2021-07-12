@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:41:18 by nwakour           #+#    #+#             */
-/*   Updated: 2020/12/25 15:42:55 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:32:41 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	*ft_find_struct_list(t_list *list, size_t i)
 		if (tmp == NULL || tmp->content == NULL)
 			return (NULL);
 	}
-	return ((void*)tmp->content);
+	return ((void *)tmp->content);
 }

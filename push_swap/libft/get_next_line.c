@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:57:11 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/17 15:32:01 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 14:40:39 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*ft_smartstrchr(const char *str, int c)
 	char	*s;
 
 	i = 0;
-	s = (char*)str;
+	s = (char *)str;
 	while (i <= (int)ft_strlen(str))
 	{
 		if (*s == c)
@@ -57,7 +57,8 @@ static int	checking(char **line, int fd)
 	if (fd < 0 || fd > FOPEN_MAX || line == NULL
 		|| 1000 <= 0 || read(fd, NULL, 0))
 		return (-1);
-	if ((*line = ft_strdup("")) == NULL)
+	*line = ft_strdup("");
+	if (!*line)
 		return (-1);
 	return (0);
 }
@@ -67,35 +68,30 @@ static int	ft_write_buf(int fd, char **sta, char **line)
 	int		j;
 	char	*buf;
 	char	*s;
-	char	*c;
 
-	if (!(buf = malloc(sizeof(char) * (1000 + 1))))
+	buf = malloc(sizeof(char) * (1000 + 1));
+	if (!buf)
 		return (free_return(line, NULL, NULL, -1));
 	j = read(fd, buf, 1000);
 	buf[j] = '\0';
-	c = *sta;
-	*sta = ft_strjoin(*sta, buf);
-	free_return(NULL, &c, NULL, 1);
-	c = *line;
+	*sta = ft_strjoin_free(*sta, buf);
 	if (j == 0 && ft_strlen(*sta) == 0)
 		return (free_return(&buf, NULL, NULL, j));
-	if ((s = ft_smartstrchr(*sta, '\n')) != NULL)
+	s = ft_smartstrchr(*sta, '\n');
+	if (!s)
 	{
-		*line = ft_strjoin(*line, *sta);
-		free_return(NULL, &c, NULL, -2);
-		c = *sta;
+		*line = ft_strjoin_free(*line, *sta);
 		*sta = ft_strdup(s + 1);
-		return ((free_return(&buf, &c, NULL, -2)));
+		return ((free_return(&buf, NULL, NULL, -2)));
 	}
-	*line = ft_strjoin(*line, *sta);
-	return ((free_return(&buf, &c, sta, j)));
+	*line = ft_strjoin_free(*line, *sta);
+	return ((free_return(&buf, NULL, sta, j)));
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	int			i;
 	static char	*sta[FOPEN_MAX] = {0};
-	char		*s;
 
 	i = 1;
 	if (checking(line, fd) == -1)
@@ -106,12 +102,9 @@ int			get_next_line(int fd, char **line)
 			i = ft_write_buf(fd, &sta[fd], line);
 		else
 		{
-			if (!(sta[fd] = malloc(sizeof(char) * (1000 + 1))))
+			sta[fd] = ft_strdup("");
+			if (!sta[fd])
 				return ((free_return(NULL, line, NULL, -1)));
-			s = sta[fd];
-			if ((sta[fd] = ft_strdup("")) == NULL)
-				return ((free_return(NULL, line, NULL, -1)));
-			free_return(NULL, &s, NULL, -1);
 			i = ft_write_buf(fd, &sta[fd], line);
 		}
 		if (i == -2)

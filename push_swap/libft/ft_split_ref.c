@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 06:45:50 by nwakour           #+#    #+#             */
-/*   Updated: 2021/03/30 15:45:35 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 13:05:59 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			ft_wordnbr(char const *s, char c)
+static int	ft_wordnbr(char const *s, char c)
 {
 	int	i;
 	int	j;
@@ -33,7 +33,7 @@ static int			ft_wordnbr(char const *s, char c)
 	return (i);
 }
 
-static int			ft_fndlen(char const *s, char c)
+static int	ft_fndlen(char const *s, char c)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ static int			ft_fndlen(char const *s, char c)
 	return (i);
 }
 
-static void			ft_free(char **str)
+static void	ft_free(char **str)
 {
 	while (*str != NULL)
 	{
@@ -56,11 +56,12 @@ static void			ft_free(char **str)
 	free(str);
 }
 
-static void			ft_allo(char **str, const char *src, const char *ref, char c)
+static void	ft_allo(char **str, const char *src, const char *ref, char c)
 {
 	char	*res;
 
-	if (!(*str = malloc((ft_fndlen(ref, c) + 1) * sizeof(char))))
+	*str = malloc((ft_fndlen(ref, c) + 1) * sizeof(char));
+	if (!*str)
 	{
 		ft_free(str);
 		return ;
@@ -76,15 +77,14 @@ static void			ft_allo(char **str, const char *src, const char *ref, char c)
 	*res = '\0';
 }
 
-char				**ft_split_ref(char const *s, char const *ref, char c)
+char	**ft_split_ref(char const *s, char const *ref, char c)
 {
 	char	**str;
 	char	**res;
 	int		i;
 
-	if (!s || !ref || !(str = malloc((ft_wordnbr(ref, c) + 1) * sizeof(char *))))
-		return (NULL);
-	if (ft_strlen(s) != ft_strlen(ref))
+	str = malloc((ft_wordnbr(ref, c) + 1) * sizeof(char *));
+	if (!s || !ref || !str || ft_strlen(s) != ft_strlen(ref))
 		return (NULL);
 	res = str;
 	i = 0;

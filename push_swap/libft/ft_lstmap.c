@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 12:49:10 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 15:38:20 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:36:26 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*))
 	tmp = tmp->next;
 	while (tmp != NULL)
 	{
-		if (!(newtmp = ft_lstnew(f(tmp->content))))
+		newtmp = ft_lstnew(f(tmp->content));
+		if (!newtmp)
 		{
 			ft_lstclear(&new, del);
 			new = NULL;

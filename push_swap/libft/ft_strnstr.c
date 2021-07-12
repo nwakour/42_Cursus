@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 16:43:32 by nwakour           #+#    #+#             */
-/*   Updated: 2019/10/12 17:55:49 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:48:24 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	if (to_find[0] == '\0')
@@ -28,7 +28,7 @@ char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 		while (to_find[j] == str[i + j] && (i + j) < len)
 		{
 			if (to_find[j + 1] == '\0')
-				return ((char*)str + i);
+				return ((char *)str + i);
 			j++;
 		}
 		i++;

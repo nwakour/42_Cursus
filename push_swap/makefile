@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 19:06:53 by nwakour           #+#    #+#              #
-#    Updated: 2021/07/11 20:28:31 by nwakour          ###   ########.fr        #
+#    Updated: 2021/07/12 12:10:48 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,26 +30,37 @@ FLAGS           =	-Wall -Wextra -Werror -fsanitize=address
 
 RM				=	rm -f
 
-INCL 			=	-Iincludes/
+INCL 			=	-I includes -L includes
 
-all:			$(NAME)
+LIBFLAGS 		= 	-I ./libft -L ./libft -L . ./libft/*.c 
+
+LIBFT_PATH 		= 	./libft
+
+all:			$(NAME) libft_all
 
 $(NAME):	$(OBJS)
-				@$(CC) -o $(NAME) $(SRCS) $(FLAGS)
-.c.o : ${SRCS}
-				@$(CC) $(FLAGS) -c ${INCL} $< -o ${<:.c=.o}
+				@$(CC) -o $(NAME) $(SRCS) $(INCLUDE) $(LIBFLAGS) $(FLAGS)
 
 bonus:			$(NAME_BONUS)
 
 $(NAME_BONUS):	$(OBJS_BONUS)
-						@$(CC) -o $(NAME_BONUS) $(SRCS_BONUS) $(FLAGS)
-.c.o :			${SRCS_BONUS}
-						@$(CC) $(FLAGS) -c ${INCL} $< -o ${<:.c=.o}
+						@$(CC) -o $(NAME_BONUS) $(SRCS_BONUS) $(INCLUDE) $(LIBFLAGS) $(FLAGS)
 
-clean:
+clean:			libft_clean
 				@$(RM) $(OBJS) $(OBJS_BONUS)
 
-fclean:			clean
+fclean:			libft_fclean clean
 				@$(RM) $(NAME) $(NAME_BONUS)
 
 re:				fclean all
+
+libft_all:
+				@make -C $(LIBFT_PATH) all
+				@cp ./libft/libft.a libft.a
+
+libft_clean:
+				@make -C $(LIBFT_PATH) clean
+
+libft_fclean:
+				@make -C $(LIBFT_PATH) fclean
+				@$(RM) libft.a

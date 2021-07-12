@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 06:59:35 by nwakour           #+#    #+#             */
-/*   Updated: 2019/10/17 07:42:14 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:34:26 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			ft_nblen(long int nb)
+static int	ft_nblen(long int nb)
 {
 	int		i;
 
@@ -32,7 +32,7 @@ static int			ft_nblen(long int nb)
 	return (i);
 }
 
-char				*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char		*str;
 	long long	nb;

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 11:46:42 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/10 15:38:45 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 14:49:33 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_ilist	*ft_int_lstnew(long nb)
 {
 	t_ilist	*head;
 
-	head = (t_ilist*)malloc(sizeof(t_ilist));
-	if (head == 0)
+	head = (t_ilist *)malloc(sizeof(t_ilist));
+	if (!head)
 		return (NULL);
 	head->nb = nb;
 	head->next = NULL;
@@ -51,7 +51,7 @@ void	ft_int_lstadd_front(t_ilist **alst, t_ilist *l_new)
 	}
 }
 
-int		ft_int_lstsize(t_ilist *lst)
+int	ft_int_lstsize(t_ilist *lst)
 {
 	long	i;
 	t_ilist	*element;
@@ -68,8 +68,8 @@ int		ft_int_lstsize(t_ilist *lst)
 
 t_ilist	*ft_int_lstdup(t_ilist *list)
 {
-	t_ilist *dup;
-	long nb;
+	t_ilist	*dup;
+	long	nb;
 
 	if (!list)
 		return (NULL);

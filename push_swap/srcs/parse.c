@@ -6,15 +6,15 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:53:25 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/11 18:57:05 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 16:36:10 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int		check_digit(char **nbs)
+static int	check_digit(char **nbs)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (nbs[++i])
@@ -25,38 +25,9 @@ int		check_digit(char **nbs)
 	return (1);
 }
 
-int		ft_atoi_err(const char *str, int *len)
+static int	has_space(char *s)
 {
-	long long	i;
-	long long	sum;
-	int			sign;
-
-	i = 0;
-	sum = 0;
-	sign = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-')
-		sign = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] <= '9' && str[i] >= '0')
-	{
-		sum = (sum * 10) + str[i] - '0';
-		i++;
-	}
-	if (sum > INT_MAX || sum < INT_MIN)
-	{
-		*len = -1;
-		return (0);
-	}
-	*len = i;
-	return (sign * sum);
-}
-
-int has_space(char *s)
-{
-	int i;
+	int	i;
 
 	i = -1;
 	while (s[++i])
@@ -65,7 +36,7 @@ int has_space(char *s)
 	return (0);
 }
 
-int skip_space(char *str)
+static int	skip_space(char *str)
 {
 	int	i;
 
@@ -75,37 +46,48 @@ int skip_space(char *str)
 	return (i);
 }
 
-t_ilist		*parse(char **argv)
+static int	multiple_args(t_ilist *stack, char *arg)
 {
-	int i;
-	t_ilist *stack;
-	int skp;
+	int	skp;
 
-	stack = NULL;
+	skp = 0;
+	while (arg[skip_space(arg)] != '\0')
+	{
+		arg += skip_space(arg);
+		t_int_lstadd_back(&stack, ft_int_lstnew(ft_atoi_err(arg, &skp)));
+		if (skp <= 0 || (skp == 1 && (arg[0] == '-' || arg[0] == '+'))
+			|| (!ft_isspace(arg[skp]) && arg[skp] != '\0'))
+			return (0);
+		arg += skp;
+	}
+	return (1);
+}
+
+t_ilist	*parse(char **argv)
+{
+	int		i;
+	int		skp;
+	t_ilist	*a;
+
+	a = NULL;
 	i = 0;
 	skp = 0;
 	while (argv[++i])
 	{
 		if (has_space(argv[i]))
 		{
-			while (argv[i][skip_space(argv[i])] != '\0')
-			{
-				argv[i] += skip_space(argv[i]);
-				ft_int_lstadd_back(&stack, ft_int_lstnew(ft_atoi_err(argv[i], &skp)));
-				if (skp <= 0 || (skp == 1 && (argv[i][0] == '-' || argv[i][0] == '+'))
-					|| (!ft_isspace(argv[i][skp]) && argv[i][skp] != '\0'))
-					return (NULL);
-				argv[i] += skp;
-			}
+			if (!multiple_args(a, argv[i]))
+				return (NULL);
 		}
 		else if (!ft_isstingdigit(argv[i]))
 			return (NULL);
 		else
 		{
-			ft_int_lstadd_back(&stack, ft_int_lstnew(ft_atoi_err(argv[i], &skp)));
-			if (skp <= 0 || (skp == 1 && (argv[i][0] == '-' || argv[i][0] == '+')))
+			ft_int_lstadd_back(&a, ft_int_lstnew(ft_atoi_err(argv[i], &skp)));
+			if (skp <= 0 || (skp == 1
+					&& (argv[i][0] == '-' || argv[i][0] == '+')))
 				return (NULL);
 		}
 	}
-	return (stack);
+	return (a);
 }

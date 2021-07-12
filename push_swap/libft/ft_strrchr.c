@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:47:31 by nwakour           #+#    #+#             */
-/*   Updated: 2021/01/13 17:05:49 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:48:30 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strrchr(const char *str, int c)
 	char	*s;
 
 	i = ft_strlen(str);
-	s = (char*)str;
+	s = (char *)str;
 	if (c == '\0')
 		return (s + i);
 	while (i != 0)

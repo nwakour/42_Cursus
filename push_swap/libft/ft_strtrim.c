@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nwakour <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 22:33:15 by nwakour           #+#    #+#             */
-/*   Updated: 2019/10/17 01:35:12 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:49:04 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			ft_strstart(char const *set, char c)
+static int	ft_strstart(char const *set, char c)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ static int			ft_strstart(char const *set, char c)
 	return (0);
 }
 
-static int			ft_cntnbset(char const *s1, char const *set)
+static int	ft_cntnbset(char const *s1, char const *set)
 {
 	int	i;
 	int	nb;
@@ -48,7 +48,7 @@ static int			ft_cntnbset(char const *s1, char const *set)
 	return (nb);
 }
 
-static int			ft_fndend(char const *s1, char const *set)
+static int	ft_fndend(char const *s1, char const *set)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ static int			ft_fndend(char const *s1, char const *set)
 	return (i);
 }
 
-char				*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*str;
 	int		i;
@@ -73,7 +73,8 @@ char				*ft_strtrim(char const *s1, char const *set)
 		start++;
 	end = ft_fndend(s1, set);
 	len = ft_strlen(s1) - ft_cntnbset(s1, set);
-	if (!(str = (char *)malloc((len + 1) * sizeof(char))))
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (start <= end)

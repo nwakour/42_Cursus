@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:36 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/11 15:46:31 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 14:56:46 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void swap(t_ilist *stack, char c, int fd)
+void	swap(t_ilist *stack, char c, int fd)
 {
 	long	tmp;
 
@@ -23,13 +23,13 @@ void swap(t_ilist *stack, char c, int fd)
 		ft_putendl_fd("sa", fd);
 	else if (c == 'b')
 		ft_putendl_fd("sb", fd);
-	else 
+	else
 		ft_putendl_fd("rs", fd);
 }
 
-void push(t_ilist **a , t_ilist **b, char c, int fd)
+void	push(t_ilist **a, t_ilist **b, char c, int fd)
 {
-	t_ilist *tmp;
+	t_ilist	*tmp;
 
 	tmp = (*b)->next;
 	ft_int_lstadd_front(a, (*b));
@@ -40,9 +40,9 @@ void push(t_ilist **a , t_ilist **b, char c, int fd)
 		ft_putendl_fd("pb", fd);
 }
 
-void rotate(t_ilist **stack, char c, int fd)
+void	rotate(t_ilist **stack, char c, int fd)
 {
-	t_ilist *tmp;
+	t_ilist	*tmp;
 
 	tmp = *stack;
 	while (tmp->next)
@@ -54,14 +54,14 @@ void rotate(t_ilist **stack, char c, int fd)
 		ft_putendl_fd("ra", fd);
 	else if (c == 'b')
 		ft_putendl_fd("rb", fd);
-	else 
+	else
 		ft_putendl_fd("rr", fd);
 }
 
-void rev_rotate(t_ilist **stack, char c, int fd)
+void	rev_rotate(t_ilist **stack, char c, int fd)
 {
-	t_ilist *tmp;
-	t_ilist *rot;
+	t_ilist	*tmp;
+	t_ilist	*rot;
 
 	tmp = *stack;
 	while (tmp->next->next)
@@ -74,6 +74,6 @@ void rev_rotate(t_ilist **stack, char c, int fd)
 		ft_putendl_fd("rra", fd);
 	else if (c == 'b')
 		ft_putendl_fd("rrb", fd);
-	else 
+	else
 		ft_putendl_fd("rrr", fd);
 }

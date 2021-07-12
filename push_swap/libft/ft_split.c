@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 06:45:50 by nwakour           #+#    #+#             */
-/*   Updated: 2021/04/10 15:26:46 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/12 12:38:57 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			ft_wordnbr(char const *s, char c)
+static int	ft_wordnbr(char const *s, char c)
 {
 	int	i;
 	int	j;
@@ -33,7 +33,7 @@ static int			ft_wordnbr(char const *s, char c)
 	return (i);
 }
 
-static int			ft_fndlen(char const *s, char c)
+static int	ft_fndlen(char const *s, char c)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ static int			ft_fndlen(char const *s, char c)
 	return (i);
 }
 
-static void			ft_free(char **str)
+static void	ft_free(char **str)
 {
 	while (*str != NULL)
 	{
@@ -56,11 +56,12 @@ static void			ft_free(char **str)
 	free(str);
 }
 
-static void			ft_allo(char **str, const char *src, char c)
+static void	ft_allo(char **str, const char *src, char c)
 {
 	char	*res;
 
-	if (!(*str = malloc((ft_fndlen(src, c) + 1) * sizeof(char))))
+	*str = malloc((ft_fndlen(src, c) + 1) * sizeof(char));
+	if (!*str)
 	{
 		ft_free(str);
 		return ;
@@ -75,13 +76,14 @@ static void			ft_allo(char **str, const char *src, char c)
 	*res = '\0';
 }
 
-char				**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**str;
 	char	**res;
 	int		i;
 
-	if (!s || !(str = malloc((ft_wordnbr(s, c) + 1) * sizeof(char *))))
+	str = malloc((ft_wordnbr(s, c) + 1) * sizeof(char *));
+	if (!s || !str)
 		return (NULL);
 	res = str;
 	i = 0;
