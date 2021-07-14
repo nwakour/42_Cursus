@@ -1,42 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi_err.c                                      :+:      :+:    :+:   */
+/*   ft_strjoin_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/12 16:32:14 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 18:30:38 by nwakour          ###   ########.fr       */
+/*   Created: 2021/07/13 17:19:35 by nwakour           #+#    #+#             */
+/*   Updated: 2021/07/13 17:41:57 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi_err(const char *str, int *len)
+char	*ft_strjoin_char(char *s, char c)
 {
-	long long	i;
-	long long	sum;
-	int			sign;
+	int		i;
+	char	*str;
 
 	i = 0;
-	sum = 0;
-	sign = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	while (s[i])
 		i++;
-	if (str[i] == '-')
-		sign = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] <= '9' && str[i] >= '0')
-	{
-		sum = (sum * 10) + str[i] - '0';
-		i++;
-	}
-	if (sum * sign > INT_MAX || sum * sign < INT_MIN || i > 12)
-	{
-		*len = -1;
+	str = (char *)malloc(sizeof(char) * (i + 2));
+	if (!str)
 		return (0);
-	}
-	*len = i;
-	return (sign * sum);
+	i = -1;
+	while (s[++i])
+		str[i] = s[i];
+	str[i] = c;
+	str[i + 1] = '\0';
+	free(s);
+	return (str);
 }

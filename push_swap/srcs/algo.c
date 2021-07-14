@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:49:22 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/12 14:53:25 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/14 15:42:42 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,46 @@ static void	sort_stack3(t_ilist **a)
 
 static void	sort_stack5(t_ilist **a, t_ilist **b, int len_a)
 {
-	while (len_a-- > 3)
-		push(b, a, 'b', 1);
-	sort_stack3(a);
-	while (*b)
+	int		smallest;
+	int		biggest;
+
+	smallest = find_smallest_or_biggest(*a, -1);
+	biggest = find_smallest_or_biggest(*a, 1);
+	while (len_a > 3)
 	{
-		if ((*a)->nb > (*b)->nb)
+		if ((*a)->nb == biggest || (*a)->nb == smallest)
 		{
-			push(a, b, 'a', 1);
-			if (*b)
-				rev_rotate(a, 'a', 1);
+			push(b, a, 'b', 1);
+			len_a--;
 		}
 		else
 			rotate(a, 'a', 1);
 	}
+	sort_stack3(a);
+	if ((*b)->nb < (*b)->next->nb)
+		swap(*b, 'b', 1);
+	push(a, b, 'a', 1);
+	rotate(a, 'a', 1);
+	push(a, b, 'a', 1);
+}
+
+static void	sort_stack4(t_ilist **a, t_ilist **b, int len_a)
+{
+	int		smallest;
+
+	smallest = find_smallest_or_biggest(*a, -1);
+	while (len_a > 3)
+	{
+		if ((*a)->nb == smallest)
+		{
+			push(b, a, 'b', 1);
+			len_a--;
+		}
+		else
+			rotate(a, 'a', 1);
+	}
+	sort_stack3(a);
+	push(a, b, 'a', 1);
 }
 
 static void	radix_sort(t_ilist **a, t_ilist **b, int len_a)
@@ -91,7 +117,9 @@ void	sort_stack(t_ilist **a, t_ilist **b)
 		swap(*a, 'a', 1);
 	else if (len_a == 3)
 		sort_stack3(a);
-	else if (len_a > 3 && len_a <= 5)
+	else if (len_a == 4)
+		sort_stack4(a, b, len_a);
+	else if (len_a == 5)
 		sort_stack5(a, b, len_a);
 	else
 	{
@@ -100,5 +128,6 @@ void	sort_stack(t_ilist **a, t_ilist **b)
 		index_stack(*a, stack_dup);
 		radix_sort(a, b, len_a);
 		orgin_stack(*a, stack_dup);
+		ft_int_lstclear(&stack_dup);
 	}
 }

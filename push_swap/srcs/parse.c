@@ -6,24 +6,11 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:53:25 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/12 16:36:10 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/14 19:45:25 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static int	check_digit(char **nbs)
-{
-	int	i;
-
-	i = 0;
-	while (nbs[++i])
-	{
-		if (!ft_isstingdigit(nbs[i]))
-			return (0);
-	}
-	return (1);
-}
 
 static int	has_space(char *s)
 {
@@ -46,7 +33,7 @@ static int	skip_space(char *str)
 	return (i);
 }
 
-static int	multiple_args(t_ilist *stack, char *arg)
+static int	multiple_args(t_ilist **stack, char *arg)
 {
 	int	skp;
 
@@ -54,7 +41,7 @@ static int	multiple_args(t_ilist *stack, char *arg)
 	while (arg[skip_space(arg)] != '\0')
 	{
 		arg += skip_space(arg);
-		t_int_lstadd_back(&stack, ft_int_lstnew(ft_atoi_err(arg, &skp)));
+		ft_int_lstadd_back(stack, ft_int_lstnew(ft_atoi_err(arg, &skp)));
 		if (skp <= 0 || (skp == 1 && (arg[0] == '-' || arg[0] == '+'))
 			|| (!ft_isspace(arg[skp]) && arg[skp] != '\0'))
 			return (0);
@@ -63,13 +50,11 @@ static int	multiple_args(t_ilist *stack, char *arg)
 	return (1);
 }
 
-t_ilist	*parse(char **argv)
+int		parse(char **argv, t_ilist	**a)
 {
 	int		i;
 	int		skp;
-	t_ilist	*a;
 
-	a = NULL;
 	i = 0;
 	skp = 0;
 	while (argv[++i])
@@ -77,17 +62,36 @@ t_ilist	*parse(char **argv)
 		if (has_space(argv[i]))
 		{
 			if (!multiple_args(a, argv[i]))
-				return (NULL);
+				return (0);
 		}
 		else if (!ft_isstingdigit(argv[i]))
-			return (NULL);
+			return (0);
 		else
 		{
-			ft_int_lstadd_back(&a, ft_int_lstnew(ft_atoi_err(argv[i], &skp)));
+			ft_int_lstadd_back(a, ft_int_lstnew(ft_atoi_err(argv[i], &skp)));
 			if (skp <= 0 || (skp == 1
 					&& (argv[i][0] == '-' || argv[i][0] == '+')))
-				return (NULL);
+				return (0);
 		}
 	}
-	return (a);
+	return (1);
+}
+
+void	ft_int_lstclear(t_ilist **lst)
+{
+	t_ilist	*next_node;
+	t_ilist	*current;
+
+	if (lst)
+	{
+		next_node = (*lst);
+		current = (*lst);
+		while (next_node != NULL)
+		{
+			current = next_node;
+			next_node = next_node->next;
+			free(current);
+		}
+		*lst = NULL;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/12 14:58:59 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/14 18:33:38 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ int	main(int argc, char **argv)
 	stack_b = NULL;
 	if (argc < 2)
 		return (0);
-	stack_a = parse(argv);
-	if (!stack_a || !check_dup(stack_a))
-		ft_putendl_fd("error", 1);
+	if (!parse(argv, &stack_a) || !check_dup(stack_a))
+		ft_putendl_fd("Error", 1);
 	else
 	{
-		if (is_sorted(stack_a, stack_b))
-			return (0);
-		sort_stack(&stack_a, &stack_b);
+		if (!is_sorted(stack_a, stack_b))
+			sort_stack(&stack_a, &stack_b);
 	}
+	ft_int_lstclear(&stack_a);
+	ft_int_lstclear(&stack_b);
+	// system("leaks push_swap");
 	return (0);
 }

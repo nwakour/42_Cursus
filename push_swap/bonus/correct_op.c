@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 16:46:41 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/12 17:11:41 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/14 16:12:27 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,30 @@ void	rev_rotate(t_ilist **stack)
 	(*stack) = rot;
 }
 
-void	corr_op(t_ilist *a, t_ilist *b, char *opp)
+int	corr_op(t_ilist **a, t_ilist **b, char *s)
 {
-	if (!opp || opp[0] == '\0' || opp[1] == '\0')
-		return ;
-	if (opp[0] == 's' && (opp[1] == 'a' || opp[1] == 's') && opp[2] == '\0')
-		swap(a);
-	if (opp[0] == 's' && (opp[1] == 'b' || opp[1] == 's') && opp[2] == '\0')
-		swap(b);
-	if (opp[0] == 'p' && opp[1] == 'a' && opp[2] == '\0')
+	int i;
+
+	i = 0;
+	if (!s || s[0] == '\0' || s[1] == '\0')
+		return (i);
+	if (s[0] == 's' && (s[1] == 'a' || s[1] == 's') && s[2] == '\0' && ++i)
+		swap(*a);
+	if (s[0] == 's' && (s[1] == 'b' || s[1] == 's') && s[2] == '\0' && ++i)
+		swap(*b);
+	if (s[0] == 'p' && s[1] == 'a' && s[2] == '\0' && ++i)
 		push(a, b);
-	if (opp[0] == 'p' && opp[1] == 'b' && opp[2] == '\0')
+	if (s[0] == 'p' && s[1] == 'b' && s[2] == '\0' && ++i)
 		push(b, a);
-	if (opp[0] == 'r' && (opp[1] == 'a' || opp[1] == 'r') && opp[2] == '\0')
+	if (s[0] == 'r' && (s[1] == 'a' || s[1] == 'r') && s[2] == '\0' && ++i)
 		rotate(a);
-	if (opp[0] == 'r' && (opp[1] == 'b' || opp[1] == 'r') && opp[2] == '\0')
+	if (s[0] == 'r' && (s[1] == 'b' || s[1] == 'r') && s[2] == '\0' && ++i)
 		rotate(b);
-	if (opp[0] == 'r' && opp[1] == 'r'
-		&& (opp[2] == 'a' || opp[2] == 'r') && opp[3] == '\0')
+	if (s[0] == 'r' && s[1] == 'r'
+		&& (s[2] == 'a' || s[2] == 'r') && s[3] == '\0' && ++i)
 		rev_rotate(a);
-	if (opp[0] == 'r' && opp[1] == 'r'
-		&& (opp[2] == 'b' || opp[2] == 'r') && opp[3] == '\0')
+	if (s[0] == 'r' && s[1] == 'r'
+		&& (s[2] == 'b' || s[2] == 'r') && s[3] == '\0' && ++i)
 		rev_rotate(b);
+	return (i);
 }

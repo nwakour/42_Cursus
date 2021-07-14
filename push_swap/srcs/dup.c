@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:08:12 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/12 14:54:47 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/14 15:42:23 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,25 @@ void	pre_sort(t_ilist *stack)
 			tmp = tmp->next;
 		}
 	}
+}
+
+int	find_smallest_or_biggest(t_ilist *stack, int flag)
+{
+	int		smallest;
+	int		biggest;
+
+	smallest = INT_MAX;
+	biggest = INT_MIN;
+	while (stack)
+	{
+		if (stack->nb > biggest)
+			biggest = stack->nb;
+		if (stack->nb < smallest)
+			smallest = stack->nb;
+		stack = stack->next;
+	}
+	if (flag == -1)
+		return (smallest);
+	else
+		return (biggest);
 }

@@ -6,11 +6,11 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 11:46:42 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/12 14:49:33 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/14 14:24:01 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker.h"
 
 t_ilist	*ft_int_lstnew(long nb)
 {

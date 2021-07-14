@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 19:06:53 by nwakour           #+#    #+#              #
-#    Updated: 2021/07/12 12:10:48 by nwakour          ###   ########.fr        #
+#    Updated: 2021/07/14 11:44:58 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJS_BONUS		=	${SRCS_BONUS:.c=.o}
 
 CC				=	gcc
 
-FLAGS           =	-Wall -Wextra -Werror -fsanitize=address
+FLAGS           =	-Wall -Wextra -Werror 
 
 RM				=	rm -f
 
