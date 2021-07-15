@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 19:06:53 by nwakour           #+#    #+#              #
-#    Updated: 2021/07/14 11:44:58 by nwakour          ###   ########.fr        #
+#    Updated: 2021/07/15 15:57:11 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME			=	push_swap
 
-SRCS			=	srcs/push_swap.c srcs/operations.c srcs/show_stack.c srcs/init_list.c srcs/dup.c srcs/algo.c srcs/parse.c
+SRCS			=	srcs/push_swap.c srcs/operations.c srcs/init_list.c srcs/dup.c srcs/algo.c srcs/parse.c
 
 OBJS			=	${SRCS:.c=.o}
 
@@ -36,16 +36,16 @@ LIBFLAGS 		= 	-I ./libft -L ./libft -L . ./libft/*.c
 
 LIBFT_PATH 		= 	./libft
 
-all:			$(NAME) libft_all
+all:			libft_all $(NAME) 
 
-$(NAME):	$(OBJS)
-				@$(CC) -o $(NAME) $(SRCS) $(INCLUDE) $(LIBFLAGS) $(FLAGS)
-
+$(NAME):		$(OBJS)
+					@$(CC) -o $(NAME) $(SRCS) $(INCLUDE) $(LIBFLAGS) $(FLAGS)
+					@echo "push_swap was created successfully"
 bonus:			$(NAME_BONUS)
 
 $(NAME_BONUS):	$(OBJS_BONUS)
-						@$(CC) -o $(NAME_BONUS) $(SRCS_BONUS) $(INCLUDE) $(LIBFLAGS) $(FLAGS)
-
+					@$(CC) -o $(NAME_BONUS) $(SRCS_BONUS) $(INCLUDE) $(LIBFLAGS) $(FLAGS)
+					@echo "Checker was created successfully"
 clean:			libft_clean
 				@$(RM) $(OBJS) $(OBJS_BONUS)
 

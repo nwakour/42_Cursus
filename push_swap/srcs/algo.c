@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:49:22 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 15:42:42 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 12:42:14 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	sort_stack3(t_ilist **a)
 {
-	long	first;
-	long	second;
-	long	third;
+	int	first;
+	int	second;
+	int	third;
 
 	first = (*a)->nb;
 	second = (*a)->next->nb;

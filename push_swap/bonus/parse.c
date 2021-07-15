@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:53:25 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 18:55:08 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 12:45:55 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	multiple_args(t_ilist **stack, char *arg)
 	return (1);
 }
 
-int		parse(char **argv, t_ilist	**a)
+int	parse(char **argv, t_ilist	**a)
 {
 	int		i;
 	int		skp;

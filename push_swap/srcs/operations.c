@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:36 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/12 14:56:46 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 12:42:42 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	swap(t_ilist *stack, char c, int fd)
 {
-	long	tmp;
+	int	tmp;
 
 	tmp = stack->nb;
 	stack->nb = stack->next->nb;

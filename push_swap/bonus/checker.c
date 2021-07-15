@@ -6,31 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 14:43:48 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 18:48:01 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 13:37:03 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-int	is_sorted(t_ilist *a, t_ilist *b)
-{
-	long	nb;
-
-	if (!a || b)
-		return (0);
-	nb = a->nb;
-	while (a->next)
-	{
-		a = a->next;
-		if (nb > a->nb)
-			return (0);
-		else
-			nb = a->nb;
-	}
-	return (1);
-}
-
-int	check_dup(t_ilist *stack)
+static int	check_dup(t_ilist *stack)
 {
 	t_ilist	*tmp;
 
@@ -48,7 +30,7 @@ int	check_dup(t_ilist *stack)
 	return (1);
 }
 
-int	checker(t_ilist **stack_a, t_ilist **stack_b, char *buff)
+static int	checker(t_ilist **stack_a, t_ilist **stack_b, char *buff)
 {
 	char	c;
 	int		r;
@@ -70,9 +52,27 @@ int	checker(t_ilist **stack_a, t_ilist **stack_b, char *buff)
 	}
 	if (buff)
 		free(buff);
-	if (r == 0 && buff &&buff[0] == '\0')
+	if (r == 0 && buff && buff[0] == '\0')
 		return (1);
 	return (0);
+}
+
+int	is_sorted(t_ilist *a, t_ilist *b)
+{
+	int	nb;
+
+	if (!a || b)
+		return (0);
+	nb = a->nb;
+	while (a->next)
+	{
+		a = a->next;
+		if (nb > a->nb)
+			return (0);
+		else
+			nb = a->nb;
+	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -99,6 +99,5 @@ int	main(int argc, char **argv)
 	}
 	ft_int_lstclear(&stack_a);
 	ft_int_lstclear(&stack_b);
-	system("leaks checker");
 	return (0);
 }

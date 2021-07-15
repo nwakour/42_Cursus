@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:08:39 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 18:33:38 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 13:32:58 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_sorted(t_ilist *a, t_ilist *b)
 {
-	long	nb;
+	int	nb;
 
 	if (!a || b)
 		return (0);
@@ -30,7 +30,7 @@ int	is_sorted(t_ilist *a, t_ilist *b)
 	return (1);
 }
 
-int	check_dup(t_ilist *stack)
+static int	check_dup(t_ilist *stack)
 {
 	t_ilist	*tmp;
 
@@ -65,6 +65,5 @@ int	main(int argc, char **argv)
 	}
 	ft_int_lstclear(&stack_a);
 	ft_int_lstclear(&stack_b);
-	// system("leaks push_swap");
 	return (0);
 }

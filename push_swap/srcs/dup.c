@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:08:12 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 15:42:23 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 12:43:33 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	index_stack(t_ilist *stack, t_ilist *dupli)
 void	pre_sort(t_ilist *stack)
 {
 	t_ilist	*tmp;
-	long	nb;
+	int		nb;
 	int		len;
 	int		i;
 

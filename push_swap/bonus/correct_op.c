@@ -6,7 +6,7 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 16:46:41 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 16:12:27 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 12:45:32 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	swap(t_ilist *stack)
 {
-	long	tmp;
+	int	tmp;
 
 	if (!stack || !stack->next)
 		return ;
@@ -66,7 +66,7 @@ void	rev_rotate(t_ilist **stack)
 
 int	corr_op(t_ilist **a, t_ilist **b, char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s || s[0] == '\0' || s[1] == '\0')

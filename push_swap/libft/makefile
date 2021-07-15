@@ -6,7 +6,7 @@
 #    By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/12 11:36:03 by nwakour           #+#    #+#              #
-#    Updated: 2021/07/14 11:48:00 by nwakour          ###   ########.fr        #
+#    Updated: 2021/07/15 13:16:19 by nwakour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,12 @@ RM		=	rm -f
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS)
+$(NAME):	$(SRCS)
 				@$(CC) -c $(SRCS) $(FLAGS)
 				@ar rc $(NAME) $(OBJS)
 				@ranlib $(NAME)
+				@echo "The library was created successfully"
+				
 
 clean:
 			@$(RM) $(OBJS)

@@ -6,13 +6,13 @@
 /*   By: nwakour <nwakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 11:46:42 by nwakour           #+#    #+#             */
-/*   Updated: 2021/07/14 14:24:01 by nwakour          ###   ########.fr       */
+/*   Updated: 2021/07/15 12:45:47 by nwakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-t_ilist	*ft_int_lstnew(long nb)
+t_ilist	*ft_int_lstnew(int nb)
 {
 	t_ilist	*head;
 
@@ -53,7 +53,7 @@ void	ft_int_lstadd_front(t_ilist **alst, t_ilist *l_new)
 
 int	ft_int_lstsize(t_ilist *lst)
 {
-	long	i;
+	int		i;
 	t_ilist	*element;
 
 	element = lst;
@@ -69,7 +69,7 @@ int	ft_int_lstsize(t_ilist *lst)
 t_ilist	*ft_int_lstdup(t_ilist *list)
 {
 	t_ilist	*dup;
-	long	nb;
+	int		nb;
 
 	if (!list)
 		return (NULL);
